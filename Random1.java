@@ -6,7 +6,11 @@ public class Random1 {
         game.addPlayer(new PlayerComp("Janusz"));
         game.addPlayer(new PlayerComp("Janusz"));
 
-        game.play();
+        for(int i=0;i<100;++i){
+            game.play();
+        }
+        
+        game.printStats();
         
     }
 }

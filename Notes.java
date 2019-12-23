@@ -141,14 +141,29 @@ Iterator<Player>    -   iterator po klasie player ???
 3) usuwanie po imieniu
 
 
+________________________________________________________________________________
+
+players.removeIf((Player player) -> { return player.getName().equals(name); } );
+lista parametrow: player
+przekazywanie kolejnych playerow z listy
+
+players.removeIf((Player player) -> player.getName().equals(name) ); - wyrazenia lambda
+
+https://github.com/oleklamza/pio-game
 
 
+klucz-wartosc   Map
+HashMap
+
+Map<Klucz,Vartosc>
+
+Integer opakowanie na inta
+
+https://javastart.pl/baza-wiedzy/algorytmy/struktury-danych-mapa
 
 
-
-
-
-
+put - umiesc w mapie
+get - pobranie z mapy
 
 
 */

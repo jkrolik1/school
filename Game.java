@@ -6,6 +6,7 @@ import java.util.Random;
 public class Game{
     private Player player;
     private List<Player> players = new ArrayList();
+    private Statistics stats = new Statistics();
     Random dice = new Random();
     
     public void addPlayer(Player player){
@@ -45,10 +46,6 @@ public class Game{
         
         boolean repeat;
 
-
-        printPlayers();
-
-
         do{
             repeat = true;                          //po to aby kazdy gracz mogl
             
@@ -65,12 +62,18 @@ public class Game{
                     System.out.println("Źle " + player.getName() + "! Spróbuj ponownie.");
                     System.out.println("");
                 }else{
-                    System.out.println("Brawo " + player.getName() + "!");
+                    System.out.println("Brawo " + player.getName() + "!");      //doliczenie punktu
                     repeat=false;
+                    stats.andTheWinnerIs(player);
                 }
                 
             }
 
         }while(repeat);
     }
+    
+    public void printStats(){
+        stats.print();
+    }
+    
 }
