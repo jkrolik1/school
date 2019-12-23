@@ -6,7 +6,7 @@ public class Random1 {
         Player player = new PlayerComp();
         
         try{
-            player.setName(" ");
+            player.setName("Ma~");
         }
         catch(IllegalArgumentException ex){
             System.err.println("Błąd! " + ex.getMessage());

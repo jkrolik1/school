@@ -5,7 +5,7 @@ public abstract class Player {
         setName(name);
     }
     public void setName(String name){        
-        if(name!=null && !name.isEmpty()){   
+        if(name!=null && name.matches("^[a-zA-Z0-9~.]{3,}$")){   
             this.name=name;
         }
         else{
