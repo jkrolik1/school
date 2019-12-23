@@ -165,6 +165,13 @@ https://javastart.pl/baza-wiedzy/algorytmy/struktury-danych-mapa
 put - umiesc w mapie
 get - pobranie z mapy
 
+________________________________________________________________________________
+
+final dla pola - nie mozna ustawic null
+
+system.out.println() - out jest finalnym polem
+
+
 
 */
 

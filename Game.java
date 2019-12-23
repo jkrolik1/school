@@ -6,8 +6,21 @@ import java.util.Random;
 public class Game{
     private Player player;
     private List<Player> players = new ArrayList();
-    private Statistics stats = new Statistics();
+    
     Random dice = new Random();
+    
+    public final Statistics stats;                          
+    
+    public Game(){
+        this(null);
+    }
+    
+    public Game(Statistics stats) {
+        if(stats!=null)
+            this.stats=stats;
+        else
+            this.stats = new NullStatistics();
+    }
     
     public void addPlayer(Player player){
         String s = "";
@@ -59,7 +72,8 @@ public class Game{
                 System.out.println("Odgadywana: " + guess);
 
                 if(number!=guess){
-                    System.out.println("Źle " + player.getName() + "! Spróbuj ponownie.");
+                    System.out.println("Źle " + player.getName() 
+                            + "! Spróbuj ponownie.");
                     System.out.println("");
                 }else{
                     System.out.println("Brawo " + player.getName() + "!");      //doliczenie punktu
@@ -70,10 +84,6 @@ public class Game{
             }
 
         }while(repeat);
-    }
-    
-    public void printStats(){
-        stats.print();
     }
     
 }

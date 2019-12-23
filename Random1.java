@@ -1,7 +1,7 @@
 public class Random1 {
     public static void main(String[] args) {
         
-        Game game = new Game();
+        Game game = new Game(new Statistics());
         
         game.addPlayer(new PlayerComp("Janusz"));
         game.addPlayer(new PlayerComp("Janusz"));
@@ -10,7 +10,7 @@ public class Random1 {
             game.play();
         }
         
-        game.printStats();
+        game.stats.print();
         
     }
 }
