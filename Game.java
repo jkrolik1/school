@@ -1,19 +1,17 @@
-import Statistics.WinStatistics;
 import Statistics.NullStatistics;
 import Statistics.Statistics;
 import players.Player;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.Iterator;
 
 public class Game{
-    private Player player;
     private List<Player> players = new ArrayList();
     
     Random dice = new Random();
     
-    public final WinStatistics stats;                          
+    public final Statistics stats;
     
     public Game(){
         this(null);

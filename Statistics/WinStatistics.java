@@ -12,8 +12,9 @@ public class WinStatistics implements Statistics{
         int score = stats.getOrDefault(player,0);                               //domyslna wartosc, na poczatku mapa jest pusta
         score += 1;
         stats.put(player,score);
-    }    
-    
+    }
+
+
     public void print(){
         
         System.out.println("\n#########################");
