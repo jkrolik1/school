@@ -1,10 +1,7 @@
-import java.util.Random;
-
-public class Player {
-    private Random dice = new Random();         
+public abstract class Player {         
     private String name="Anonim";               
-    public PlayerA_1(){}                                   
-    public PlayerA_1(String name){
+    public Player(){}                                   
+    public Player(String name){
         setName(name);
     }
     public void setName(String name){        
@@ -19,7 +16,5 @@ public class Player {
     public String getName(){
         return name;
     }
-    public int guess(){
-        return dice.nextInt(6)+1;
-    }
+    public abstract int guess();
 }
