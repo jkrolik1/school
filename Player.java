@@ -1,23 +1,14 @@
 import java.util.Random;
 
 public class Player {
-    private Random dice = new Random();         //pole klasy
-    private String name;
-  //private String name="Anonim";               może zamiast konstruktora bezparametrowego wtedy public Player() {}
-    public Player(){
-        //this.name="Anonim";                   //raczej nie!!!
-        setName("Anonim");
-    }                                           //ta sama nazwa funkcji np: dla konstruktora to PRZECIĄŻENIE
-    public Player(String name){
-        //this.name=name;                       //raczej nie!!!
+    private Random dice = new Random();         
+    private String name="Anonim";               
+    public PlayerA_1(){}                                   
+    public PlayerA_1(String name){
         setName(name);
     }
-    public void setName(String name){           //setter!!!!!!
-        if(name!=null && !(name.isEmpty())){    //muszą być oba prawdziwe (Ważna kolejność!!!)
-      //if(name!=null && name.length!=0)          
-      //if(name!=null && !(name.equals("")))          
-      //if(name!=null && !("".equals(name)))         
-      //if(name!=null && name!="")              //nie!!!
+    public void setName(String name){        
+        if(name!=null && !(name.isEmpty())){   
             this.name=name;
         }
         else{
