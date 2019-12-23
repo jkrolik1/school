@@ -5,11 +5,11 @@ public abstract class Player {
         setName(name);
     }
     public void setName(String name){        
-        if(name!=null && !(name.isEmpty())){   
+        if(name!=null && !name.isEmpty()){   
             this.name=name;
         }
         else{
-            System.err.println("Podaj prawidłowe imię");
+            throw new IllegalArgumentException("Nieprawidłowe imię!");
         }
         
     }

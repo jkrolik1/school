@@ -3,14 +3,14 @@ public class Random1 {
     public static void main(String[] args) {
         Random dice = new Random();
         
-        /*
-        Player player;
-        if(true)
-            player = new Player();
-        else
-            player = new PlayerHuman();
-        */
         Player player = new PlayerComp();
+        
+        try{
+            player.setName(" ");
+        }
+        catch(IllegalArgumentException ex){
+            System.err.println("Błąd! " + ex.getMessage());
+        }
         
         int number;
         int guess;

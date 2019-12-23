@@ -77,12 +77,32 @@ ________________________________________________________________________________
 
 
 
+Jeżeli setName będzie null lub pusty -> try catch
+
+Wyjątek jest obiektem
+rzucenie obiektu wyjątku
+Java exception hierarchy https://www.benchresources.net/wp-content/uploads/2017/02/exception-hierarchy-in-java.png
+    indexoutofbounds wyjscie poza tablice
+http://java5tutor.info/images/exceptionhierarchy.jpg
+Runtime exception -> illegalargumentexception
+
+c jest kompilowany do kodu maszynowego
+java jest kompilowany...
+throw wyjście z klasy - main - maszyny wirtualnej
+wm konczy ten proces
+rzucenie wyjatku - cos sie stalo nie tak
+throw leci cala droge wywolan
+
+walidacja imienia
+REGEX wyrazenia regularne   regex101.com
+.
++
+* - dowolna
+^[a-zA-Z0-9~\.]{3,}$ -> a-z A-Z 0-9 ~ .
 
 
 
-
-
-
+________________________________________________________________________________
 
 
 
