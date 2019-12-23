@@ -104,10 +104,25 @@ REGEX wyrazenia regularne   regex101.com
 
 ________________________________________________________________________________
 
+lista - powiązane ze sobą elementy
+trzeba pamietac poczatek listy
+koniec ustawiony na null
+nowy element dolaczamy na strzalkach
+x->x->x->null
+dostep - za kazdym razem od poczatku
 
+List list new ArrayList(); - tablica dynamiczna
+polacenie tavlicy i listy 
+lista jest obiektem.
+list.add można dodać typ obiekt-klasa;
+Object - baza dla wszystkich klas w Javie
 
-
-
+List list = new ArrayList();
+        list.add("raz");
+        list.add("dwa");
+        list.add("trzy");
+        System.out.print(list.toString());
+Trzeba dodać importy - ikonka żarówki w net beans
 
 
 
