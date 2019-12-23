@@ -1,3 +1,7 @@
+import Statistics.WinStatistics;
+import Statistics.NullStatistics;
+import Statistics.Statistics;
+import players.Player;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -9,7 +13,7 @@ public class Game{
     
     Random dice = new Random();
     
-    public final Statistics stats;                          
+    public final WinStatistics stats;                          
     
     public Game(){
         this(null);
