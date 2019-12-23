@@ -124,7 +124,13 @@ List list = new ArrayList();
         System.out.print(list.toString());
 Trzeba dodać importy - ikonka żarówki w net beans
 
+List<String> list = new ArrayList(); - typy generyczne
 
+iterowanie po liście - ITERATOR
+poprosimy liste o dostarczenie iteratora
+lista jednokierunkowa - metoda NEXT - przeskakuje nad elementem i patrzy jego wartosc
+ostatni element - next przeskakuje - wyjątek
+hasNext()
 
 
 
