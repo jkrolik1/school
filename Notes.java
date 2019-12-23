@@ -132,6 +132,10 @@ lista jednokierunkowa - metoda NEXT - przeskakuje nad elementem i patrzy jego wa
 ostatni element - next przeskakuje - wyjątek
 hasNext()
 
+________________________________________________________________________________
+
+Iterator<Player>    -   iterator po klasie player ???
+
 
 
 
