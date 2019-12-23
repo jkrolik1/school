@@ -136,7 +136,9 @@ ________________________________________________________________________________
 
 Iterator<Player>    -   iterator po klasie player ???
 
-
+1) unikatowe imie (Janusz1, Janusz11...)
+2) Wyswietlanie wszy graczy ktorzy biora udzial w grze
+3) usuwanie po imieniu
 
 
 
