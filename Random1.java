@@ -5,7 +5,7 @@ public class Random1 {
         
         game.addPlayer(new PlayerComp("Janusz"));
         game.addPlayer(new PlayerComp("Janusz"));
-        
+
         game.play();
         
     }
