@@ -1,3 +1,4 @@
+;zamazanie okreÅ›lonej linii w programie wybranym wzorcem 
 Progr segment
 
 assume  cs:Progr,ds:dane,ss:stosik
@@ -41,10 +42,10 @@ Start:
                   push ds
                   pop es
                   mov di,offset bufor
-                  mov ax,0b800h                         ;Adres konsoli
+                  mov ax,0b800h                         ;pierwszy znak ;Adres konsoli
                   mov ds,ax
                   mov si,bx
-                  mov cx,80                             ;80 znaków w jedym wierszu a kazdy znak ma 2bajty
+                  mov cx,80                             ;80 znakÃ³w w jedym wierszu a kazdy znak ma 2bajty (1bajt kod znaku, 2bajt atrybut) 
                   rep movsw                             ;Operacja blokowa przeniesienia z konsoli do innego miejsca w pamieci ;kopiuje z segmentu danych i zrodla danych do segmentu dodatkowego i przeznaczenia danych
                   pop ds                                        ;przy si mamy segment danych, przy di w segmencie dodatkowym es
                                                                 ;movsw - kopiuje do slowa adresowanego es:di slowo spod adesu ds:si, di+-2 i si+-2 (kolejny adres bloku)
@@ -70,7 +71,7 @@ Start:
                   mov si,offset bufor                   ;160bajtow, w si zapisany offset bufora
                   mov di,bx
                   mov cx,80
-                  rep movsw               ;Powrót wczesniej pobranego wiersza na konsole ds:si -> es:di
+                  rep movsw               ;PowrÃ³t wczesniej pobranego wiersza na konsole ds:si -> es:di
 
                 mov ax,0b00h
                 int 21h
@@ -91,7 +92,8 @@ dane segment
         bufor       db 160 dup(0)                       ;bufor 160 elementowy wypelniony przy starcie programu zerami
         wybrany     db 0
         czas        db 0
-        losuj       db 4,7,8,14,5,24,12,23,16,14,6,21,8,11,2,17,24,0,10,20,11,22,8,5,8,10,15,5,7,21,16,5,3,15,4,12,21,12,10,4,3,19,15,2,12,10,20,5,8,12,14,14,19,3,10,12,19,19,7,7,3,1,0,4,22,7,22,14,11,24,23,12,13,0,16,0,4,0,17,6,14,10,15,13,12,24,19,22,4,5,20,21,20,19,3,9,1,4,21,5,14,0,14,4,14,19,2,6,3,9,3,9,7,13,15,19,0,17,14,10,22,1,19,11,0,17,5,5,1,8,3,20,9,13,20,0,9,9,8,18,21,2,8,22,23,24,23,2,15,18,8,17,24,21,1,24,19,2,17,24,5,20,9,18,15,18,5,7,5,19,16,17,21,22,20,0,23,12,5,7,8,13,5,0,11,14,11,21,4,14,10,6,16,22,16,19,9,2,20,19,15,15,18,9,24,16,15,22,16,6,20,21,24,10,21,3,16,13,8,20,11,5,10,8,18,5,12,0,19,3,7,14,15,1,3,20,2,18,18,1,14,3,5,24,10,13,17,18,20,0,4,9,15,20,16,10                                                ;256 liczb z generatora (od 0 do 24) 25linii(w pionie max)
+        losuj       db 4,7,8,14,5,24,12,23,16,14,6,21,8,11,2,17,24,0,10,20,11,22,8,5,8,10,15,5,7,21,16,5,3,15,4,12,21,12,10,4,3,19,15,2,12,10,20,5,8,12,14,14,19,3,10,12,19,19,7,7,3,1,0,4,22,7,22,14,11,24,23,12,13,0,16,0,4,0,17,6,14,10,15,13,12,24,19,22,4,5,20,21,20,19,3,9,1,4,21,5,14,0,14,4,14,19,2,6,3,9,3,9,7,13,15,19,0,17,14,10,22,1,19,11,0,17,5,5,1,8,3,20,9,13,20,0,9,9,8,18,21,2,8,22,23,24,23,2,15,18,8,17,24,21,1,24,19,2,17,24,5,20,9,18,15,18,5,7,5,19,16,17,21,22,20,0,23,12,5,7,8,13,5,0,11,14,11,21,4,14,10,6,16,22,16,19,9,2,20,19,15,15,18,9,24,16,15,22,16,6,20,21,24,10,21,3,16,13,8,20,11,5,10,8,18,5,12,0,19,3,7,14,15,1,3,20,2,18,18,1,14,3,5,24,10,13,17,18,20,0,4,9,15,20,16,10
+                                                ;256 liczb z generatora (od 0 do 24) 25linii(w pionie max)
 dane ends
 
 
