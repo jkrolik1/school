@@ -58,7 +58,7 @@ Start:
                   rep movsw                  ;Operacja blokowa przeniesienia z konsoli do innego miejsca w pamieci ;kopiuje z segmentu danych i zrodla danych do segmentu dodatkowego i przeznaczenia danych
                   pop ds                     ;przy si mamy segment danych, przy di w segmencie dodatkowym es
                                              ;movsw - kopiuje do slowa adresowanego es:di slowo spod adesu ds:si, di+-2 i si+-2 (kolejny adres bloku)
-                mov ax,0b800h                                                       ekstra segm z przesunieciem destination index spod...
+                mov ax,0b800h                                                       ;ekstra segm z przesunieciem destination index spod...
                 mov es,ax
 
                 mov di,bx
