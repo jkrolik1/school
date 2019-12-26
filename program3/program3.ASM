@@ -1,0 +1,126 @@
+Progr   segment
+	assume cs:Progr,ds:dane,ss:stosik
+
+
+start:  mov ax,dane
+        mov ds,ax
+        mov ax,stosik
+        mov ss,ax
+        mov sp,offset szczyt
+
+        mov ah,62h			;pobranie adresu PSP
+        int 21h
+        mov es,bx
+
+        xor bx,bx			;sprawdzenie czy wpisano parametr
+        mov bl,es:[80h]
+        cmp bx,0
+        jz error
+
+        add bx,81h			;dopisanie 0 na koncu lancucha
+        mov byte ptr es:[bx],0
+
+        mov ah,3Dh   			;otwiercie pliku (DS:DX adres sciezki) (file handle w AX)
+        mov al,0     			;acces mode (0=read, 1=write, 2=rw)
+        mov dx,82h
+
+        push ds
+        mov cx,es
+        mov ds,cx
+
+        int 21h
+        pop ds
+        mov bx,ax
+
+
+        mov dx,offset bufor		;odczyt z pliku
+        mov ah,3Fh   			;czyta cx bajtow z pliku ktorego hendle jest w BX
+        mov cx,100
+        int 21h
+
+
+        mov si,offset bufor
+
+	graj:
+        	xor ax,ax
+
+        	lodsb			;wczytanie podzielnika (nuty)
+        	sub ax,41h
+        	cmp ax,23  		;sprawdzenie konca nut
+        	jz koniec
+
+        	mov bx,ax
+        	shl bx,1
+        	mov bx,nuty[bx]
+
+        	xor ax,ax
+        	lodsb       		;wczytanie otawy
+        	sub ax,30h
+
+        	mov cx,ax
+        	shr bx,cl
+
+        	mov ax,bx		;wpisuje odpowiedni podzielnik do L2
+        	mov dx,0042h
+        	out dx,al
+        	mov al,ah
+       	 	out dx,al
+
+        	xor ax,ax
+        	lodsb        		;wczytanie dlugosci
+        	sub ax,30h
+        	mov cx,ax
+        	xor dx,dx
+
+       	 	mov dx,0061h		;wlaczenie glosnika
+        	in al,dx
+        	or al,00000011b
+        	out dx,al
+
+
+       	 	mov ah,86h		;odegranie dzwieku
+        	int 15h
+
+
+        	mov dx,0061h		;wylaczenie glosnika
+        	in al,dx
+        	and al,11111100b
+        	out dx,al
+
+        jmp graj
+
+
+	koniec: 			;zakonczenie poprawne
+	        mov ah,4ch 
+		mov al,0h
+	        int 21h
+
+	koniec2:			;zakonczenie bledne bez parametru wywolania
+	        mov al,1
+	        mov ah,4ch 
+	        int 21h
+
+	error:  mov ah,09h
+	        mov dx,offset blad
+	        int 21h
+	        jmp koniec2
+
+Progr   ends
+
+dane    segment
+
+	bufor db 100 dup(?)
+	blad db 'Brak parametru wywolania programu !$'
+
+	;       A    pauz  C     D    E     F    G     H
+	nuty dw 21454,1,35757,31891,28780,26818,24081,19032
+
+dane    ends
+
+stosik  segment
+
+        dw 100h dup(?)
+szczyt  dw 0
+
+stosik  ends
+        end start
