@@ -12,23 +12,22 @@ start:  mov ax,dane			;adresacja segmentow
         int 21h
         mov es,bx
 
-        xor bx,bx			;sprawdzenie dlugosci parametru
-        mov bl,es:[80h]			;80h w PSP to długość 
+        xor bx,bx			;sprawdzenie dlugosci parametru		//http://fysnet.net/cmndline.htm
+        mov bl,es:[80h]			;80h w PSP to długość 			//https://en.wikipedia.org/wiki/Program_Segment_Prefix
         cmp bx,0			;sprawdzenie czy wpisano parametr
         jz error
-
-        add bx,81h			;dostanie się do parametru (Unformatted Parm Area) DOSfunctions>62h>PSP
+        add bx,81h			;dostanie się do parametru (Unformatted Parm Area) DOSfunctions>62h>PSP ?????
         mov byte ptr es:[bx],0		;dopisanie 0 na koncu lancucha
 				
-				;3Dh otwieranie :: INT21h
+				;3Dh otwieranie :: INT21h			//http://spike.scu.edu.au/~barry/interrupts.html#ah3d
         mov ah,3Dh   			;otwarcie pliku (DS:DX adres sciezki//nazwa pliku) (file handle w AX)
         mov al,0     			;acces mode (0=read, 1=write, 2=rw)
         mov dx,82h			;nazwa pliku od 82h w PSP
-        push ds
-        mov cx,es
-        mov ds,cx			;z es do ds, poniewaz int21h ah3Dh dziala dla DS:DX
+         push ds
+          mov cx,es
+          mov ds,cx			;z es do ds, poniewaz int21h ah3Dh dziala dla DS:DX
         int 21h				;tutaj otwiera sie plik
-        pop ds
+         pop ds
 
 				;3Fh czytanie :: INT21h
         mov bx,ax			;file handle (A file handle is an integer value which is used to address an open file)
@@ -37,9 +36,9 @@ start:  mov ax,dane			;adresacja segmentow
         mov cx,100
         int 21h
 
-
-        mov si,offset bufor
-
+        mov si,offset bufor		;mov ah,09h		;\
+					;mov dx,offset bufor	;-| Wyswietlenie to, co napisane w pliku	
+					;int 21h		;/
 	graj:
         	xor ax,ax
 
