@@ -33,7 +33,7 @@ start:  mov ax,dane			;adresacja segmentow
         mov bx,ax			;file handle (A file handle is an integer value which is used to address an open file)
         mov dx,offset bufor		;odczyt z pliku // w buforze bedzie linia pliku // DS:DX (addres of buffer to receive data)
         mov ah,3Fh   			;czyta cx bajtow z pliku ktorego hendle jest w BX
-        mov cx,100
+        mov cx,200
         int 21h
 
         mov si,offset bufor		;mov ah,09h		;\
@@ -43,47 +43,53 @@ start:  mov ax,dane			;adresacja segmentow
         	xor ax,ax
 
         	lodsb			;wczytanie podzielnika (nuty)
-        	sub ax,41h
-        	cmp ax,23  		;sprawdzenie konca nut
-        	jz koniec
 
-        	mov bx,ax
-        	shl bx,1
-        	mov bx,nuty[bx]
+        	  sub ax,41h
+        	  cmp ax,23  		;sprawdzenie konca nut
+        	  jz koniec
 
-        	xor ax,ax
+        	  mov bx,ax
+        	  shl bx,1
+        	  mov bx,nuty[bx]
+
+        	  xor ax,ax
+
+
         	lodsb       		;wczytanie otawy
-        	sub ax,30h
 
-        	mov cx,ax
-        	shr bx,cl
+        	  sub ax,30h
 
-        	mov ax,bx		;wpisuje odpowiedni podzielnik do L2
-        	mov dx,0042h
-        	out dx,al
-        	mov al,ah
-       	 	out dx,al
+        	  mov cx,ax
+        	  shr bx,cl
 
-        	xor ax,ax
+        	  mov ax,bx		;wpisuje odpowiedni podzielnik do L2
+        	  mov dx,0042h
+        	  out dx,al
+        	  mov al,ah
+       	 	  out dx,al
+
+        	  xor ax,ax
+
         	lodsb        		;wczytanie dlugosci
-        	sub ax,30h
-        	mov cx,ax
-        	xor dx,dx
 
-       	 	mov dx,0061h		;wlaczenie glosnika
-        	in al,dx
-        	or al,00000011b
-        	out dx,al
+        	  sub ax,30h
+        	  mov cx,ax
+        	  xor dx,dx
 
-
-       	 	mov ah,86h		;odegranie dzwieku
-        	int 15h
+       	 	  mov dx,0061h		;wlaczenie glosnika
+        	  in al,dx
+        	  or al,00000011b
+        	  out dx,al
 
 
-        	mov dx,0061h		;wylaczenie glosnika
-        	in al,dx
-        	and al,11111100b
-        	out dx,al
+       	 	  mov ah,86h		;odegranie dzwieku
+        	  int 15h
+
+
+        	  mov dx,0061h		;wylaczenie glosnika
+        	  in al,dx
+        	  and al,11111100b
+        	  out dx,al
 
         jmp graj
 
@@ -98,22 +104,29 @@ start:  mov ax,dane			;adresacja segmentow
 	        mov ah,4ch 
 	        int 21h
 
-	error:  mov ah,09h
+	error:  mov ah,09h		;display string, w ds:dx musi byc adres lancucha zawierajacy znacznik konca $
 	        mov dx,offset blad
 	        int 21h
-	        jmp koniec2
+
+	czekaj:				;jesli jest komunikat o bledzie czeka na wcisniecie klawisza
+                mov ah,0bh		;usluga 0bh przerwania dosowego 21h
+                int 21h
+                cmp al,0		;wynik funkcji w al (0 - no character available)
+                je  czekaj
+		jmp koniec2
+
 
 Progr   ends
 
 dane    segment
 
-	bufor db 100 dup(?)
-	blad db 'Brak parametru wywolania programu !$'
+	bufor	db 200 dup(?)
+	blad 	db 'Cos poszlo nie tak! Sprobuj ponownie z nazwa: program.exe dzwiek.txt$'
 
-	;       A    pauz  C     D    E     F    G     H
-	nuty dw 21454,1,35757,31891,28780,26818,24081,19032
+	;          A    pauz  C     D    E     F    G     H
+	nuty    dw 21454,1,35757,31891,28780,26818,24081,19032
 
-	zero equ 0
+	zero 	equ 0
 
 dane    ends
 
