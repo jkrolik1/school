@@ -29,8 +29,10 @@ start:  mov ax,dane			;adresacja segmentow
         int 21h				;tutaj otwiera sie plik
          pop ds
 
+	mov filehandle,ax
+
 				;3Fh czytanie :: INT21h
-        mov bx,ax			;file handle (A file handle is an integer value which is used to address an open file)
+        mov bx,filehandle		;file handle (A file handle is an integer value which is used to address an open file)
         mov dx,offset bufor		;odczyt z pliku // w buforze bedzie linia pliku // DS:DX (addres of buffer to receive data)
         mov ah,3Fh   			;czyta cx bajtow z pliku ktorego hendle jest w BX
         mov cx,200
@@ -94,18 +96,26 @@ start:  mov ax,dane			;adresacja segmentow
         jmp graj
 
 
-	koniec: 			;zakonczenie poprawne
+	error:  
+		mov ah,09h		;display string, w ds:dx musi byc adres lancucha zawierajacy znacznik konca $
+	        mov dx,offset blad
+	        int 21h
+		jmp czekaj
+
+	koniec: 			
+		xor ax,ax		;ZAMKNIECIE PLIKU!!!
+		mov bx,filehandle		
+		mov ah,3Eh
+		int 21h
+
+		xor ax,ax		;zakonczenie poprawne
 	        mov ah,4ch 
 		mov al,zero
 	        int 21h
 
 	koniec2:			;zakonczenie bledne bez parametru wywolania
-	        mov al,1
+	        mov al,1		
 	        mov ah,4ch 
-	        int 21h
-
-	error:  mov ah,09h		;display string, w ds:dx musi byc adres lancucha zawierajacy znacznik konca $
-	        mov dx,offset blad
 	        int 21h
 
 	czekaj:				;jesli jest komunikat o bledzie czeka na wcisniecie klawisza
@@ -120,13 +130,13 @@ Progr   ends
 
 dane    segment
 
-	bufor	db 200 dup(?)
-	blad 	db 'Cos poszlo nie tak! Sprobuj ponownie z nazwa: program.exe dzwiek.txt$'
+	bufor		db 	200 dup(?)
+	blad 		db 	'Cos poszlo nie tak! Sprobuj ponownie z nazwa: program.exe dzwiek.txt$'
+	zero 		equ 	0
+	filehandle 	dw 	0
 
-	;          A    pauz  C     D    E     F    G     H
-	nuty    dw 21454,1,35757,31891,28780,26818,24081,19032
-
-	zero 	equ 0
+	;          	        A    pauz  C     D    E     F    G     H
+	nuty    	dw 	21454,1,35757,31891,28780,26818,24081,19032
 
 dane    ends
 
