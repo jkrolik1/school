@@ -2,38 +2,37 @@ Progr   segment
 	assume cs:Progr,ds:dane,ss:stosik
 
 
-start:  mov ax,dane
+start:  mov ax,dane			;adresacja segmentow
         mov ds,ax
         mov ax,stosik
         mov ss,ax
         mov sp,offset szczyt
 
-        mov ah,62h			;pobranie adresu PSP
+        mov ah,62h			;pobranie adresu PSP (pobieranie zawartości wiersza poleceń)
         int 21h
         mov es,bx
 
-        xor bx,bx			;sprawdzenie czy wpisano parametr
-        mov bl,es:[80h]
-        cmp bx,0
+        xor bx,bx			;sprawdzenie dlugosci parametru
+        mov bl,es:[80h]			;80h w PSP to długość 
+        cmp bx,0			;sprawdzenie czy wpisano parametr
         jz error
 
-        add bx,81h			;dopisanie 0 na koncu lancucha
-        mov byte ptr es:[bx],0
-
-        mov ah,3Dh   			;otwiercie pliku (DS:DX adres sciezki) (file handle w AX)
+        add bx,81h			;dostanie się do parametru (Unformatted Parm Area) DOSfunctions>62h>PSP
+        mov byte ptr es:[bx],0		;dopisanie 0 na koncu lancucha
+				
+				;3Dh otwieranie :: INT21h
+        mov ah,3Dh   			;otwarcie pliku (DS:DX adres sciezki//nazwa pliku) (file handle w AX)
         mov al,0     			;acces mode (0=read, 1=write, 2=rw)
-        mov dx,82h
-
+        mov dx,82h			;nazwa pliku od 82h w PSP
         push ds
         mov cx,es
-        mov ds,cx
-
-        int 21h
+        mov ds,cx			;z es do ds, poniewaz int21h ah3Dh dziala dla DS:DX
+        int 21h				;tutaj otwiera sie plik
         pop ds
-        mov bx,ax
 
-
-        mov dx,offset bufor		;odczyt z pliku
+				;3Fh czytanie :: INT21h
+        mov bx,ax			;file handle (A file handle is an integer value which is used to address an open file)
+        mov dx,offset bufor		;odczyt z pliku // w buforze bedzie linia pliku // DS:DX (addres of buffer to receive data)
         mov ah,3Fh   			;czyta cx bajtow z pliku ktorego hendle jest w BX
         mov cx,100
         int 21h
@@ -92,7 +91,7 @@ start:  mov ax,dane
 
 	koniec: 			;zakonczenie poprawne
 	        mov ah,4ch 
-		mov al,0h
+		mov al,zero
 	        int 21h
 
 	koniec2:			;zakonczenie bledne bez parametru wywolania
@@ -114,6 +113,8 @@ dane    segment
 
 	;       A    pauz  C     D    E     F    G     H
 	nuty dw 21454,1,35757,31891,28780,26818,24081,19032
+
+	zero equ 0
 
 dane    ends
 
