@@ -6,7 +6,7 @@ DzF equ 27117				;1193180Hz/44Hz			;44Hz to Hz F w oktawie 1
 DzG equ 24350				;1193180Hz/49Hz			;49Hz to Hz G w oktawie 1
 DzA equ 21694				;1193180Hz/55Hz			;55Hz to Hz A w oktawie 1
 DzH equ 19244				;1193180Hz/62Hz			;62Hz to Hz H w oktawie 1
-DzP equ 2				;1193180Hz/596590‬Hz - dzwiek bardzo wysoki, glosnik go nie zagra, dlatego bd cisza-pauza
+DzP equ 100				;dzwiek bardzo wysoki, glosnik go nie zagra, dlatego bd cisza-pauza (PAUZA MA BYĆ POSTACI P1x, gdzie x to jej dlugosc tak jak nut)
 
 
 
