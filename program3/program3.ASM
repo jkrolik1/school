@@ -43,9 +43,9 @@ start:  mov ax,dane			;adresacja segmentow
 					;int 21h		;/
 	graj:
         	xor ax,ax
-
-        	lodsb			;wczytanie podzielnika (nuty)
-
+					;LODSB - transfers the byte from DS:SI into AL and increments or decrements SI), LODSW/LODSB - odczytania parametrow dzwieku 
+        	lodsb		        ;wczytanie podzielnika (nuty)
+					;w AL znajduje sie dany (i-ty) znak z bufora, czyli z linii pliku
         	  sub ax,41h
         	  cmp ax,23  		;sprawdzenie konca nut
         	  jz koniec
@@ -63,10 +63,10 @@ start:  mov ax,dane			;adresacja segmentow
 
         	  mov cx,ax
         	  shr bx,cl
-
-        	  mov ax,bx		;wpisuje odpowiedni podzielnik do L2
-        	  mov dx,0042h
-        	  out dx,al
+					;wpisuje odpowiedni podzielnik do L2
+        	  mov ax,bx		
+        	  mov dx,0042h		;42h to adres licznika L2 (40Hz to adres bazowy ukladu zegara licznika oraz adres rejestru L0 || 41Hz - adres L1)
+        	  out dx,al		;za pomoca instrukcji OUT wpisujemy odpowiedni podzielnik
         	  mov al,ah
        	 	  out dx,al
 
@@ -77,8 +77,8 @@ start:  mov ax,dane			;adresacja segmentow
         	  sub ax,30h
         	  mov cx,ax
         	  xor dx,dx
-
-       	 	  mov dx,0061h		;wlaczenie glosnika
+					;wlaczenie glosnika
+       	 	  mov dx,0061h		;61hz adres rejestru wł i wył głośnika (adres bazowy protow A,B,C - 60hz)
         	  in al,dx
         	  or al,00000011b
         	  out dx,al
