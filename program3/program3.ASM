@@ -87,8 +87,17 @@ start:  mov ax,dane			;adresacja segmentow
         	  sub ax,30h		;znowu mapowanie, aby uzyskac dlugosc w cyfrze
         	  mov dlugosc,ax
         	  
-		  jmp sprjakadlug
+		  call speaker
 
+		  cmp dlugosc,1
+		  je cala
+		  cmp dlugosc,2
+		  je pol
+		  cmp dlugosc,4
+		  je cwierc
+		  cmp dlugosc,8
+		  je osemka  
+			
 
 		inna:
         				;wylaczenie glosnika
@@ -127,6 +136,51 @@ start:  mov ax,dane			;adresacja segmentow
                 cmp al,0		;wynik funkcji w al (0 - no character available)
                 je  czekaj
 		jmp koniec2
+
+
+
+	cala:
+		push dx;
+		push cx;
+		mov cx,16;
+		mov dx,65535;
+		mov ah,86h;
+		int 15h
+		pop cx
+		pop dx
+		jmp inna
+	pol:
+		push dx;
+		push cx;
+		mov cx,8;
+		mov dx,65535;
+		mov ah,86h;
+		int 15h
+		pop cx
+		pop dx
+		jmp inna
+	cwierc:
+		push dx;
+		push cx;
+		mov cx,4;
+		mov dx,65535;
+		mov ah,86h;
+		int 15h
+		pop cx
+		pop dx
+		jmp inna
+	osemka:
+		push dx;
+		push cx;
+		mov cx,2;
+		mov dx,65535;
+		mov ah,86h;
+		int 15h
+		pop cx
+		pop dx
+		jmp inna
+
+
 
 	sprnazwedzwieku:  
 		cmp al,'^'
@@ -172,64 +226,8 @@ start:  mov ax,dane			;adresacja segmentow
 	pauza: 
 		mov bx,DzP
 		jmp grajdalej2
-
+		
 	
-	sprjakadlug:
-		call speaker
-		cmp dlugosc,1
-		je cala
-		cmp dlugosc,2
-		je pol
-		cmp dlugosc,4
-		je cwierc
-		cmp dlugosc,8
-		je osemka
-		jmp inna
-
-	cala:	
-		push dx
-		push cx
-		mov cx,16
-		mov dx,65535
-		mov ah,86h
-		int 15h
-		pop cx
-		pop dx
-		loop cala
-		jmp inna
-	pol:
-		push dx
-		push cx
-		mov cx,8
-		mov dx,65535
-		mov ah,86h
-		int 15h
-		pop cx
-		pop dx
-		loop pol
-		jmp inna
-	cwierc:
-		push dx
-		push cx
-		mov cx,4
-		mov dx,65535
-		mov ah,86h
-		int 15h
-		pop cx
-		pop dx
-		loop cwierc
-		jmp inna
-	osemka:
-		push dx
-		push cx
-		mov cx,2
-		mov dx,65535
-		mov ah,86h
-		int 15h
-		pop cx
-		pop dx
-		loop osemka
-		jmp inna
 
 	speaker proc
 		mov ax,podzielnik	;wgranie nuty
