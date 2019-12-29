@@ -73,13 +73,14 @@ start:  mov ax,dane			;adresacja segmentow
         	  mov cx,ax
         	  shr bx,cl		;tyle razy dzielimy przez 2 dany dzwiek z poczatku programu ile mamy wybrana oktawe, shr-przesuwanie binarne w prawo (dzielenie przez 2)
 					;wpisuje odpowiedni podzielnik do L2
-        	  mov ax,bx		
-        	  mov dx,0042h		;42h to adres licznika L2 (40Hz to adres bazowy ukladu zegara licznika oraz adres rejestru L0 || 41Hz - adres L1)
-        	  out dx,al		;za pomoca instrukcji OUT wpisujemy odpowiedni podzielnikdo L2; dx - adr licznika 2, al - mlodzy bajt podzielnik ;OUT TYLKO AL!!!
-        	  mov al,ah
-       	 	  out dx,al
+        	  
+
+		grajdalej2:
+		  mov podzielnik,bx		
 
         	  xor ax,ax
+	       
+		
 
         	lodsb        		;wczytanie dlugosci
 
@@ -90,10 +91,10 @@ start:  mov ax,dane			;adresacja segmentow
 
 
 		inna:
-        	  mov dx,0061h		;wylaczenie glosnika
-        	  in al,dx
-        	  and al,11111100b
-        	  out dx,al
+        				;wylaczenie glosnika
+		  in al,61h;
+		  and al,11111100b;
+		  out 61h,al;
 
         jmp graj
 
@@ -170,10 +171,11 @@ start:  mov ax,dane			;adresacja segmentow
 		jmp grajdalej
 	pauza: 
 		mov bx,DzP
-		jmp grajdalej
+		jmp grajdalej2
 
 	
 	sprjakadlug:
+		call speaker
 		cmp dlugosc,1
 		je cala
 		cmp dlugosc,2
@@ -185,7 +187,6 @@ start:  mov ax,dane			;adresacja segmentow
 		jmp inna
 
 	cala:	
-		call speaker
 		push dx
 		push cx
 		mov cx,16
@@ -197,7 +198,6 @@ start:  mov ax,dane			;adresacja segmentow
 		loop cala
 		jmp inna
 	pol:
-		call speaker
 		push dx
 		push cx
 		mov cx,8
@@ -209,7 +209,6 @@ start:  mov ax,dane			;adresacja segmentow
 		loop pol
 		jmp inna
 	cwierc:
-		call speaker
 		push dx
 		push cx
 		mov cx,4
@@ -221,7 +220,6 @@ start:  mov ax,dane			;adresacja segmentow
 		loop cwierc
 		jmp inna
 	osemka:
-		call speaker
 		push dx
 		push cx
 		mov cx,2
@@ -234,14 +232,17 @@ start:  mov ax,dane			;adresacja segmentow
 		jmp inna
 
 	speaker proc
-		xor dx,dx
+		mov ax,podzielnik	;wgranie nuty
+		out 42h,al
+		mov al,ah
+		out 42h,al
 					;wlaczenie glosnika
-       	 	mov dx,0061h		;61hz adres rejestru wł i wył głośnika (adres bazowy protow A,B,C - 60hz)
-        	in al,dx
-        	or al,00000011b
-        	out dx,al
+       	 				;61hz adres rejestru wł i wył głośnika (adres bazowy protow A,B,C - 60hz)
+        	in al,61h;
+		or al,00000011b;
+		out 61h,al;
 	ret
-	speaker endp
+	endp
 
 
 
@@ -252,6 +253,7 @@ dane    segment
 	bufor		db 	300 dup(?)
 	blad 		db 	'Cos poszlo nie tak! Sprobuj ponownie z nazwa: program.exe dzwiek.txt$'
 	filehandle 	dw 	0
+	podzielnik      dw      0
 	dlugosc		dw	0
 
 dane    ends
