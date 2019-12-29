@@ -1,12 +1,18 @@
 							;podzielniki czestotliwosci	;1193180Hz = 1.19MHz to czestotliwosc wysylana do licznikow (czestotliwosc zegara licznikow (clk))
-DzC equ 570						;1193180Hz/2093Hz		;2093Hz to Hz C w oktawie 7
-DzD equ 507						;1193180Hz/2349Hz		;2349Hz to Hz D w oktawie 7		
-DzE equ 452						;1193180Hz/2637Hz		;2637Hz to Hz E w oktawie 7	
-DzF equ 427						;1193180Hz/2794Hz		;2794Hz to Hz F w oktawie 7	
-DzG equ 380						;1193180Hz/3139Hz		;3139Hz to Hz G w oktawie 7	
-DzA equ 339						;1193180Hz/3520Hz		;3520Hz to Hz A w oktawie 7	
-DzH equ 302						;1193180Hz/3951Hz		;3951Hz to Hz H w oktawie 7	
-DzP equ 100						;1193180Hz/11931.80Hz --- dzwiek bardzo wysoki, glosnik go nie zagra, dlatego bd cisza-pauza (PAUZA MA BYĆ POSTACI P7x, gdzie x to jej dlugosc tak jak nut)
+DzC 	equ 570						;1193180Hz/2093Hz		;2093Hz to Hz C w oktawie 7
+DzD 	equ 507						;1193180Hz/2349Hz		;2349Hz to Hz D w oktawie 7		
+DzE 	equ 452						;1193180Hz/2637Hz		;2637Hz to Hz E w oktawie 7	
+DzF 	equ 427						;1193180Hz/2794Hz		;2794Hz to Hz F w oktawie 7	
+DzG 	equ 380						;1193180Hz/3139Hz		;3139Hz to Hz G w oktawie 7	
+DzA 	equ 339						;1193180Hz/3520Hz		;3520Hz to Hz A w oktawie 7	
+DzH 	equ 302						;1193180Hz/3951Hz		;3951Hz to Hz H w oktawie 7	
+DzP 	equ 100						;1193180Hz/11931.80Hz --- dzwiek bardzo wysoki, glosnik go nie zagra, dlatego bd cisza-pauza (PAUZA MA BYĆ POSTACI P7x, gdzie x to jej dlugosc tak jak nut)
+DzCis	equ 538						;1193180Hz/2217Hz
+DzDis	equ 479						;1193180Hz/2489Hz
+DzEis	equ 437						;1193180Hz/2714Hz
+DzFis	equ 403						;1193180Hz/2960Hz
+DzGis	equ 359						;1193180Hz/3322Hz
+DzAis	equ 320						;1193180Hz/3729Hz
 							;1: C D E F G A H (nazwa dzwieku)
 							;2: 1 2 3 4 5 6 7 (oktawa)
 							;3: 1 (cala nuta) 2 (pol nuta) 4 (cwierc nuta) 8 (osemka)	  (dlugosc)	
@@ -58,7 +64,7 @@ start:  mov ax,dane					;adresacja segmentow
 							;LODSB - transfers the byte from DS:SI into AL and increments or decrements SI), Si jest inkrementowany u nas o jeden, dlatego ze flaga kierunku = 0, LODSW/LODSB - odczytania parametrow dzwieku 
         	lodsb		        		;wczytanie podzielnika (nuty)
 							;w AL znajduje sie dany (SI-ty) znak z bufora, czyli z linii pliku
-        	  jmp sprnazwedzwieku  			;musi sprawdzic czy to jest c d e f g a h c itd..	
+        	  jmp sprnazwedzwieku  		;musi sprawdzic czy to jest c d e f g a h c itd..	
 
 
 	          grajdalej:				;powrot z danej etykiety. W bx mamy podzielniki z poczatku programu, ktore trzeba przeksztalcic na prawidlowe oktawy
@@ -120,7 +126,7 @@ start:  mov ax,dane					;adresacja segmentow
 		mov al,1
 	        int 21h
 
-	koniec2:					zakonczenie bledne bez parametru wywolania // tutaj nie trzebaq zamykac pliku, bo go nie otworzono
+	koniec2:					;zakonczenie bledne bez parametru wywolania // tutaj nie trzebaq zamykac pliku, bo go nie otworzono
 	        mov al,1		
 	        mov ah,4ch 
 	        int 21h
@@ -190,8 +196,70 @@ start:  mov ax,dane					;adresacja segmentow
 		je la
 		cmp al,'H'
 		je sii
+
+		cmp al,'c'
+		je cis
+		cmp al,'d'
+		je dis
+		cmp al,'e'
+		je eis
+		cmp al,'f'
+		je fis
+		cmp al,'g'
+		je gis
+		cmp al,'a'
+		je ais
+
 		cmp al,'P'
 		je pauza
+
+
+	do: 
+		mov bx,DzC				;wpisuje podzielniki z 7 oktaw z poczatku programu
+		jmp grajdalej
+	re: 
+		mov bx,DzD
+		jmp grajdalej
+	mi: 
+		mov bx,DzE
+		jmp grajdalej
+	fa: 
+		mov bx,DzF
+		jmp grajdalej
+	soll: 
+		mov bx,DzG
+		jmp grajdalej
+	la: 
+		mov bx,DzA
+		jmp grajdalej
+	sii: 
+		mov bx,DzH
+		jmp grajdalej
+
+	cis: 
+		mov bx,DzCis
+		jmp grajdalej
+	dis: 
+		mov bx,DzDis
+		jmp grajdalej
+	eis: 
+		mov bx,DzEis
+		jmp grajdalej
+	fis: 
+		mov bx,DzFis
+		jmp grajdalej
+	gis: 
+		mov bx,DzGis
+		jmp grajdalej
+	ais: 
+		mov bx,DzAis
+		jmp grajdalej
+
+	pauza: 
+		mov bx,DzP
+		jmp grajdalej
+
+
 
 	sproktawy:					;przechodzimy tutaj, aby utworzyc odpowiedni podzielnik na podstawie zmiennych z poczatku programu
 		cmp ax,7 
@@ -232,31 +300,6 @@ start:  mov ax,dane					;adresacja segmentow
 		mov cl,6
 		jmp wyliczenie
 	
-
-	do: 
-		mov bx,DzC				;wpisuje podzielniki z 7 oktaw z poczatku programu
-		jmp grajdalej
-	re: 
-		mov bx,DzD
-		jmp grajdalej
-	mi: 
-		mov bx,DzE
-		jmp grajdalej
-	fa: 
-		mov bx,DzF
-		jmp grajdalej
-	soll: 
-		mov bx,DzG
-		jmp grajdalej
-	la: 
-		mov bx,DzA
-		jmp grajdalej
-	sii: 
-		mov bx,DzH
-		jmp grajdalej
-	pauza: 
-		mov bx,DzP
-		jmp grajdalej
 		
 	
 
