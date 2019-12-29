@@ -6,7 +6,7 @@ DzF equ 27117				;1193180Hz/44Hz			;44Hz to Hz F w oktawie 1
 DzG equ 24350				;1193180Hz/49Hz			;49Hz to Hz G w oktawie 1
 DzA equ 21694				;1193180Hz/55Hz			;55Hz to Hz A w oktawie 1
 DzH equ 19244				;1193180Hz/62Hz			;62Hz to Hz H w oktawie 1
-DzP equ 100				;dzwiek bardzo wysoki, glosnik go nie zagra, dlatego bd cisza-pauza (PAUZA MA BYĆ POSTACI P1x, gdzie x to jej dlugosc tak jak nut)
+DzP equ 100				;1193180Hz/11931,80Hz - dzwiek bardzo wysoki, glosnik go nie zagra, dlatego bd cisza-pauza (PAUZA MA BYĆ POSTACI P1x, gdzie x to jej dlugosc tak jak nut)
 
 
 
@@ -84,7 +84,7 @@ start:  mov ax,dane			;adresacja segmentow
         	lodsb        		;wczytanie dlugosci
 
         	  sub ax,30h		;znowu mapowanie, aby uzyskac dlugosc w cyfrze
-        	  mov dlugosc,al
+        	  mov dlugosc,ax
         	  
 		  jmp sprjakadlug
 
@@ -174,7 +174,6 @@ start:  mov ax,dane			;adresacja segmentow
 
 	
 	sprjakadlug:
-		call speaker
 		cmp dlugosc,1
 		je cala
 		cmp dlugosc,2
@@ -253,7 +252,7 @@ dane    segment
 	bufor		db 	300 dup(?)
 	blad 		db 	'Cos poszlo nie tak! Sprobuj ponownie z nazwa: program.exe dzwiek.txt$'
 	filehandle 	dw 	0
-	dlugosc		db	0
+	dlugosc		dw	0
 
 dane    ends
 
