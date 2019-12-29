@@ -1,12 +1,12 @@
 					;podzielniki czestotliwosci	;1193180Hz = 1.19MHz to czestotliwosc wysylana do licznikow (czestotliwosc zegara licznikow (clk))
-DzC equ 36156				;1193180Hz/33Hz			;33Hz to Hz C w oktawie 1
-DzD equ 32248				;1193180Hz/37Hz			;37Hz to Hz D w oktawie 1
-DzE equ 29101				;1193180Hz/41Hz			;41Hz to Hz E w oktawie 1
-DzF equ 27117				;1193180Hz/44Hz			;44Hz to Hz F w oktawie 1
-DzG equ 24350				;1193180Hz/49Hz			;49Hz to Hz G w oktawie 1
-DzA equ 21694				;1193180Hz/55Hz			;55Hz to Hz A w oktawie 1
-DzH equ 19244				;1193180Hz/62Hz			;62Hz to Hz H w oktawie 1
-DzP equ 100				;1193180Hz/11931,80Hz - dzwiek bardzo wysoki, glosnik go nie zagra, dlatego bd cisza-pauza (PAUZA MA BYĆ POSTACI P1x, gdzie x to jej dlugosc tak jak nut)
+DzC equ 570				;1193180Hz/2093Hz		;2093Hz to Hz C w oktawie 7
+DzD equ 507				;1193180Hz/2349Hz			
+DzE equ 452				;1193180Hz/2637Hz			
+DzF equ 427				;1193180Hz/2794Hz			
+DzG equ 380				;1193180Hz/3139Hz			
+DzA equ 339				;1193180Hz/3520Hz			
+DzH equ 302				;1193180Hz/3951Hz			
+DzP equ 100				;dzwiek bardzo wysoki, glosnik go nie zagra, dlatego bd cisza-pauza (PAUZA MA BYĆ POSTACI P1x, gdzie x to jej dlugosc tak jak nut)
 
 
 
@@ -70,12 +70,14 @@ start:  mov ax,dane			;adresacja segmentow
 
         	  sub ax,30h		;mapujemy, zeby otrzymac numer oktawy, 30h to 0 hex
 
-        	  mov cx,ax
-        	  shr bx,cl		;tyle razy dzielimy przez 2 dany dzwiek z poczatku programu ile mamy wybrana oktawe, shr-przesuwanie binarne w prawo (dzielenie przez 2)
+		  jmp sproktawy
+		
+		wyliczenie:
+
+        	  shl bx,cl		;tyle razy dzielimy przez 2 dany dzwiek z poczatku programu ile mamy wybrana oktawe, shr-przesuwanie binarne w prawo (dzielenie przez 2)
 					;wpisuje odpowiedni podzielnik do L2
         	  
 
-		grajdalej2:
 		  mov podzielnik,bx		
 
         	  xor ax,ax
@@ -137,8 +139,6 @@ start:  mov ax,dane			;adresacja segmentow
                 je  czekaj
 		jmp koniec2
 
-
-
 	cala:
 		push dx;
 		push cx;
@@ -180,8 +180,6 @@ start:  mov ax,dane			;adresacja segmentow
 		pop dx
 		jmp inna
 
-
-
 	sprnazwedzwieku:  
 		cmp al,'^'
 		je koniec
@@ -201,6 +199,46 @@ start:  mov ax,dane			;adresacja segmentow
 		je sii
 		cmp al,'P'
 		je pauza
+
+	sproktawy:
+		cmp ax,7 
+		je oktawa7
+		cmp ax,6
+		je oktawa6	
+		cmp ax,5
+		je oktawa5
+		cmp ax,4
+		je oktawa4
+		cmp ax,3
+		je oktawa3
+		cmp ax,2
+		je oktawa2
+		cmp ax,1
+		je oktawa1	
+
+
+	oktawa7:
+		mov cl,0
+		jmp wyliczenie
+	oktawa6:
+		mov cl,1
+		jmp wyliczenie
+	oktawa5:
+		mov cl,2
+		jmp wyliczenie
+	oktawa4:
+		mov cl,3
+		jmp wyliczenie
+	oktawa3:
+		mov cl,4
+		jmp wyliczenie
+	oktawa2:
+		mov cl,5
+		jmp wyliczenie
+	oktawa1:
+		mov cl,6
+		jmp wyliczenie
+	
 
 	do: 
 		mov bx,DzC
@@ -225,7 +263,7 @@ start:  mov ax,dane			;adresacja segmentow
 		jmp grajdalej
 	pauza: 
 		mov bx,DzP
-		jmp grajdalej2
+		jmp grajdalej
 		
 	
 
