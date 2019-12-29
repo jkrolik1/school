@@ -1,3 +1,15 @@
+					;podzielniki czestotliwosci	;1193180Hz = 1.19MHz to czestotliwosc wysylana do licznikow (czestotliwosc zegara licznikow (clk))
+DzC equ 36156				;1193180Hz/33Hz			;33Hz to Hz C w oktawie 1
+DzD equ 32248				;1193180Hz/37Hz			;37Hz to Hz D w oktawie 1
+DzE equ 29101				;1193180Hz/41Hz			;41Hz to Hz E w oktawie 1
+DzF equ 27117				;1193180Hz/44Hz			;44Hz to Hz F w oktawie 1
+DzG equ 24350				;1193180Hz/49Hz			;49Hz to Hz G w oktawie 1
+DzA equ 21694				;1193180Hz/55Hz			;55Hz to Hz A w oktawie 1
+DzH equ 19244				;1193180Hz/62Hz			;62Hz to Hz H w oktawie 1
+DzP equ 2				;1193180Hz/596590‬Hz - dzwiek bardzo wysoki, glosnik go nie zagra, dlatego bd cisza-pauza
+
+
+
 Progr   segment
 	assume cs:Progr,ds:dane,ss:stosik
 
@@ -35,38 +47,35 @@ start:  mov ax,dane			;adresacja segmentow
         mov bx,filehandle		;file handle (A file handle is an integer value which is used to address an open file)
         mov dx,offset bufor		;odczyt z pliku // w buforze bedzie linia pliku // DS:DX (addres of buffer to receive data)
         mov ah,3Fh   			;czyta cx bajtow z pliku ktorego hendle jest w BX
-        mov cx,200
+        mov cx,300
         int 21h
 
         mov si,offset bufor		;mov ah,09h		;\
 					;mov dx,offset bufor	;-| Wyswietlenie to, co napisane w pliku	
 					;int 21h		;/
 	graj:
-        	xor ax,ax
-					;LODSB - transfers the byte from DS:SI into AL and increments or decrements SI), LODSW/LODSB - odczytania parametrow dzwieku 
+        	  xor ax,ax
+					;LODSB - transfers the byte from DS:SI into AL and increments or decrements SI), Si jest inkrementowany u nas o jeden, dlatego ze flaga kierunku = 0, LODSW/LODSB - odczytania parametrow dzwieku 
         	lodsb		        ;wczytanie podzielnika (nuty)
-					;w AL znajduje sie dany (i-ty) znak z bufora, czyli z linii pliku
-        	  sub ax,41h
-        	  cmp ax,23  		;sprawdzenie konca nut
-        	  jz koniec
+					;w AL znajduje sie dany (SI-ty) znak z bufora, czyli z linii pliku
+        	  jmp sprnazwedzwieku  	;musi sprawdzic czy to jest c d e f g a h c itd..	
 
-        	  mov bx,ax
-        	  shl bx,1
-        	  mov bx,nuty[bx]
+
+	       grajdalej:
 
         	  xor ax,ax
 
 
         	lodsb       		;wczytanie oktawy
 
-        	  sub ax,30h
+        	  sub ax,30h		;mapujemy, zeby otrzymac numer oktawy, 30h to 0 hex
 
         	  mov cx,ax
-        	  shr bx,cl
+        	  shr bx,cl		;tyle razy dzielimy przez 2 dany dzwiek z poczatku programu ile mamy wybrana oktawe, shr-przesuwanie binarne w prawo (dzielenie przez 2)
 					;wpisuje odpowiedni podzielnik do L2
         	  mov ax,bx		
         	  mov dx,0042h		;42h to adres licznika L2 (40Hz to adres bazowy ukladu zegara licznika oraz adres rejestru L0 || 41Hz - adres L1)
-        	  out dx,al		;za pomoca instrukcji OUT wpisujemy odpowiedni podzielnik
+        	  out dx,al		;za pomoca instrukcji OUT wpisujemy odpowiedni podzielnikdo L2; dx - adr licznika 2, al - mlodzy bajt podzielnik ;OUT TYLKO AL!!!
         	  mov al,ah
        	 	  out dx,al
 
@@ -74,20 +83,13 @@ start:  mov ax,dane			;adresacja segmentow
 
         	lodsb        		;wczytanie dlugosci
 
-        	  sub ax,30h
-        	  mov cx,ax
-        	  xor dx,dx
-					;wlaczenie glosnika
-       	 	  mov dx,0061h		;61hz adres rejestru wł i wył głośnika (adres bazowy protow A,B,C - 60hz)
-        	  in al,dx
-        	  or al,00000011b
-        	  out dx,al
+        	  sub ax,30h		;znowu mapowanie, aby uzyskac dlugosc w cyfrze
+        	  mov dlugosc,al
+        	  
+		  jmp sprjakadlug
 
 
-       	 	  mov ah,86h		;odegranie dzwieku
-        	  int 15h
-
-
+		inna:
         	  mov dx,0061h		;wylaczenie glosnika
         	  in al,dx
         	  and al,11111100b
@@ -110,10 +112,10 @@ start:  mov ax,dane			;adresacja segmentow
 
 		xor ax,ax		;zakonczenie poprawne
 	        mov ah,4ch 
-		mov al,zero
+		mov al,1
 	        int 21h
 
-	koniec2:			;zakonczenie bledne bez parametru wywolania
+	koniec2:			;zakonczenie bledne bez parametru wywolania // tutaj nie trzebaq zamykac pliku, bo go nie otworzono
 	        mov al,1		
 	        mov ah,4ch 
 	        int 21h
@@ -125,17 +127,133 @@ start:  mov ax,dane			;adresacja segmentow
                 je  czekaj
 		jmp koniec2
 
+	sprnazwedzwieku:  
+		cmp al,'^'
+		je koniec
+		cmp al,'C'
+		je do
+		cmp al,'D'
+		je re
+		cmp al,'E'
+		je mi
+		cmp al,'F'
+		je fa
+		cmp al,'G'
+		je soll
+		cmp al,'A'
+		je la
+		cmp al,'H'
+		je sii
+		cmp al,'P'
+		je pauza
+
+	do: 
+		mov bx,DzC
+		jmp grajdalej
+	re: 
+		mov bx,DzD
+		jmp grajdalej
+	mi: 
+		mov bx,DzE
+		jmp grajdalej
+	fa: 
+		mov bx,DzF
+		jmp grajdalej
+	soll: 
+		mov bx,DzG
+		jmp grajdalej
+	la: 
+		mov bx,DzA
+		jmp grajdalej
+	sii: 
+		mov bx,DzH
+		jmp grajdalej
+	pauza: 
+		mov bx,DzP
+		jmp grajdalej
+
+	
+	sprjakadlug:
+		call speaker
+		cmp dlugosc,1
+		je cala
+		cmp dlugosc,2
+		je pol
+		cmp dlugosc,4
+		je cwierc
+		cmp dlugosc,8
+		je osemka
+		jmp inna
+
+	cala:	
+		call speaker
+		push dx
+		push cx
+		mov cx,16
+		mov dx,65535
+		mov ah,86h
+		int 15h
+		pop cx
+		pop dx
+		loop cala
+		jmp inna
+	pol:
+		call speaker
+		push dx
+		push cx
+		mov cx,8
+		mov dx,65535
+		mov ah,86h
+		int 15h
+		pop cx
+		pop dx
+		loop pol
+		jmp inna
+	cwierc:
+		call speaker
+		push dx
+		push cx
+		mov cx,4
+		mov dx,65535
+		mov ah,86h
+		int 15h
+		pop cx
+		pop dx
+		loop cwierc
+		jmp inna
+	osemka:
+		call speaker
+		push dx
+		push cx
+		mov cx,2
+		mov dx,65535
+		mov ah,86h
+		int 15h
+		pop cx
+		pop dx
+		loop osemka
+		jmp inna
+
+	speaker proc
+		xor dx,dx
+					;wlaczenie glosnika
+       	 	mov dx,0061h		;61hz adres rejestru wł i wył głośnika (adres bazowy protow A,B,C - 60hz)
+        	in al,dx
+        	or al,00000011b
+        	out dx,al
+	ret
+	speaker endp
+
+
 
 Progr   ends
 
 dane    segment
 
-	bufor		db 	200 dup(?)
+	bufor		db 	300 dup(?)
 	blad 		db 	'Cos poszlo nie tak! Sprobuj ponownie z nazwa: program.exe dzwiek.txt$'
-	zero 		equ 	0
 	filehandle 	dw 	0
-          	        
-	nuty    	dw 	21454,1,35757,31891,28780,26818,24081,19032
+	dlugosc		db	0
 
 dane    ends
 
