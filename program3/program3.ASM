@@ -57,7 +57,7 @@ start:  mov ax,dane			;adresacja segmentow
         	  xor ax,ax
 
 
-        	lodsb       		;wczytanie otawy
+        	lodsb       		;wczytanie oktawy
 
         	  sub ax,30h
 
@@ -134,8 +134,7 @@ dane    segment
 	blad 		db 	'Cos poszlo nie tak! Sprobuj ponownie z nazwa: program.exe dzwiek.txt$'
 	zero 		equ 	0
 	filehandle 	dw 	0
-
-	;          	        A    pauz  C     D    E     F    G     H
+          	        
 	nuty    	dw 	21454,1,35757,31891,28780,26818,24081,19032
 
 dane    ends
