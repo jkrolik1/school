@@ -35,7 +35,7 @@ start:  mov ax,dane					;adresacja segmentow
         jz error
         add bx,81h					;dostanie się do parametru (Unformatted Parm Area) DOSfunctions>62h>PSP ?????
         mov byte ptr es:[bx],0				;dopisanie 0 na koncu lancucha
-				
+			
 						;3Dh otwieranie :: INT21h			//http://spike.scu.edu.au/~barry/interrupts.html#ah3d
         mov ah,3Dh   					;otwarcie pliku (DS:DX adres sciezki//nazwa pliku) (file handle w AX)
         mov al,0     					;acces mode (0=read, 1=write, 2=rw)
@@ -52,7 +52,7 @@ start:  mov ax,dane					;adresacja segmentow
         mov bx,filehandle				;file handle (A file handle is an integer value which is used to address an open file)
         mov dx,offset bufor				;odczyt z pliku // w buforze bedzie linia pliku // DS:DX (addres of buffer to receive data)
         mov ah,3Fh   					;czyta cx bajtow z pliku ktorego hendle jest w BX
-        mov cx,200
+        mov cx,250
         int 21h
 
         mov si,offset bufor				;mov ah,09h		;\
@@ -83,7 +83,7 @@ start:  mov ax,dane					;adresacja segmentow
         	  xor ax,ax	
 
         	lodsb        				;wczytanie dlugosci
-
+		
         	  sub ax,30h				;znowu mapowanie, aby uzyskac dlugosc w cyfrze
         	  mov dlugosc,ax			
         	  
@@ -156,7 +156,7 @@ start:  mov ax,dane					;adresacja segmentow
 		push dx
 		push cx
 		mov cx,4
-		mov dx,65535;
+		mov dx,65535
 		mov ah,86h
 		int 15h
 		pop cx
@@ -333,9 +333,9 @@ start:  mov ax,dane					;adresacja segmentow
 
 	speaker proc					;wlaczenie glosnika
        	 						;61hz adres rejestru wł i wył głośnika (adres bazowy protow A,B,C - 60hz)
-        	  in al,61h;
-		  or al,00000011b;
-		  out 61h,al;
+        	  in al,61h
+		  or al,00000011b
+		  out 61h,al
 		ret					;powrot z procedury
 		speaker endp
 
@@ -351,9 +351,9 @@ start:  mov ax,dane					;adresacja segmentow
 
 	
 	speaker2 proc					;wylaczenie glosnika
-		  in al,61h;
-		  and al,11111100b;
-		  out 61h,al;
+		  in al,61h
+		  and al,11111100b
+		  out 61h,al
 		ret
 		speaker2 endp
 	
@@ -371,7 +371,7 @@ Progr   ends
 
 dane    segment
 
-	bufor		db	200			;db 	65159 dup(?)
+	bufor		db	250			;db 	65159 dup(?)
 	blad 		db 	'Cos poszlo nie tak! Sprobuj ponownie z nazwa: program.exe dzwiek.txt$'
 	blad2		db	'Nieprawidlowa nazwa dzwieku w pliku tekstowym!!! Dozwolone C D E F G A H c d e f g a p na pierwszym miejscu kazdej notacji.$'
 	blad3		db	'Nieprawidlowy numer oktawy!!! Dozwolony od 1 do 7 na drugim miejscu kazdej notacji.$'
