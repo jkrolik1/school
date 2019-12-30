@@ -210,7 +210,7 @@ start:  mov ax,dane					;adresacja segmentow
 		cmp al,'P'
 		je pauza
 
-		
+		jmp error2
 
 
 	do: 
@@ -274,7 +274,9 @@ start:  mov ax,dane					;adresacja segmentow
 		cmp ax,2
 		je oktawa2
 		cmp ax,1
-		je oktawa1	
+		je oktawa1
+
+		;jmp error3	
 
 
 	oktawa7:
@@ -300,21 +302,35 @@ start:  mov ax,dane					;adresacja segmentow
 		jmp wyliczenie
 	
 
+	error2: 
+		xor ax,ax				;ZAMKNIECIE PLIKU!!!
+		mov bx,filehandle		
+		mov ah,3Eh
+		int 21h
+
+		xor ax,ax
+		xor dx,dx 
+		mov ah,09h				;display string, w ds:dx musi byc adres lancucha zawierajacy znacznik konca $
+	        mov dx,offset blad2
+	        int 21h
+		jmp czekaj
+
+
 	speaker proc					;wlaczenie glosnika
        	 						;61hz adres rejestru wł i wył głośnika (adres bazowy protow A,B,C - 60hz)
-        	in al,61h;
-		or al,00000011b;
-		out 61h,al;
+        	  in al,61h;
+		  or al,00000011b;
+		  out 61h,al;
 		ret					;powrot z procedury
 		speaker endp
 
 
 	wgraniepodzielnika proc
-		xor ax,ax
-		mov ax,podzielnik			;wgranie nuty (podzielnika)
-		out 42h,al
-		mov al,ah
-		out 42h,al
+		  xor ax,ax
+		  mov ax,podzielnik			;wgranie nuty (podzielnika)
+		  out 42h,al
+		  mov al,ah
+		  out 42h,al
 		ret
 		wgraniepodzielnika endp
 
@@ -334,7 +350,7 @@ dane    segment
 
 	bufor		db 	300 dup(?)
 	blad 		db 	'Cos poszlo nie tak! Sprobuj ponownie z nazwa: program.exe dzwiek.txt$'
-	blad2		db	''
+	blad2		db	'Nieprawidlowa nazwa dzwieku w pliku tekstowym!!!$'
 	filehandle 	dw 	0
 	podzielnik      dw      0
 	dlugosc		dw	0
