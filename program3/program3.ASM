@@ -88,6 +88,7 @@ start:  mov ax,dane					;adresacja segmentow
         	  sub ax,30h				;znowu mapowanie, aby uzyskac dlugosc w cyfrze
         	  mov dlugosc,ax			
         	  
+		  call wgraniepodzielnika
 		  call speaker				;przejscie do procedury (call nie pokazuje nigdy kominikatu outofrange)
 
 		  cmp dlugosc,1				;takie dlugosci trzeba podac na 3 miejscu w kazdej strukturze dzwieku
@@ -97,14 +98,10 @@ start:  mov ax,dane					;adresacja segmentow
 		  cmp dlugosc,4
 		  je cwierc
 		  cmp dlugosc,8
-		  je osemka  
-			
+		  je osemka  			
 
 		inna:
-        						;wylaczenie glosnika
-		  in al,61h;
-		  and al,11111100b;
-		  out 61h,al;
+		  call speaker2
 
         jmp graj
 
@@ -213,6 +210,8 @@ start:  mov ax,dane					;adresacja segmentow
 		cmp al,'P'
 		je pauza
 
+		
+
 
 	do: 
 		mov bx,DzC				;wpisuje podzielniki z 7 oktaw z poczatku programu
@@ -300,22 +299,33 @@ start:  mov ax,dane					;adresacja segmentow
 		mov cl,6
 		jmp wyliczenie
 	
-		
-	
 
-	speaker proc
-		mov ax,podzielnik			;wgranie nuty (podzielnika)
-		out 42h,al
-		mov al,ah
-		out 42h,al
-							;wlaczenie glosnika
+	speaker proc					;wlaczenie glosnika
        	 						;61hz adres rejestru wł i wył głośnika (adres bazowy protow A,B,C - 60hz)
         	in al,61h;
 		or al,00000011b;
 		out 61h,al;
-	ret						;powrot z procedury
-	endp
+		ret					;powrot z procedury
+		speaker endp
 
+
+	wgraniepodzielnika proc
+		xor ax,ax
+		mov ax,podzielnik			;wgranie nuty (podzielnika)
+		out 42h,al
+		mov al,ah
+		out 42h,al
+		ret
+		wgraniepodzielnika endp
+
+	
+	speaker2 proc					;wylaczenie glosnika
+		  in al,61h;
+		  and al,11111100b;
+		  out 61h,al;
+		ret
+		speaker2 endp
+	
 
 
 Progr   ends
@@ -324,6 +334,7 @@ dane    segment
 
 	bufor		db 	300 dup(?)
 	blad 		db 	'Cos poszlo nie tak! Sprobuj ponownie z nazwa: program.exe dzwiek.txt$'
+	blad2		db	''
 	filehandle 	dw 	0
 	podzielnik      dw      0
 	dlugosc		dw	0
