@@ -48,49 +48,31 @@ start:  mov ax,dane					;adresacja segmentow
 
 	mov filehandle,ax				;zapisujemy filehandle do osobnej zmiennej, poniewaz bd nam potem potrzebna do zamkniecia pliku
 
-						;3Fh czytanie :: INT21h
-        mov bx,filehandle				;file handle (A file handle is an integer value which is used to address an open file)
-        mov dx,offset bufor				;odczyt z pliku // w buforze bedzie linia pliku // DS:DX (addres of buffer to receive data)
-        mov ah,3Fh   					;czyta cx bajtow z pliku ktorego hendle jest w BX
-        mov cx,250
-        int 21h
-
-        mov si,offset bufor				;mov ah,09h		;\
-							;mov dx,offset bufor	;-| Wyswietlenie to, co napisane w pliku	
-							;int 21h		;/
 	graj:
+		call czytanie
         	  xor ax,ax
-							;LODSB - transfers the byte from DS:SI into AL and increments or decrements SI), Si jest inkrementowany u nas o jeden, dlatego ze flaga kierunku = 0, LODSW/LODSB - odczytania parametrow dzwieku 
-        	lodsb		        		;wczytanie podzielnika (nuty)
-							;w AL znajduje sie dany (SI-ty) znak z bufora, czyli z linii pliku
-        	  jmp sprnazwedzwieku  		;musi sprawdzic czy to jest c d e f g a h c itd..	
-
-
-	          grajdalej:				;powrot z danej etykiety. W bx mamy podzielniki z poczatku programu, ktore trzeba przeksztalcic na prawidlowe oktawy
+							
+		mov al,bufor(0)
+        	  jmp sprnazwedzwieku  		
+	          grajdalej:				
         	    xor ax,ax
 
-        	lodsb       				;wczytanie oktawy, w al znajduje sie numer oktawy, czyli cyfra po kazdej literce w pliku (buforze)
-
-        	  sub ax,30h				;mapujemy, zeby otrzymac numer oktawy - fizyczna cyfre, 30h to 0 hex
+        	mov al,bufor(1)      				
+        	  sub ax,30h				
 		  jmp sproktawy
-		
-		  wyliczenie:				;powrot z danej etykiety. Teraz w cl mamy cyfre, ktora mowi ile razy mamy pomnozyc przez 2 nasz podzielnik z poczatku programu
+		  wyliczenie:				
+        	    shl bx,cl				       	  
+		    mov podzielnik,bx			
+        	    xor ax,ax	
 
-        	  shl bx,cl				;tyle razy mnozyc przez 2 dany dzwiek z poczatku programu ile mamy wybrana oktawe, shl-przesuwanie binarne w lewo (mnozenie przez 2)
-							;np mamy C61 to 6 to nr oktawy. Wtedy dostaniemy w cl jedynke. Oznacza to ze raz mnozymy DzC razy 2 i dostajemy oktawe 6. 570 * 2 = 1140. Spr: 1193180Hz/1047Hz tj. 1139.6, czyli 1140!!!       	  
-		  mov podzielnik,bx			;otrzymany FINALNY podzielnik wpisujemy do zmiennej	
-
-        	  xor ax,ax	
-
-        	lodsb        				;wczytanie dlugosci
-		
-        	  sub ax,30h				;znowu mapowanie, aby uzyskac dlugosc w cyfrze
+        	mov al,bufor(2)        				
+        	  sub ax,30h				
         	  mov dlugosc,ax			
         	  
 		  call wgraniepodzielnika
-		  call speaker				;przejscie do procedury (call nie pokazuje nigdy kominikatu outofrange)
+		  call speaker				
 
-		  cmp dlugosc,1				;takie dlugosci trzeba podac na 3 miejscu w kazdej strukturze dzwieku
+		  cmp dlugosc,1				
 		  je cala
 		  cmp dlugosc,2
 		  je pol
@@ -366,12 +348,22 @@ start:  mov ax,dane					;adresacja segmentow
 		ret
 		zamkpliku endp
 
+	czytanie proc
+ 		  mov bx,filehandle				;file handle (A file handle is an integer value which is used to address an open file)
+        	  mov dx,offset bufor				;odczyt z pliku // w buforze bedzie linia pliku // DS:DX (addres of buffer to receive data)
+        	  mov ah,3Fh   					;czyta cx bajtow z pliku ktorego hendle jest w BX
+        	  mov cx,3
+        	  int 21h
+
+		ret
+		czytanie endp
+
 
 Progr   ends
 
 dane    segment
 
-	bufor		db	250			;db 	65159 dup(?)
+	bufor		db	3 dup(0)			
 	blad 		db 	'Cos poszlo nie tak! Sprobuj ponownie z nazwa: program.exe dzwiek.txt$'
 	blad2		db	'Nieprawidlowa nazwa dzwieku w pliku tekstowym!!! Dozwolone C D E F G A H c d e f g a p na pierwszym miejscu kazdej notacji.$'
 	blad3		db	'Nieprawidlowy numer oktawy!!! Dozwolony od 1 do 7 na drugim miejscu kazdej notacji.$'
@@ -389,4 +381,3 @@ szczyt  dw 0
 
 stosik  ends
         end start
- 
