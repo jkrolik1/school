@@ -15,8 +15,7 @@ DzGis	equ 359						;1193180Hz/3322Hz
 DzAis	equ 320						;1193180Hz/3729Hz
 							;1: C D E F G A H c d e f g a (p)(nazwa dzwieku)
 							;2: 1 2 3 4 5 6 7 (oktawa)
-							;3: 1 (cala nuta) 2 (pol nuta) 4 (cwierc nuta) 8 (osemka)	  (dlugosc)	
-Progr   segment
+Progr   segment						;3: 1 (cala nuta) 2 (pol nuta) 4 (cwierc nuta) 8 (osemka)	  (dlugosc)	
 	assume cs:Progr,ds:dane,ss:stosik
 
 
@@ -40,11 +39,11 @@ start:  mov ax,dane					;adresacja segmentow
 						;3Dh otwieranie :: INT21h			//http://spike.scu.edu.au/~barry/interrupts.html#ah3d
         mov ah,3Dh   					;otwarcie pliku (DS:DX adres sciezki//nazwa pliku) (file handle w AX)
         mov al,0     					;acces mode (0=read, 1=write, 2=rw)
-        mov dx,82h					;nazwa pliku od 82h w PSP
+        mov dx,82h					;nazwa pliku od 82h w PSP, DS:DX points to an ASCIIZ string in the form "d:\path\filespec"
          push ds
           mov cx,es
           mov ds,cx					;z es do ds, poniewaz int21h ah3Dh dziala dla DS:DX
-        int 21h						;tutaj otwiera sie plik
+          int 21h					;tutaj otwiera sie plik
          pop ds
 
 	mov filehandle,ax				;zapisujemy filehandle do osobnej zmiennej, poniewaz bd nam potem potrzebna do zamkniecia pliku
@@ -53,7 +52,7 @@ start:  mov ax,dane					;adresacja segmentow
         mov bx,filehandle				;file handle (A file handle is an integer value which is used to address an open file)
         mov dx,offset bufor				;odczyt z pliku // w buforze bedzie linia pliku // DS:DX (addres of buffer to receive data)
         mov ah,3Fh   					;czyta cx bajtow z pliku ktorego hendle jest w BX
-        mov cx,300
+        mov cx,200
         int 21h
 
         mov si,offset bufor				;mov ah,09h		;\
@@ -372,7 +371,7 @@ Progr   ends
 
 dane    segment
 
-	bufor		db 	300 dup(?)
+	bufor		db	200			;db 	65159 dup(?)
 	blad 		db 	'Cos poszlo nie tak! Sprobuj ponownie z nazwa: program.exe dzwiek.txt$'
 	blad2		db	'Nieprawidlowa nazwa dzwieku w pliku tekstowym!!! Dozwolone C D E F G A H c d e f g a p na pierwszym miejscu kazdej notacji.$'
 	blad3		db	'Nieprawidlowy numer oktawy!!! Dozwolony od 1 do 7 na drugim miejscu kazdej notacji.$'
