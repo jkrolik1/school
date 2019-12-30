@@ -389,3 +389,4 @@ szczyt  dw 0
 
 stosik  ends
         end start
+ 
