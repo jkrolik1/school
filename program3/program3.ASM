@@ -13,7 +13,7 @@ DzEis	equ 437						;1193180Hz/2714Hz
 DzFis	equ 403						;1193180Hz/2960Hz
 DzGis	equ 359						;1193180Hz/3322Hz
 DzAis	equ 320						;1193180Hz/3729Hz
-							;1: C D E F G A H (nazwa dzwieku)
+							;1: C D E F G A H c d e f g a (p)(nazwa dzwieku)
 							;2: 1 2 3 4 5 6 7 (oktawa)
 							;3: 1 (cala nuta) 2 (pol nuta) 4 (cwierc nuta) 8 (osemka)	  (dlugosc)	
 Progr   segment
@@ -99,7 +99,8 @@ start:  mov ax,dane					;adresacja segmentow
 		  je cwierc
 		  cmp dlugosc,8
 		  je osemka  			
-
+		  jmp error4
+		
 		inna:
 		  call speaker2
 
@@ -113,10 +114,7 @@ start:  mov ax,dane					;adresacja segmentow
 		jmp czekaj
 
 	koniec: 			
-		xor ax,ax				;ZAMKNIECIE PLIKU!!!
-		mov bx,filehandle		
-		mov ah,3Eh
-		int 21h
+		call zamkpliku
 
 		xor ax,ax				;zakonczenie poprawne
 	        mov ah,4ch 
@@ -276,7 +274,7 @@ start:  mov ax,dane					;adresacja segmentow
 		cmp ax,1
 		je oktawa1
 
-		;jmp error3	
+		jmp error3	
 
 
 	oktawa7:
@@ -303,15 +301,33 @@ start:  mov ax,dane					;adresacja segmentow
 	
 
 	error2: 
-		xor ax,ax				;ZAMKNIECIE PLIKU!!!
-		mov bx,filehandle		
-		mov ah,3Eh
-		int 21h
+		call zamkpliku
 
 		xor ax,ax
 		xor dx,dx 
 		mov ah,09h				;display string, w ds:dx musi byc adres lancucha zawierajacy znacznik konca $
 	        mov dx,offset blad2
+	        int 21h
+		jmp czekaj
+
+	error3: 
+		call zamkpliku
+
+		xor ax,ax
+		xor dx,dx 
+		mov ah,09h				;display string, w ds:dx musi byc adres lancucha zawierajacy znacznik konca $
+	        mov dx,offset blad3
+	        int 21h
+		jmp czekaj
+
+	error4: 
+		call speaker2
+		call zamkpliku
+
+		xor ax,ax
+		xor dx,dx 
+		mov ah,09h				;display string, w ds:dx musi byc adres lancucha zawierajacy znacznik konca $
+	        mov dx,offset blad4
 	        int 21h
 		jmp czekaj
 
@@ -343,6 +359,14 @@ start:  mov ax,dane					;adresacja segmentow
 		speaker2 endp
 	
 
+	zamkpliku proc
+		  xor ax,ax				;ZAMKNIECIE PLIKU!!!
+		  mov bx,filehandle		
+		  mov ah,3Eh
+		  int 21h
+		ret
+		zamkpliku endp
+
 
 Progr   ends
 
@@ -350,7 +374,9 @@ dane    segment
 
 	bufor		db 	300 dup(?)
 	blad 		db 	'Cos poszlo nie tak! Sprobuj ponownie z nazwa: program.exe dzwiek.txt$'
-	blad2		db	'Nieprawidlowa nazwa dzwieku w pliku tekstowym!!!$'
+	blad2		db	'Nieprawidlowa nazwa dzwieku w pliku tekstowym!!! Dozwolone C D E F G A H c d e f g a p na pierwszym miejscu kazdej notacji.$'
+	blad3		db	'Nieprawidlowy numer oktawy!!! Dozwolony od 1 do 7 na drugim miejscu kazdej notacji.$'
+	blad4		db	'Nieprawidlowa dlugosc dzwieku! Nalezy wpisac 1, 2, 4 lub 8 na trzecim miejscu kazdej notacji.$'
 	filehandle 	dw 	0
 	podzielnik      dw      0
 	dlugosc		dw	0
