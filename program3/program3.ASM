@@ -34,7 +34,7 @@ start:  mov ax,dane					;adresacja segmentow
         cmp bx,0					;sprawdzenie czy wpisano parametr
         jz error
         add bx,81h					;dostanie się do parametru (Unformatted Parm Area) DOSfunctions>62h>PSP ?????
-        mov byte ptr es:[bx],0				;dopisanie 0 na koncu lancucha
+        mov byte ptr es:[bx],0				;dopisanie 0 na koncu lancucha (zeby wiadomo bylo gdzie koniec - tak jak w C)
 			
 						;3Dh otwieranie :: INT21h			//http://spike.scu.edu.au/~barry/interrupts.html#ah3d
         mov ah,3Dh   					;otwarcie pliku (DS:DX adres sciezki//nazwa pliku) (file handle w AX)
