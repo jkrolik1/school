@@ -16,7 +16,7 @@ DzAis	equ 320						;1193180Hz/3729Hz		;3729Hz to Hz Ais w oktawie 7
 							;equ - deklarowanie stalej // equ jest pseudooperacją, która służy do przypisania nazw fizycznym danym
 							;1znak: C D E F G A H c d e f g a (p)(nazwa dzwieku)
 							;2znak: 1 2 3 4 5 6 7 (oktawa)
-Progr   segment						;3znak: 1 (cala nuta) 2 (pol nuta) 4 (cwierc nuta) 8 (osemka)	  (dlugosc)	
+Progr   segment						;3znak: 1 (cala nuta) 2 (pol nuta) 4 (cwierc nuta) 8 (osemka)	  (dlugosc) {nie użyłem kropki(przedłużenie o polowe), ktorą da się wywołać przez ponowne wywołanie polowy danego dźwięku - wtedy powstaje 1,5 danego dźwięku} 
 	assume cs:Progr,ds:dane,ss:stosik
 
 
