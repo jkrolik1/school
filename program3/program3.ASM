@@ -33,7 +33,7 @@ start:  mov ax,dane					;adresacja segmentow
         xor bx,bx					;sprawdzenie dlugosci parametru		//http://fysnet.net/cmndline.htm
         mov bl,es:[80h]					;80h w PSP to długość 			//https://en.wikipedia.org/wiki/Program_Segment_Prefix
         cmp bx,0					;sprawdzenie czy wpisano parametr
-        jz error
+        jz error                                        ;https://stackoverflow.com/questions/42920244/assembler-save-arguments-from-psp-dosbox
         add bx,81h					;dodanie 81h do dlugosci - dostajemy sie na koniec psp. 81h - command tail 
         mov byte ptr es:[bx],0				;dopisanie 0 na koncu lancucha (zeby wiadomo bylo gdzie koniec - tak jak w jezyku C)
 			
