@@ -486,3 +486,6 @@ stosik  ends
 ;	przeczytanie stanu portu B: in al,61h
 ;	ustawienie B0 i B1 na 0 (wył): and al,11111100h
 ;	zapisanie spowrotem do portu B: out 61h,al
+;
+;
+; https://stackoverflow.com/questions/51081447/nasm-assembly-what-is-the-0-after-this-variable-for
