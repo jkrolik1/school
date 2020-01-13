@@ -50,7 +50,7 @@ start:  mov ax,dane					;adresacja segmentow
 	mov filehandle,ax				;zapisujemy filehandle do osobnej zmiennej, poniewaz bd nam potem potrzebna do zamkniecia pliku
 							;When you open a file, DOS passes back a 16-bit value called a file handle.  Thereafter, when you read, write, seek a position, or close the file, you refer to it by its handle
 
-	graj:					       ;petla 'graj' - gra dany dźwięk (kolejne trzy znaki z pliku)
+	graj:				       ;petla 'graj' - gra dany dźwięk (kolejne trzy znaki z pliku)
 		call czytanie				;wywaloanie procedury, ktorej zadaniem jest czytanie z pliku trzech znaków
         	  xor ax,ax
 							
@@ -489,3 +489,8 @@ stosik  ends
 ;
 ;
 ; https://stackoverflow.com/questions/51081447/nasm-assembly-what-is-the-0-after-this-variable-for
+;
+;
+; out, układ 8255 to układ 8 bitowy 
+; sub 30h - mapowanie ze znaku na cyfre
+;
