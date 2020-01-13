@@ -493,4 +493,5 @@ stosik  ends
 ;
 ; out, układ 8255 to układ 8 bitowy 
 ; sub 30h - mapowanie ze znaku na cyfre
+; es:[80h] - bazowo indeksowa (chyba) 
 ;
