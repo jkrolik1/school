@@ -491,8 +491,13 @@ stosik  ends
 ; https://stackoverflow.com/questions/51081447/nasm-assembly-what-is-the-0-after-this-variable-for
 ;
 ;
+;
 ; out!!!, układ 8255 to układ 8 bitowy 
 ; sub 30h - mapowanie ze znaku na cyfre
 ; es:[80h] - bazowo indeksowa (chyba) 
+; 
 ; tryb 3 układ 8255 - generowanie fali prostokatnej, jest 16 bitowy, do połowy odlicza 1log, od połowy do końca 0logiczne,następnie się przeladowuje wpisanym podzielnikiem
+; bit 0 (b0) portu B - zalaczenie (1logiczna) / wyłączenie (0logiczne)
+; bit 1 (b1) portu B - zatrzymanie głośnika, GATE2 - zatrzymanie zaliczania, generowanie częstotliwości 
+;
 ;
