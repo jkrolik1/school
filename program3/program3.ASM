@@ -493,7 +493,8 @@ stosik  ends
 ; wszędzie w in, out jest AL, ponieważ są to operacje 8 bitowe, układ 8255 też jest 8mio bitowy
 ; (86h int15h) - cx = 8 - powtórzenie 8 razy interwalu czasowego 1/16 sekundy 
 ;              - przerwanie dosowe int 15h
-;              - wymaga aby w cx była wartość 0, bo jak pojawią się jakieś inne wartości to bd inny czas
 ;
-; 
+; http://spike.scu.edu.au/~barry/interrupts.html#ah0b
+;
+;
 ;
