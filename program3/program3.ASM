@@ -500,4 +500,10 @@ stosik  ends
 ; bit 0 (b0) portu B - zalaczenie (1logiczna) / wyłączenie (0logiczne)
 ; bit 1 (b1) portu B - zatrzymanie głośnika, GATE2 - zatrzymanie zaliczania, generowanie częstotliwości 
 ;
+; wszędzie w in, out jest AL, ponieważ są to operacje 8 bitowe, układ 8255 też jest 8mio bitowy
+; (86h int15h) - cx = 8 - powtórzenie 8 razy interwalu czasowego 1/16 sekundy 
+;              - przerwanie dosowe int 15h
+;              - wymaga aby w cx była wartość 0, bo jak pojawią się jakieś inne wartości to bd inny czas
+;
+; 
 ;
