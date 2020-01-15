@@ -117,44 +117,28 @@ start:  mov ax,dane					;adresacja segmentow
 		jmp koniec2
 
 	cala:						
-		push dx					;odlozenie dx i cx na stosie
-		push cx
 		mov cx,16				;szesnascie interwalow - wywolan int 15h uslugi 86h. 
 		mov dx,65535				;zatrzymanie programu na dany czas (przy czym glosnik jest wlaczony i gra)
 		mov ah,86h				;usługa 86h przerwania int 15h - odmierzenie czzsu w programie
 		int 15h
-		pop cx					;sciaganie cx i dx ze stosu / odwrotna kolejnosc niz przy odkladaniu
-		pop dx
 		jmp inna				;powrot do glownej petli 'graj'
 	pol:
-		push dx
-		push cx
 		mov cx,8				;opóźnienie ok 500ms (0,5s)
 		mov dx,65535				;CX is high word, DX is low word
 		mov ah,86h
 		int 15h
-		pop cx
-		pop dx
 		jmp inna
 	cwierc:						;opóźnienie 262ms
-		push dx
-		push cx
 		mov cx,4
 		mov dx,65535
 		mov ah,86h
 		int 15h
-		pop cx
-		pop dx
 		jmp inna
 	osemka:						;opóźnienie 131ms
-		push dx
-		push cx
 		mov cx,2
 		mov dx,65535
 		mov ah,86h
 		int 15h
-		pop cx
-		pop dx
 		jmp inna
 
 	sprnazwedzwieku:  
