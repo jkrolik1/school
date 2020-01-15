@@ -87,6 +87,12 @@ start:  mov ax,dane					;adresacja segmentow
 		inna:
 		  call speaker2				;wylaczenie glosnika
 
+		  xor ax,ax
+		  mov ax,0b00h				;get stdin status - status konsoli
+		  int 21h
+		  cmp al,0				;00 al - nie wpisano nic; ff al - wpisano coś
+		  jne koniec				;jesli zostal wcisniety klawisz to zakoncz
+		  
         jmp graj
 
 
