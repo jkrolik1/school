@@ -4,7 +4,11 @@ single yes;
 
 objawy:
 	query "Jakie masz objawy:" 
-	val oneof { "kaszel", "katar", "temperatura", "bole", "wahania masy ciala", "wymioty", "problemy z oddawaniem moczu" };
+	val oneof { "kaszel", "katar", "temperatura", "bole", "wahania masy ciala", "wymioty", "problemy z oddawaniem moczu", "zmeczenie" };
+
+	jakiezmeczenie:
+		query "Jakie zmeczenie:" 
+		val oneof { "dlugotrwale", "krotkotrwale" };
 
 	rodzajkaszlu:
 		query "Jaki rodzaj kaszlu:" 
@@ -20,7 +24,7 @@ objawy:
 
 	czegodotyczybol:
 		query "Czego dokladnie dotyczy bol:"
-		val oneof { "glowa", "gardlo", "kostno-stawowy" };
+		val oneof { "glowa", "gardlo", "kostno-stawowy", "serce" };
 
 		cisnieniekrwi:
 			query "Jakie masz cisnienie krwi:"
@@ -31,6 +35,10 @@ objawy:
 		stawy:
 			query "Jakie stawy atakuje bol:"
 			val oneof { "kolanowy", "barkowy" };
+
+		szerzejserce:
+			query "Zdefiniuj szerzej objawy:"
+			val oneof { "kolatanie serca", "zaburzenie rytmu pracy serca + dusznosci", "przyspieszone bicie serca" };
 
 	jakiewahania:
 		query "Jakie wahania:"
@@ -64,8 +72,8 @@ end;
 
 rules
 
-01: lek = "Lipomal"	if objawy = "kaszel", rodzajkaszlu = "suchy";
-02: lek = "Mocosolvan"	if objawy = "kaszel", rodzajkaszlu = "mokry";
+01: lek = "Herbapect"		if objawy = "kaszel", rodzajkaszlu = "suchy";
+02: lek = "Mucosolvan"		if objawy = "kaszel", rodzajkaszlu = "mokry";
 
 // --------------------------------------------------------------------
 
@@ -107,6 +115,17 @@ rules
 
 // --------------------------------------------------------------------
 
+23: lek = "Asparganin"					if objawy = "bole", czegodotyczybol = "serce", szerzejserce = "kolatanie serca";
+24: lek = "Potrzebne sa szczegolowe badania!!!"		if objawy = "bole", czegodotyczybol = "serce", szerzejserce = "zaburzenie rytmu pracy serca + dusznosci";
+25: lek = "Propranolol"					if objawy = "bole", czegodotyczybol = "serce", szerzejserce = "przyspieszone bicie serca";
+
+// --------------------------------------------------------------------
+
+26: lek = "Wymagany dluzszy sen, odpowiednia ilosc wody, mniejszy stres, odpowiednia dieta, witaminy"		if objawy = "zmeczenie", jakiezmeczenie = "krotkotrwale";
+27: lek = "Zelazo, witamina B12, kwas foliowy"									if objawy = "zmeczenie", jakiezmeczenie = "dlugotrwale";
+
+// --------------------------------------------------------------------
+
 end;
 
 control
@@ -126,8 +145,9 @@ control
      		dlgExecute( DLG, Ret );
    	end;
 
-run;
 
+run;
+char AAge;
 char S1, S2, S3;
 S1 := "Wybor leku dla Ciebie";
 S2 := "System doradczy, ktory pomaga wybrac lek na podstawie Twoich objawow";
@@ -144,6 +164,7 @@ menu "Menu"
 	case 1:
 		oknoDialogowe;
 		messageBox( 0, 0, "Komunikat", "Dziekuje za wypelnienie ankiety!" );
+		ntos( Age, AAge );
 		goal("lek=Lek");
 		delNewFacts;
 
