@@ -58,6 +58,7 @@ objawy:
 
 lek:
 ask no;
+
 end;
 
 
@@ -68,73 +69,86 @@ rules
 
 // --------------------------------------------------------------------
 
-03: lek = "Antybiotyk Rovamecyna"	if objawy = "katar", rodzajkataru = "ropny";
+03: lek = "Antybiotyk Rovamecyna"		if objawy = "katar", rodzajkataru = "ropny";
 04: lek = "Zyrtec, lek przeciwalergiczny"	if objawy = "katar", rodzajkataru = "wodnisty";
 
 // --------------------------------------------------------------------
 
-05: lek = "Pyralgina"	if objawy = "temperatura", jakatemperatura = "wysoka (do 40 stopni)";
+05: lek = "Pyralgina"					if objawy = "temperatura", jakatemperatura = "wysoka (do 40 stopni)";
 06: lek = "Kroplowka PWE, plyn wieloelektrolitowy"	if objawy = "temperatura", jakatemperatura = "niska (ponizej 36 stopni)";
 
 // --------------------------------------------------------------------
 
-07: lek = "Enarenal"	if objawy = "bole", czegodotyczybol = "glowa", cisnieniekrwi = "wysokie";
+07: lek = "Enarenal"				if objawy = "bole", czegodotyczybol = "glowa", cisnieniekrwi = "wysokie";
 08: lek = "Kroplowka NACL 0,9% GLUKOZA 5%"	if objawy = "bole", czegodotyczybol = "glowa", cisnieniekrwi = "niskie";
-09: lek = "Chlorchinaldin"	if objawy = "bole", czegodotyczybol = "gardlo", formaleku = "do ssania";
-10: lek = "Tantum verde"	if objawy = "bole", czegodotyczybol = "gardlo", formaleku = "do psikania";
-11: lek = "Metotreksat"	if objawy = "bole", czegodotyczybol = "kostno-stawowy", stawy = "kolanowy";
-12: lek = "Aglan zastrzyki"	if objawy = "bole", czegodotyczybol = "kostno-stawowy", stawy = "barkowy";
+09: lek = "Chlorchinaldin"			if objawy = "bole", czegodotyczybol = "gardlo", formaleku = "do ssania";
+10: lek = "Tantum verde"			if objawy = "bole", czegodotyczybol = "gardlo", formaleku = "do psikania";
+11: lek = "Metotreksat"				if objawy = "bole", czegodotyczybol = "kostno-stawowy", stawy = "kolanowy";
+12: lek = "Aglan zastrzyki"			if objawy = "bole", czegodotyczybol = "kostno-stawowy", stawy = "barkowy";
 
 // --------------------------------------------------------------------
 
-13: lek = "Insulina"	if objawy = "wahania masy ciala", jakiewahania = "spadek masy ciala", przyczynaspadku = "cukrzyca";
+13: lek = "Insulina"				if objawy = "wahania masy ciala", jakiewahania = "spadek masy ciala", przyczynaspadku = "cukrzyca";
 14: lek = "Wymagany kontakt ze specjalista"	if objawy = "wahania masy ciala", jakiewahania = "spadek masy ciala", przyczynaspadku = "anoreksja";
-15: lek = "Eutyroks"	if objawy = "wahania masy ciala", jakiewahania = "wzrost masy ciala", przyczynawzrostu = "niedoczynnosc tarczycy";
+15: lek = "Eutyroks"				if objawy = "wahania masy ciala", jakiewahania = "wzrost masy ciala", przyczynawzrostu = "niedoczynnosc tarczycy";
 16: lek = "Wymagany kontakt z dietetykiem"	if objawy = "wahania masy ciala", jakiewahania = "wzrost masy ciala", przyczynawzrostu = "bledy zywieniowe";
 
 // --------------------------------------------------------------------
 
-17: lek = "Metoklopramid"	if objawy = "wymioty", rodzajwymiotow = "trescia pokarmowa";
-18: lek = "Essentiale esselive"	if objawy = "wymioty", rodzajwymiotow = "zulcia";
+17: lek = "Metoklopramid"			if objawy = "wymioty", rodzajwymiotow = "trescia pokarmowa";
+18: lek = "Essentiale esselive"			if objawy = "wymioty", rodzajwymiotow = "zulcia";
 19: lek = "Wymagana operacja chirurgiczna"	if objawy = "wymioty", rodzajwymiotow = "krwia";
 
 // --------------------------------------------------------------------
 
-20: lek = "Wymagane usuniecie kamieni poprzez operacje"	if objawy = "problemy z oddawaniem moczu", mocz = "bezmocz";
-21: lek = "Fitolizyna"	if objawy = "problemy z oddawaniem moczu", mocz = "czeste oddawanie moczu", jakaformaleku = "pasta";
-22: lek = "Furagin"	if objawy = "problemy z oddawaniem moczu", mocz = "czeste oddawanie moczu", jakaformaleku = "tabletki";
+20: lek = "Wymagane usuniecie kamieni poprzez operacje"		if objawy = "problemy z oddawaniem moczu", mocz = "bezmocz";
+21: lek = "Fitolizyna"						if objawy = "problemy z oddawaniem moczu", mocz = "czeste oddawanie moczu", jakaformaleku = "pasta";
+22: lek = "Furagin"						if objawy = "problemy z oddawaniem moczu", mocz = "czeste oddawanie moczu", jakaformaleku = "tabletki";
 
 // --------------------------------------------------------------------
 
 end;
 
 control
+
+	char Name;
+  	int Age,Gender;
+
+   	function oknoDialogowe
+   	begin
+     		int DLG, Ret;
+
+     		dlgCreate( DLG, "", "ankieta.dlg" );
+     		dlgBindEdit( DLG, "Obiekt2", Name );
+     		dlgBindRadioButton ( DLG, "Plec", Gender );
+     		dlgBindRadioButton ( DLG, "Obiekt13", Age );
+
+     		dlgExecute( DLG, Ret );
+   	end;
+
 run;
 
 char S1, S2, S3;
 S1 := "Wybor leku dla Ciebie";
 S2 := "System doradczy, ktory pomaga wybrac lek na podstawie Twoich objawow";
-S3 := "Jakub Krolik";
+S3 := "Wykonal: Jakub Krolik";
 
 vignette( S1, S2, S3 );
 setAppWinTitle("Wybierz swoj lek!");
 addSolution( yes );
 
-int Odp;
-Odp:=1;
 menu "Menu"
 1. "Wybor leku"
 2. "Exit"
 
-case 1:
-while (Odp==1)
-begin
-goal("lek=Lek");
-confirmBox( 0, 0, "Kontynuacja","Chcesz ponownie wybrac", Odp );
-delNewFacts;
-end;
-case 2:
-exit;
+	case 1:
+		oknoDialogowe;
+		messageBox( 0, 0, "Komunikat", "Dziekuje za wypelnienie ankiety!" );
+		goal("lek=Lek");
+		delNewFacts;
+
+	case 2:
+		exit;
 end;
 end;
 end;
