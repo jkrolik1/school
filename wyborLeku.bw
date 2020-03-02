@@ -130,8 +130,16 @@ end;
 
 control
 
-	char Name;
+	char Name, Medicine;
   	int Age,Gender;
+
+	function getLek
+	begin
+		int DLG,Ret;
+     		dlgCreate( DLG, "", "dawk.dlg" );
+     		dlgBindListBox( DLG, "Obiekt1", _, Medicine );
+     		dlgExecute( DLG, Ret );
+	end;
 
    	function oknoDialogowe
    	begin
@@ -139,15 +147,211 @@ control
 
      		dlgCreate( DLG, "", "ankieta.dlg" );
      		dlgBindEdit( DLG, "Obiekt2", Name );
-     		dlgBindRadioButton ( DLG, "Plec", Gender );
      		dlgBindRadioButton ( DLG, "Obiekt13", Age );
+		dlgBindButton( DLG, "Obiekt10", getLek);
 
      		dlgExecute( DLG, Ret );
    	end;
 
 
+	function one(char Med, char T)
+	begin
+		if (Med == "Herbapect") begin 
+			messageBox( 0, 0, T, "3 razy dziennie po 2ml" ); end;
+		if (Med == "Mucosolvan") begin 
+			messageBox( 0, 0, T, "2 razy dziennie po 2ml (druga dawka do godziny 16)" ); end;
+		if (Med == "Antybiotyk Rovamecyna") begin 
+			messageBox( 0, 0, T, "2 razy dziennie po 2,5ml" ); end;
+		if (Med == "Zyrtec, lek przeciwalergiczny") begin 
+			messageBox( 0, 0, T, "1 raz dziennie rano na czczo" ); end;
+		if (Med == "Pyralgina") begin 
+			messageBox( 0, 0, T, "Ten lek nie jest zalecany w Twoim przedziale wiekowym. Mozna uzyc APAP lub paracetamol (3 razy dziennie po 2ml)" ); end;
+		if (Med == "Kroplowka PWE, plyn wieloelektrolitowy") begin 
+			messageBox( 0, 0, T, "Lek nie zalecany w Twoim wieku" ); end;
+		if (Med == "Enarenal") begin 
+			messageBox( 0, 0, T, "Tylko dla doroslych!" ); end;
+		if (Med == "Kroplowka NACL 0,9% GLUKOZA 5%") begin 
+			messageBox( 0, 0, T, "1-2 raz dziennie 250ml" ); end;
+		if (Med == "Chlorchinaldin") begin 
+			messageBox( 0, 0, T, "Doraznie do ssania" ); end;
+		if (Med == "Tantum verde") begin 
+			messageBox( 0, 0, T, "W razie bolu psikanie do gardla do 4 razy dziennie (co 6 godzin)" ); end;
+		if (Med == "Metotreksat") begin 
+			messageBox( 0, 0, T, "Tylko dla doroslych!" ); end;
+		if (Med == "Aglan zastrzyki") begin 
+			messageBox( 0, 0, T, "Lek tylko dla doroslych!" ); end;
+		if (Med == "Insulina") begin 
+			messageBox( 0, 0, T, "Dobierana indywidualna dawka do wagi ciala i wyniku glukozy we krwi." ); end;
+		if (Med == "Eutyroks") begin 
+			messageBox( 0, 0, T, "Tylko dla doroslych!" ); end;
+		if (Med == "Metoklopramid") begin 
+			messageBox( 0, 0, T, "1 raz dziennie 1ml w zastrzyku (maksymalnie 3 dni)" ); end;
+		if (Med == "Essentiale esselive") begin 
+			messageBox( 0, 0, T, "Dla doroslych!" ); end;
+		if (Med == "Fitolizyna") begin 
+			messageBox( 0, 0, T, "Raczej nie stosowany w tym wieku!" ); end;
+		if (Med == "Furagin") begin 
+			messageBox( 0, 0, T, "Wedlug schematu na ulotce" ); end;
+		if (Med == "Asparganin") begin 
+			messageBox( 0, 0, T, "Tylko dla doroslych!" ); end;
+		if (Med == "Propranolol") begin 
+			messageBox( 0, 0, T, "Dla doroslych!" ); end;
+		if (Med == "Zelazo, witamina B12, kwas foliowy") begin 
+			messageBox( 0, 0, T, "Minimalne dawki zalecane przez lekarza" ); end;
+	end;
+
+	function two(char Med, char T)
+	begin
+		if (Med == "Herbapect") begin 
+			messageBox( 0, 0, T, "3 razy dziennie po 3ml" ); end;
+		if (Med == "Mucosolvan") begin 
+			messageBox( 0, 0, T, "2 razy dziennie po 3ml (druga dawka do godziny 16)" ); end;
+		if (Med == "Antybiotyk Rovamecyna") begin 
+			messageBox( 0, 0, T, "2 razy dziennie po 4ml" ); end;
+		if (Med == "Zyrtec, lek przeciwalergiczny") begin 
+			messageBox( 0, 0, T, "1 raz dziennie rano na czczo" ); end;
+		if (Med == "Pyralgina") begin 
+			messageBox( 0, 0, T, "3 razy dziennie polowa tabletki" ); end;
+		if (Med == "Kroplowka PWE, plyn wieloelektrolitowy") begin 
+			messageBox( 0, 0, T, "Lek nie zalecany w Twoim wieku" ); end;
+		if (Med == "Enarenal") begin 
+			messageBox( 0, 0, T, "Tylko dla doroslych!" ); end;
+		if (Med == "Kroplowka NACL 0,9% GLUKOZA 5%") begin 
+			messageBox( 0, 0, T, "1 raz dziennie 500ml" ); end;
+		if (Med == "Chlorchinaldin") begin 
+			messageBox( 0, 0, T, "Doraznie do ssania" ); end;
+		if (Med == "Tantum verde") begin 
+			messageBox( 0, 0, T, "W razie bolu psikanie do gardla do 4 razy dziennie (co 6 godzin)" ); end;
+		if (Med == "Metotreksat") begin 
+			messageBox( 0, 0, T, "Tylko dla doroslych!" ); end;
+		if (Med == "Aglan zastrzyki") begin 
+			messageBox( 0, 0, T, "Lek tylko dla doroslych!" ); end;
+		if (Med == "Insulina") begin 
+			messageBox( 0, 0, T, "Dobierana indywidualna dawka do wagi ciala i wyniku glukozy we krwi." ); end;
+		if (Med == "Eutyroks") begin 
+			messageBox( 0, 0, T, "Tylko dla doroslych!" ); end;
+		if (Med == "Metoklopramid") begin 
+			messageBox( 0, 0, T, "1 raz dziennie 2ml w zastrzyku (maksymalnie 3 dni)" ); end;
+		if (Med == "Essentiale esselive") begin 
+			messageBox( 0, 0, T, "Dla doroslych!" ); end;
+		if (Med == "Fitolizyna") begin 
+			messageBox( 0, 0, T, "Kapsulki 1 raz dziennie na czczo" ); end;
+		if (Med == "Furagin") begin 
+			messageBox( 0, 0, T, "3 razy dziennie po 2 tabletki" ); end;
+		if (Med == "Asparganin") begin 
+			messageBox( 0, 0, T, "Tylko dla doroslych!" ); end;
+		if (Med == "Propranolol") begin 
+			messageBox( 0, 0, T, "Dla doroslych!" ); end;
+		if (Med == "Zelazo, witamina B12, kwas foliowy") begin 
+			messageBox( 0, 0, T, "Wielkosc dawki zalezna od rad lekarza" ); end;
+	end;
+
+	function three(char Med, char T)
+	begin
+		if (Med == "Herbapect") begin 
+			messageBox( 0, 0, T, "3 razy dziennie po 5ml" ); end;
+		if (Med == "Mucosolvan") begin 
+			messageBox( 0, 0, T, "2 razy dziennie po 5ml (druga dawka do godziny 16)" ); end;
+		if (Med == "Antybiotyk Rovamecyna") begin 
+			messageBox( 0, 0, T, "2 razy dziennie dawka maksymalna (3000 jednostek)" ); end;
+		if (Med == "Zyrtec, lek przeciwalergiczny") begin 
+			messageBox( 0, 0, T, "1 raz dziennie rano na czczo" ); end;
+		if (Med == "Pyralgina") begin 
+			messageBox( 0, 0, T, "do 4 razy dziennie(czyli co 6 godzin) tabletka - w razie potrzeby" ); end;
+		if (Med == "Kroplowka PWE, plyn wieloelektrolitowy") begin 
+			messageBox( 0, 0, T, "1 raz dziennie 500ml" ); end;
+		if (Med == "Enarenal") begin 
+			messageBox( 0, 0, T, "Wynik uzalezniony od wysokosci cisnienia tetniczego krwi!" ); end;
+		if (Med == "Kroplowka NACL 0,9% GLUKOZA 5%") begin 
+			messageBox( 0, 0, T, "2 razy dziennie 500ml" ); end;
+		if (Med == "Chlorchinaldin") begin 
+			messageBox( 0, 0, T, "Doraznie do ssania" ); end;
+		if (Med == "Tantum verde") begin 
+			messageBox( 0, 0, T, "W razie bolu psikanie do gardla do 4 razy dziennie (co 6 godzin)" ); end;
+		if (Med == "Metotreksat") begin 
+			messageBox( 0, 0, T, "1 raz dziennie 4 gramy" ); end;
+		if (Med == "Aglan zastrzyki") begin 
+			messageBox( 0, 0, T, "1 raz dziennie jedna ampulka" ); end;
+		if (Med == "Insulina") begin 
+			messageBox( 0, 0, T, "Dobierana indywidualna dawka do wagi ciala i wyniku glukozy we krwi." ); end;
+		if (Med == "Eutyroks") begin 
+			messageBox( 0, 0, T, "1 raz dziennie 75 gram. Moze byc inna - wg zalecen lekarza" ); end;
+		if (Med == "Metoklopramid") begin 
+			messageBox( 0, 0, T, "1 raz dziennie 2ml w zastrzyku (maksymalnie 3 dni)" ); end;
+		if (Med == "Essentiale esselive") begin 
+			messageBox( 0, 0, T, "2 razy dziennie" ); end;
+		if (Med == "Fitolizyna") begin 
+			messageBox( 0, 0, T, "Kapsulki 1 raz dziennie na czczo, pasta 2 razy dziennie 1 lyzka" ); end;
+		if (Med == "Furagin") begin 
+			messageBox( 0, 0, T, "3 razy dziennie po 2 tabletki (3 dni) - potem dawke nalezy zmniejszac" ); end;
+		if (Med == "Asparganin") begin 
+			messageBox( 0, 0, T, "1 raz dziennie 1 tabletka" ); end;
+		if (Med == "Propranolol") begin 
+			messageBox( 0, 0, T, "1 raz dziennie" ); end;
+		if (Med == "Zelazo, witamina B12, kwas foliowy") begin 
+			messageBox( 0, 0, T, "Wielkosc dawki zalezna od rad lekarza" ); end;
+	end;
+
+
+	function dawkowanie
+	begin
+		char AAge, Txt, Txt2;
+
+		Txt2 := "! Twoje dawkowanie leku: ";
+
+		oknoDialogowe;
+
+		// ntos( Age, AAge );
+
+		strcat ( Txt,Name );
+		strcat ( Txt,Txt2 ); 
+		strcat ( Txt,Medicine ); 
+
+		if ( Age == 0 ) begin one(Medicine,Txt); end;
+		if ( Age == 1 ) begin two(Medicine,Txt); end;
+		if ( Age == 2 ) begin three(Medicine,Txt); end;
+
+	end;
+
+
+	function dalej
+	begin
+		int Odp;
+		confirmBox(0, 0, "Czy chcesz sprawdzic dawkowanie dla swojego leku?" , 
+			"Nacisnij OK w celu sprawdzenia dawkowania." , Odp);
+
+		if(Odp == 1) begin dawkowanie; end;
+	end;
+
+
+	 
+
+	function wybierzlek
+	begin
+		goal("lek=Lek");
+		delNewFacts;
+		dalej;
+	end;
+
+
+	function about
+	begin
+		int DLG, Ret;
+
+     		dlgCreate( DLG, "", "oprog.dlg" );
+
+     		dlgExecute( DLG, Ret );
+	end;
+
+
+	function wyjdz
+	begin
+		exit;
+	end;
+
+
 run;
-char AAge;
+
 char S1, S2, S3;
 S1 := "Wybor leku dla Ciebie";
 S2 := "System doradczy, ktory pomaga wybrac lek na podstawie Twoich objawow";
@@ -156,21 +360,33 @@ S3 := "Wykonal: Jakub Krolik";
 vignette( S1, S2, S3 );
 setAppWinTitle("Wybierz swoj lek!");
 addSolution( yes );
+//menu "Menu"
+//1. "Wybor leku"
+//2. "Exit"
 
-menu "Menu"
-1. "Wybor leku"
-2. "Exit"
+//	case 1:
+		
 
-	case 1:
-		oknoDialogowe;
-		messageBox( 0, 0, "Komunikat", "Dziekuje za wypelnienie ankiety!" );
-		ntos( Age, AAge );
-		goal("lek=Lek");
-		delNewFacts;
+//	case 2:
+//		exit;
 
-	case 2:
-		exit;
-end;
+	int MenuGlowne, Opcje, Inne;
+
+   	createMenu( MenuGlowne );
+
+   		createPopupMenu( Opcje, "&Opcje programu" );
+			appendMenu( Opcje, "&Wybierz lek", wybierzlek );
+			appendMenu( Opcje, "&Dawkowanie", dawkowanie );
+				appendMenu( MenuGlowne, menu, Opcje );
+
+		createPopupMenu( Inne, "&Inne" );
+			appendMenu( Inne, "&O programie", about );
+			appendMenu( Inne, "&Wyjscie", wyjdz );
+				appendMenu( MenuGlowne, menu, Inne );
+
+ 	fullMenu( MenuGlowne );
+
+//end;
 end;
 end;
 
