@@ -65,64 +65,64 @@ objawy:
 
 
 lek:
-ask no;
+	ask no;
 
 end;
 
 
 rules
 
-01: lek = "Herbapect"		if objawy = "kaszel", rodzajkaszlu = "suchy";
-02: lek = "Mucosolvan"		if objawy = "kaszel", rodzajkaszlu = "mokry";
+	01: lek = "Herbapect"		if objawy = "kaszel", rodzajkaszlu = "suchy";
+	02: lek = "Mucosolvan"		if objawy = "kaszel", rodzajkaszlu = "mokry";
 
 // --------------------------------------------------------------------
 
-03: lek = "Antybiotyk Rovamecyna"		if objawy = "katar", rodzajkataru = "ropny";
-04: lek = "Zyrtec, lek przeciwalergiczny"	if objawy = "katar", rodzajkataru = "wodnisty";
+	03: lek = "Antybiotyk Rovamecyna"		if objawy = "katar", rodzajkataru = "ropny";
+	04: lek = "Zyrtec, lek przeciwalergiczny"	if objawy = "katar", rodzajkataru = "wodnisty";
 
 // --------------------------------------------------------------------
 
-05: lek = "Pyralgina"					if objawy = "temperatura", jakatemperatura = "wysoka (do 40 stopni)";
-06: lek = "Kroplowka PWE, plyn wieloelektrolitowy"	if objawy = "temperatura", jakatemperatura = "niska (ponizej 36 stopni)";
+	05: lek = "Pyralgina"					if objawy = "temperatura", jakatemperatura = "wysoka (do 40 stopni)";
+	06: lek = "Kroplowka PWE, plyn wieloelektrolitowy"	if objawy = "temperatura", jakatemperatura = "niska (ponizej 36 stopni)";
 
 // --------------------------------------------------------------------
 
-07: lek = "Enarenal"				if objawy = "bole", czegodotyczybol = "glowa", cisnieniekrwi = "wysokie";
-08: lek = "Kroplowka NACL 0,9% GLUKOZA 5%"	if objawy = "bole", czegodotyczybol = "glowa", cisnieniekrwi = "niskie";
-09: lek = "Chlorchinaldin"			if objawy = "bole", czegodotyczybol = "gardlo", formaleku = "do ssania";
-10: lek = "Tantum verde"			if objawy = "bole", czegodotyczybol = "gardlo", formaleku = "do psikania";
-11: lek = "Metotreksat"				if objawy = "bole", czegodotyczybol = "kostno-stawowy", stawy = "kolanowy";
-12: lek = "Aglan zastrzyki"			if objawy = "bole", czegodotyczybol = "kostno-stawowy", stawy = "barkowy";
+	07: lek = "Enarenal"				if objawy = "bole", czegodotyczybol = "glowa", cisnieniekrwi = "wysokie";
+	08: lek = "Kroplowka NACL 0,9% GLUKOZA 5%"	if objawy = "bole", czegodotyczybol = "glowa", cisnieniekrwi = "niskie";
+	09: lek = "Chlorchinaldin"			if objawy = "bole", czegodotyczybol = "gardlo", formaleku = "do ssania";
+	10: lek = "Tantum verde"			if objawy = "bole", czegodotyczybol = "gardlo", formaleku = "do psikania";
+	11: lek = "Metotreksat"				if objawy = "bole", czegodotyczybol = "kostno-stawowy", stawy = "kolanowy";
+	12: lek = "Aglan zastrzyki"			if objawy = "bole", czegodotyczybol = "kostno-stawowy", stawy = "barkowy";
 
 // --------------------------------------------------------------------
 
-13: lek = "Insulina"				if objawy = "wahania masy ciala", jakiewahania = "spadek masy ciala", przyczynaspadku = "cukrzyca";
-14: lek = "Wymagany kontakt ze specjalista"	if objawy = "wahania masy ciala", jakiewahania = "spadek masy ciala", przyczynaspadku = "anoreksja";
-15: lek = "Eutyroks"				if objawy = "wahania masy ciala", jakiewahania = "wzrost masy ciala", przyczynawzrostu = "niedoczynnosc tarczycy";
-16: lek = "Wymagany kontakt z dietetykiem"	if objawy = "wahania masy ciala", jakiewahania = "wzrost masy ciala", przyczynawzrostu = "bledy zywieniowe";
+	13: lek = "Insulina"				if objawy = "wahania masy ciala", jakiewahania = "spadek masy ciala", przyczynaspadku = "cukrzyca";
+	14: lek = "Wymagany kontakt ze specjalista"	if objawy = "wahania masy ciala", jakiewahania = "spadek masy ciala", przyczynaspadku = "anoreksja";
+	15: lek = "Eutyroks"				if objawy = "wahania masy ciala", jakiewahania = "wzrost masy ciala", przyczynawzrostu = "niedoczynnosc tarczycy";
+	16: lek = "Wymagany kontakt z dietetykiem"	if objawy = "wahania masy ciala", jakiewahania = "wzrost masy ciala", przyczynawzrostu = "bledy zywieniowe";
 
 // --------------------------------------------------------------------
 
-17: lek = "Metoklopramid"			if objawy = "wymioty", rodzajwymiotow = "trescia pokarmowa";
-18: lek = "Essentiale esselive"			if objawy = "wymioty", rodzajwymiotow = "zulcia";
-19: lek = "Wymagana operacja chirurgiczna"	if objawy = "wymioty", rodzajwymiotow = "krwia";
+	17: lek = "Metoklopramid"			if objawy = "wymioty", rodzajwymiotow = "trescia pokarmowa";
+	18: lek = "Essentiale esselive"			if objawy = "wymioty", rodzajwymiotow = "zulcia";
+	19: lek = "Wymagana operacja chirurgiczna"	if objawy = "wymioty", rodzajwymiotow = "krwia";
 
 // --------------------------------------------------------------------
 
-20: lek = "Wymagane usuniecie kamieni poprzez operacje"		if objawy = "problemy z oddawaniem moczu", mocz = "bezmocz";
-21: lek = "Fitolizyna"						if objawy = "problemy z oddawaniem moczu", mocz = "czeste oddawanie moczu", jakaformaleku = "pasta";
-22: lek = "Furagin"						if objawy = "problemy z oddawaniem moczu", mocz = "czeste oddawanie moczu", jakaformaleku = "tabletki";
+	20: lek = "Wymagane usuniecie kamieni poprzez operacje"		if objawy = "problemy z oddawaniem moczu", mocz = "bezmocz";
+	21: lek = "Fitolizyna"						if objawy = "problemy z oddawaniem moczu", mocz = "czeste oddawanie moczu", jakaformaleku = "pasta";
+	22: lek = "Furagin"						if objawy = "problemy z oddawaniem moczu", mocz = "czeste oddawanie moczu", jakaformaleku = "tabletki";
 
 // --------------------------------------------------------------------
 
-23: lek = "Asparganin"					if objawy = "bole", czegodotyczybol = "serce", szerzejserce = "kolatanie serca";
-24: lek = "Potrzebne sa szczegolowe badania!!!"		if objawy = "bole", czegodotyczybol = "serce", szerzejserce = "zaburzenie rytmu pracy serca + dusznosci";
-25: lek = "Propranolol"					if objawy = "bole", czegodotyczybol = "serce", szerzejserce = "przyspieszone bicie serca";
+	23: lek = "Asparganin"					if objawy = "bole", czegodotyczybol = "serce", szerzejserce = "kolatanie serca";
+	24: lek = "Potrzebne sa szczegolowe badania!!!"		if objawy = "bole", czegodotyczybol = "serce", szerzejserce = "zaburzenie rytmu pracy serca + dusznosci";
+	25: lek = "Propranolol"					if objawy = "bole", czegodotyczybol = "serce", szerzejserce = "przyspieszone bicie serca";
 
 // --------------------------------------------------------------------
 
-26: lek = "Wymagany dluzszy sen, odpowiednia ilosc wody, mniejszy stres, odpowiednia dieta, witaminy"		if objawy = "zmeczenie", jakiezmeczenie = "krotkotrwale";
-27: lek = "Zelazo, witamina B12, kwas foliowy"									if objawy = "zmeczenie", jakiezmeczenie = "dlugotrwale";
+	26: lek = "Wymagany dluzszy sen, odpowiednia ilosc wody, mniejszy stres, odpowiednia dieta, witaminy"		if objawy = "zmeczenie", jakiezmeczenie = "krotkotrwale";
+	27: lek = "Zelazo, witamina B12, kwas foliowy"									if objawy = "zmeczenie", jakiezmeczenie = "dlugotrwale";
 
 // --------------------------------------------------------------------
 
@@ -301,8 +301,6 @@ control
 
 		oknoDialogowe;
 
-		// ntos( Age, AAge );
-
 		strcat ( Txt,Name );
 		strcat ( Txt,Txt2 ); 
 		strcat ( Txt,Medicine ); 
@@ -352,23 +350,14 @@ control
 
 run;
 
-char S1, S2, S3;
-S1 := "Wybor leku dla Ciebie";
-S2 := "System doradczy, ktory pomaga wybrac lek na podstawie Twoich objawow";
-S3 := "Wykonal: Jakub Krolik";
+	char S1, S2, S3;
+		S1 := "Wybor leku dla Ciebie";
+		S2 := "System doradczy, ktory pomaga wybrac lek na podstawie Twoich objawow";
+		S3 := "Wykonal: Jakub Krolik";
 
-vignette( S1, S2, S3 );
-setAppWinTitle("Wybierz swoj lek!");
-addSolution( yes );
-//menu "Menu"
-//1. "Wybor leku"
-//2. "Exit"
-
-//	case 1:
-		
-
-//	case 2:
-//		exit;
+	vignette( S1, S2, S3 );
+	setAppWinTitle("Wybierz swoj lek!");
+	addSolution( yes );
 
 	int MenuGlowne, Opcje, Inne;
 
@@ -386,7 +375,6 @@ addSolution( yes );
 
  	fullMenu( MenuGlowne );
 
-//end;
 end;
 end;
 
