@@ -7,6 +7,8 @@
 void samochody();       // ksiazka o samochodach
 std::string apart(std::string str);
 
+int counterRozdzial = 0, counterPodrozdzial = 0, counterPodpodrozdzial = 0;
+
 int main(){
     samochody();
 
@@ -54,25 +56,23 @@ void samochody(){
         ou1->add(ou2);
         ou1->add(ou9);
 
-    ou1->showInfo();
+    ou1->showInfo(counterRozdzial,counterPodrozdzial,counterPodpodrozdzial);
 }
 
 ReferenceUnit::ReferenceUnit(std::string tit, std::string typ) : title(tit),type(typ){};
 
 BaseUnit::BaseUnit(std::string tit, std::string typ) : ReferenceUnit(tit,typ){};
 
-void BaseUnit::showInfo(){std::cout << " " << type << ": " << title << std::endl;}
+void BaseUnit::showInfo(int& counterRozdzial,int& counterPodrozdzial,int& counterPodpodrozdzial){std::cout << " " << type << ": " << title << std::endl;}
 
 OrganizationalUnit::OrganizationalUnit(std::string tit, std::string typ) : ReferenceUnit(tit,typ){};
 
 void OrganizationalUnit::add(std::shared_ptr<ReferenceUnit> x) {components.push_back(x);}
 
-void OrganizationalUnit::showInfo(){
-    int counterRozdzial = 0, counterPodrozdzial = 0, counterPodpodrozdzial = 0;
-    std::string takenType,firstPart;
+void OrganizationalUnit::showInfo(int& counterRozdzial,int& counterPodrozdzial,int& counterPodpodrozdzial){
+    std::string takenType,firstPart,spaces="";
 
     std::cout << type << ": " << title << std::endl;
-
     for(auto x : components){
         takenType = (x->getType());
         firstPart = apart(takenType);
@@ -82,24 +82,37 @@ void OrganizationalUnit::showInfo(){
             std::cout << counterRozdzial << ".";
             std::cout << counterPodrozdzial << ".";
             std::cout << counterPodpodrozdzial << ". ";
-            x->showInfo();
+            x->showInfo(counterRozdzial,counterPodrozdzial,counterPodpodrozdzial);
         }
         if(firstPart == "Podrozdzial"){
             counterPodrozdzial += 1;
             std::cout << "   ";
             std::cout << counterRozdzial << ".";
             std::cout << counterPodrozdzial << ". ";
-            x->showInfo();
+            counterPodpodrozdzial = 0;
+            x->showInfo(counterRozdzial,counterPodrozdzial,counterPodpodrozdzial);
         }
         if(firstPart == "Rozdzial"){
             counterRozdzial += 1;
             std::cout << " ";
             std::cout << counterRozdzial << ". ";
-            x->showInfo();
+            counterPodrozdzial = 0;
+            counterPodpodrozdzial = 0;
+            x->showInfo(counterRozdzial,counterPodrozdzial,counterPodpodrozdzial);
         }
         if(firstPart == "Akapit"){
-            std::cout << "      ";
-            x->showInfo();
+            if(counterRozdzial > 0){
+                spaces += "   ";
+                if(counterPodrozdzial > 0){
+                    spaces += "    ";
+                    if(counterPodpodrozdzial > 0){
+                        spaces += "     ";
+                    }
+                }
+            }
+            std::cout << spaces;
+            spaces = "";
+            x->showInfo(counterRozdzial,counterPodrozdzial,counterPodpodrozdzial);
         }
     }
 }
