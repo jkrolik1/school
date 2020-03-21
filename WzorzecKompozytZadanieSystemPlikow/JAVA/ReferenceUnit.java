@@ -10,6 +10,8 @@ public abstract class ReferenceUnit {
     String getType()    { return type; }
 
     public abstract void showInfo();
+    public abstract boolean findObjB(String str);
+    public abstract ReferenceUnit findObj(String str);
     protected String name;
     protected String type;
 }
