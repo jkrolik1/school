@@ -101,15 +101,13 @@ void OrganizationalUnit::showInfo(int& counterRozdzial,int& counterPodrozdzial,i
             x->showInfo(counterRozdzial,counterPodrozdzial,counterPodpodrozdzial);
         }
         if(firstPart == "Akapit"){
-            if(counterRozdzial > 0){
+            if(counterRozdzial > 0)
                 spaces += "   ";
-                if(counterPodrozdzial > 0){
+                if(counterPodrozdzial > 0)
                     spaces += "    ";
-                    if(counterPodpodrozdzial > 0){
+                    if(counterPodpodrozdzial > 0)
                         spaces += "     ";
-                    }
-                }
-            }
+
             std::cout << spaces;
             spaces = "";
             x->showInfo(counterRozdzial,counterPodrozdzial,counterPodpodrozdzial);
