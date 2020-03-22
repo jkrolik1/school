@@ -1,3 +1,7 @@
+import decorators.ParagraphDecorator;
+import decorators.PlainText;
+import decorators.StrongDecorator;
+
 import java.util.Scanner;
 
 public class main {

@@ -1,4 +1,6 @@
-class Text extends PlainText{
+import decorators.PlainText;
+
+class Text extends PlainText {
     protected String s;
 
     public Text(String s){
