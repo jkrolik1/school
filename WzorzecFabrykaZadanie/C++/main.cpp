@@ -15,7 +15,7 @@ int main(){
     std::string line = getText();
 
     std::unique_ptr<TagFactoryClient> client = std::make_unique<TagFactoryClient>();
-    std::string s = client->createAndUseTag(line);
+    client->createAndUseTag(line);
 
 
     return 0;
@@ -52,61 +52,20 @@ std::string ConfigFile::getType(){
     return line;
 }
 
-std::string ConfigFile::nextType(std::string){
-    std::string line("");
-
-    std::cout << std::endl;
-    std::cout << "Select tag: " << std::endl;
-    std::cout << "- p" << std::endl;
-    std::cout << "- strong" << std::endl;
-    std::cout << "- em" << std::endl;
-    std::cout << "- mark" << std::endl;
-    std::cout << std::endl;
-    std::cout << "> ";
-
-    getline(std::cin,line);
-
-    return line;
+void PTag::execTag(std::string content){
+    std::cout << std::endl << "<p>" << content << "</p>" << std::endl;
 }
 
-std::string PTag::execTag(std::string content){
-    std::cout << std::endl;
-    std::string ret("");
-    ret += "<p>";
-    ret += content;
-    ret += "</p>";
-    std::cout << ret << std::endl;
-    return ret;
+void StrongTag::execTag(std::string content){
+    std::cout << std::endl << "<strong>" << content << "</strong>" << std::endl;
 }
 
-std::string StrongTag::execTag(std::string content){
-    std::cout << std::endl;
-    std::string ret("");
-    ret += "<strong>";
-    ret += content;
-    ret += "</strong>";
-    std::cout << ret << std::endl;
-    return ret;
+void EmTag::execTag(std::string content){
+    std::cout << std::endl << "<em>" << content << "</em>" << std::endl;
 }
 
-std::string EmTag::execTag(std::string content){
-    std::cout << std::endl;
-    std::string ret("");
-    ret += "<em>";
-    ret += content;
-    ret += "</em>";
-    std::cout << ret << std::endl;
-    return ret;
-}
-
-std::string MarkTag::execTag(std::string content){
-    std::cout << std::endl;
-    std::string ret("");
-    ret += "<mark>";
-    ret += content;
-    ret += "</mark>";
-    std::cout << ret << std::endl;
-    return ret;
+void MarkTag::execTag(std::string content){
+    std::cout << std::endl << "<mark>" << content << "</mark>" << std::endl;
 }
 
 std::unique_ptr<Choice> TagFactory::createTag(std::unique_ptr<ConfigFile> cf){
@@ -124,14 +83,12 @@ std::unique_ptr<Choice> TagFactory::createTag(std::unique_ptr<ConfigFile> cf){
     return nullptr;
 }
 
-std::string TagFactoryClient::createAndUseTag(std::string line){
+void TagFactoryClient::createAndUseTag(std::string line){
     std::unique_ptr<TagFactory> tagF = std::make_unique<TagFactory>();
 
     std::unique_ptr<Choice> choice = tagF->createTag(std::move(cnF));
 
-    std::string str = choice->execTag(line); //!
-
-    return str;
+    choice->execTag(line);
 }
 
 
