@@ -1,45 +1,51 @@
 #include <string>
 #include <memory>
+#include <vector>
 
 class ConfigFile{
 public:
     std::string getType();
-    std::string nextType(std::string);
+    std::string getNextType();
 };
 
 class Choice{
 public:
-    virtual void execTag(std::string) = 0;
+    virtual std::string execTag(std::string) = 0;
 };
 
 class PTag : public Choice{
 public:
-    void execTag(std::string);
+    std::string execTag(std::string);
 };
 
 class StrongTag : public Choice{
 public:
-    void execTag(std::string);
+    std::string execTag(std::string);
 };
 
 class EmTag : public Choice{
 public:
-    void execTag(std::string);
+    std::string execTag(std::string);
 };
 
 class MarkTag : public Choice{
 public:
-    void execTag(std::string);
+    std::string execTag(std::string);
+};
+
+class NoneTag : public Choice{
+public:
+    std::string execTag(std::string);
 };
 
 class TagFactory{
 public:
-    std::unique_ptr<Choice> createTag(std::unique_ptr<ConfigFile>);
+    std::shared_ptr<Choice> createTag(std::shared_ptr<ConfigFile>);
 };
 
 class TagFactoryClient{
-    std::unique_ptr<ConfigFile> cnF = std::make_unique<ConfigFile>();
+    std::shared_ptr<ConfigFile> cnF = std::make_shared<ConfigFile>();
 public:
-    void createAndUseTag(std::string);
+    std::string createAndUseTag(std::string);
 
 };
