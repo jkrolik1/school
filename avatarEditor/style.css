@@ -1,0 +1,65 @@
+body{
+	position: absolute;
+	bottom: 0px; 
+	top: 0px; 
+	left: 0px; 
+	right: 0px;
+}
+
+#template{
+	height: 100%;
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.x{
+	padding: 5%;
+	width: 40%;
+	height: 80%;
+	float: left;
+}
+
+#sim{
+	background-image: url(images/sim.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 100%;
+	height: 100%;
+}
+
+#trousers{
+	background-image: url(images/trousers.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 100%;
+	height: 100%;
+}
+#shirt{
+	background-image: url(images/shirt.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 100%;
+	height: 100%;
+}
+#hair{
+	background-image: url(images/hair.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 100%;
+	height: 100%;
+}
+#glasses{
+	background-image: url(images/glasses.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 100%;
+	height: 100%;
+}
+
+.part2{
+	padding: 5%;
+	width: 40%;
+	height: 80%;
+	float: left;
+}
