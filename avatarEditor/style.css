@@ -13,53 +13,49 @@ body{
 	margin-right: auto;
 }
 
-.x{
-	padding: 5%;
-	width: 40%;
-	height: 80%;
+#left{
+	width: 50%;
+	height: 100%;
 	float: left;
+	position: relative;
+}
+
+#sim,#trousers,#hair,#shirt,#glasses{
+	width: 100%;
+	height: 100%;
+	background-position: center;
+	background-repeat: no-repeat;
+	position: absolute;
 }
 
 #sim{
 	background-image: url(images/sim.png);
-	background-repeat: no-repeat;
-	background-position: center;
-	width: 100%;
-	height: 100%;
 }
 
 #trousers{
 	background-image: url(images/trousers.png);
-	background-repeat: no-repeat;
-	background-position: center;
-	width: 100%;
-	height: 100%;
-}
-#shirt{
-	background-image: url(images/shirt.png);
-	background-repeat: no-repeat;
-	background-position: center;
-	width: 100%;
-	height: 100%;
-}
-#hair{
-	background-image: url(images/hair.png);
-	background-repeat: no-repeat;
-	background-position: center;
-	width: 100%;
-	height: 100%;
-}
-#glasses{
-	background-image: url(images/glasses.png);
-	background-repeat: no-repeat;
-	background-position: center;
-	width: 100%;
-	height: 100%;
 }
 
-.part2{
+#hair{
+	background-image: url(images/hair.png);
+}
+	
+#shirt{
+	background-image: url(images/shirt.png);
+}
+
+#glasses{
+	background-image: url(images/glasses.png);
+}
+
+.right{
 	padding: 5%;
 	width: 40%;
 	height: 80%;
 	float: left;
+	
+}
+
+h2{
+	cursor: pointer;
 }
