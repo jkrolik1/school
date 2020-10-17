@@ -18,10 +18,12 @@ window.onload = function(){
 		var span = hairS.getElementsByTagName("span")[0];
 		if(hair.style.display !== "block"){
 			hair.style.display = "block";
-			span.innerHTML = "Delete "
+			span.innerHTML = "Take off hair";
+			span.style.fontWeight = "bold";
 		}else{
 			hair.style.display = "none";
-			span.innerHTML = "Add "
+			span.innerHTML = "Put on hair";
+			span.style.fontWeight = "lighter";
 		}
 	}
 
@@ -30,10 +32,12 @@ window.onload = function(){
 		var span1 = glassesS.getElementsByTagName("span")[0];
 		if(glasses.style.display !== "block"){
 			glasses.style.display = "block";
-			span1.innerHTML = "Delete "
+			span1.innerHTML = "Take off glasses";
+			span1.style.fontWeight = "bold";
 		}else{
 			glasses.style.display = "none";
-			span1.innerHTML = "Add "
+			span1.innerHTML = "Put on glasses";
+			span1.style.fontWeight = "lighter";
 		}
 	}
 
@@ -42,10 +46,12 @@ window.onload = function(){
 		var span2 = shirtS.getElementsByTagName("span")[0];
 		if(shirt.style.display !== "block"){
 			shirt.style.display = "block";
-			span2.innerHTML = "Delete "
+			span2.innerHTML = "Take off shirt";
+			span2.style.fontWeight = "bold";
 		}else{
 			shirt.style.display = "none";
-			span2.innerHTML = "Add "
+			span2.innerHTML = "Put on shirt";
+			span2.style.fontWeight = "lighter";
 		}
 	}
 
@@ -54,10 +60,12 @@ window.onload = function(){
 		var span3 = trousersS.getElementsByTagName("span")[0];
 		if(trousers.style.display !== "block"){
 			trousers.style.display = "block";
-			span3.innerHTML = "Delete "
+			span3.innerHTML = "Take off trousers";
+			span3.style.fontWeight = "bold";
 		}else{
 			trousers.style.display = "none";
-			span3.innerHTML = "Add "
+			span3.innerHTML = "Put on trousers";
+			span3.style.fontWeight = "lighter";
 		}
 	}
 	
