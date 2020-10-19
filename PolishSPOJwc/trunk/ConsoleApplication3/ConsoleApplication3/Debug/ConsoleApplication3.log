@@ -1,0 +1,5 @@
+﻿  ConsoleApplication3.cpp
+D:\Dokumenty\SVN\PolishSPOJwc\trunk\ConsoleApplication3\ConsoleApplication3\ConsoleApplication3.cpp(13,27): warning C4018: '<': signed/unsigned mismatch
+D:\Dokumenty\SVN\PolishSPOJwc\trunk\ConsoleApplication3\ConsoleApplication3\ConsoleApplication3.cpp(15,25): warning C4018: '<': signed/unsigned mismatch
+D:\Dokumenty\SVN\PolishSPOJwc\trunk\ConsoleApplication3\ConsoleApplication3\ConsoleApplication3.cpp(19,62): warning C4018: '<': signed/unsigned mismatch
+  ConsoleApplication3.vcxproj -> D:\Dokumenty\SVN\PolishSPOJwc\trunk\ConsoleApplication1\Debug\ConsoleApplication3.exe
