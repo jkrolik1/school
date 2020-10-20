@@ -1,0 +1,4 @@
+﻿  ConsoleApplication7.cpp
+D:\Dokumenty\SVN\PolishSPOJwc\trunk\ConsoleApplication7\ConsoleApplication7\ConsoleApplication7.cpp(26,23): warning C4018: '<': signed/unsigned mismatch
+D:\Dokumenty\SVN\PolishSPOJwc\trunk\ConsoleApplication7\ConsoleApplication7\ConsoleApplication7.cpp(29,27): warning C4018: '<': signed/unsigned mismatch
+  ConsoleApplication7.vcxproj -> D:\Dokumenty\SVN\PolishSPOJwc\trunk\ConsoleApplication7\Debug\ConsoleApplication7.exe
