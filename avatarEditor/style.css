@@ -1,0 +1,62 @@
+body{
+	position: absolute;
+	bottom: 0px; 
+	top: 0px; 
+	left: 0px; 
+	right: 0px;
+}
+
+#template{
+	height: 100%;
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#left{
+	width: 50%;
+	height: 100%;
+	float: left;
+	position: relative;
+}
+
+#sim,#trousers,#hair,#shirt,#glasses{
+	width: 100%;
+	height: 100%;
+	background-position: center;
+	background-repeat: no-repeat;
+	position: absolute;
+}
+
+#sim{
+	background-image: url(images/sim.png);
+}
+
+#trousers{
+	background-image: url(images/trousers.png);
+}
+
+#hair{
+	background-image: url(images/hair.png);
+}
+	
+#shirt{
+	background-image: url(images/shirt.png);
+}
+
+#glasses{
+	background-image: url(images/glasses.png);
+}
+
+.right{
+	padding: 5%;
+	width: 40%;
+	height: 80%;
+	float: left;
+	
+}
+
+h2{
+	cursor: pointer;
+	font-weight: lighter;
+}
