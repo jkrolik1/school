@@ -8,6 +8,7 @@
     border-color: teal;
     border-radius: 1.5%;
     text-align: center;
+    margin-top: 1%;
 }
 .title{
     font-style: italic;
@@ -62,10 +63,10 @@ li{
 }
 
 .button2{
-    padding: 0.2em 2em;
+    padding: 0.1em 1em;
     margin: 0.2em;
     background-color: rgb(220, 255, 255);
-    font-size: 0.6em;
+    font-size: 0.55em;
     cursor: pointer;
 }
 

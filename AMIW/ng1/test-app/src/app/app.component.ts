@@ -35,11 +35,6 @@ export class AppComponent {
     this.listX.splice(index,1);
   }
 
-  onDone(ele){
-  }
 
 }
 
-// przy kazdej pozycji przycisk do usuwania tej pozycji
-// przy kazdej pozycji done ? jest przekreslane, jest w liscie zrobionych itd
-// zeby po wcisnieciu klawisza tez bylo podswietlone
