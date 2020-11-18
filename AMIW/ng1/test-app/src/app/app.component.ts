@@ -24,7 +24,7 @@ export class AppComponent {
   }
 
   onClearUp(){
-    this.listX[0] = ''; // !!!!!!!!!!
+    this.listX.shift();
   }
 
 }
