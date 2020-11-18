@@ -8,7 +8,14 @@ import { Component } from '@angular/core';
 
 
 export class AppComponent {
+  name: any;
+  //listX = [];
+
   onAdd(event){
-    console.log(event.target.value);
+    //this.name = event.target.value;
+    //this.listX.push(name);
+    if(event.key === "Enter"){
+      console.log(event.target.value);
+    }
   }
 }
