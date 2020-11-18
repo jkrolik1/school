@@ -11,7 +11,10 @@ export class AppComponent {
   listX = [];
 
   onAdd(name){
-    this.listX.push(name);
+    if (!(name === '')){
+      this.listX.push(name);
+    }
+    
     console.log(this.listX);
   }
 
@@ -25,6 +28,14 @@ export class AppComponent {
 
   onClearUp(){
     this.listX.shift();
+  }
+
+  onDelete(ele){
+    let index = this.listX.findIndex(element => element == ele);
+    this.listX.splice(index,1);
+  }
+
+  onDone(ele){
   }
 
 }
