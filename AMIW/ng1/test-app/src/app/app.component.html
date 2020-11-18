@@ -1,6 +1,13 @@
-<input type="text" (keyup.enter)="onAdd($event.target.value)">
-
+<input type="text" #in (keyup.enter)="onAdd($event.target.value)">
+<button (click)="onAdd(in.value)" style="display: block;">Dodaj</button>
 
 <ul>
     <li *ngFor="let item of listX">{{item}}</li>
 </ul>
+
+<div>
+    <button (click)="onClear()">Wyczyść</button>
+    <button (click)="onClearDown()">Wyczyść dolne</button>
+    <button (click)="onClearUp()">Wyczyść górne</button>
+</div>
+
