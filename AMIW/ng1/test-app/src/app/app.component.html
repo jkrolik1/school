@@ -1,6 +1,6 @@
-<input type="text" (keyup.enter)="onAdd($event)">
+<input type="text" (keyup.enter)="onAdd($event.target.value)">
 
 
 <ul>
-    <li>{{name}}</li>
+    <li *ngFor="let item of listX">{{item}}</li>
 </ul>
