@@ -28,7 +28,11 @@
     font-size: 1.4em;
     color: snow;
     margin: 0.2em;
-    width: 80%;
+    width: 81%;
+}
+
+.inputS:focus{
+    background-color: rgb(104, 158, 158);
 }
 
 .button1{
@@ -37,6 +41,7 @@
     background-color: rgb(220, 255, 255);
     font-size: 1em;
     cursor: pointer;
+    font-weight: 600;
 }
 
 .button1:hover{
@@ -63,11 +68,13 @@ li{
 }
 
 .button2{
-    padding: 0.1em 1em;
+    padding: 0.1em 1.2em;
     margin: 0.2em;
     background-color: rgb(220, 255, 255);
     font-size: 0.55em;
     cursor: pointer;
+    border: 0.1%;
+    border-color: rgb(124, 124, 124);
 }
 
 .button2:hover{

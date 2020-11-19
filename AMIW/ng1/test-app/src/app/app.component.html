@@ -11,6 +11,11 @@
     <ul>
         <li *ngFor="let item of listX">{{item}}
             <button class = "button2" (click)="onDelete(item)">Usuń</button>
+            <button class = "button2" (click)="onDone(item)">Zrobione</button>
+        </li>
+        <li *ngFor="let item2 of listY" [ngStyle]="styleS">{{item2}}
+            <button class = "button2" (click)="onDelete2(item2)">Usuń</button>
+            <button class = "button2" (click)="onUndone(item2)">Nie zrobione</button>
         </li>
     </ul>
 
