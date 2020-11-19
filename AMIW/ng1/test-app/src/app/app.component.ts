@@ -30,7 +30,6 @@ export class AppComponent {
     }else{
       this.listY.pop();
     }
-    
   }
 
   onClearUp(){
@@ -53,7 +52,7 @@ export class AppComponent {
   }
 
   onDelete2(ele){
-    let index = this.listX.findIndex(element => element == ele);
+    let index = this.listY.findIndex(element => element == ele);
     this.listY.splice(index,1);
   }
 
