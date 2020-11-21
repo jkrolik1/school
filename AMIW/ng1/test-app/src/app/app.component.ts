@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -13,10 +13,13 @@ export class AppComponent {
 
   styleS = {'text-decoration': 'line-through'};
 
+  @ViewChild('in') inputName;
+
   onAdd(name){
     if (!(name === '')){
       this.listX.push(name);
     }
+    this.inputName.nativeElement.value = '';
   }
 
   onClear(){
