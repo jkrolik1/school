@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TodoService } from './todo.service';
 
 @Component({
   selector: 'app-root',
@@ -8,14 +9,22 @@ import { Component } from '@angular/core';
 
 
 export class AppComponent {
-  listX = ['a','b','c'];
+  todos = []
+  
+  constructor(private todoService: TodoService) { }
 
-  onAdd(name){
-    this.listX.push(name);
+  ngOnInit(){
+    this.todoService.getTodos().subscribe( todos => {
+      this.todos = todos;
+    });
+  }
+
+  onAdd(name: string){
+    this.todoService.addToDo(name);
   }
 
   onClear(){
-    this.listX = [];
+    this.todoService.removeAll();
   }
 
 }
