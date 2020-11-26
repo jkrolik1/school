@@ -1,13 +1,23 @@
-<div class = 'all'>
-    <input type="text" #in (keyup.enter)="onAdd($event.target.value)">
-    <div id = 'buttons'>
-        <button (click)="onAdd(in.value)" class="button1">Dodaj</button>
-    </div>
+<html>
+    <head>
+        <title>Aplikacja do zapisywania zadań</title>
+    </head>
+    <body>
+        <div class = 'all'>
+            <form [formGroup] = "todoForm" (ngSubmit)="add()">
+                <input type="text" #in formControlName="title" placeholder="Tytuł zadania">
+                <div id = 'buttons'>
+                    <input type="submit" value="Dodaj zadanie" [disabled]="todoForm.invalid">
+                </div>
+            </form>
 
-    <ul>
-        <li *ngFor="let item of todos">{{item}}</li>
-    </ul>
+            
+            <ul>
+                <li *ngFor="let item of todos">{{item}}</li>
+            </ul>
+            
+        </div>
+    </body>
+</html>
 
-    <button (click)="onClear()" class="button1">Wyczyść</button>
-</div>
 
