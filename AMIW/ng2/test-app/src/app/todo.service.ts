@@ -27,11 +27,15 @@ export class TodoService {
     }
   }
 
-/*   addToDo(todo: string){
-    this.todos.push(todo);
-  }
+  removeAll(): void{
+    let list: string[] = JSON.parse(localStorage.getItem('todolist'));
+    list.splice(0,list.length);
+    localStorage.setItem('todolist',JSON.stringify(list));
+  } 
 
-  removeAll(){
-    this.todos.splice(0,this.todos.length);
-  } */
+  delete(index: number): void{
+    let list: string[] = JSON.parse(localStorage.getItem('todolist'));
+    list.splice(index,1);
+    localStorage.setItem('todolist',JSON.stringify(list));
+  }
 }

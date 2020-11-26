@@ -1,0 +1,93 @@
+.all {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 100%;
+    height: 95vh;
+}
+
+.main {
+    width: 75%; height: 70vh;
+    margin: 0 auto;
+    border-top: 1px dotted rgba(255, 250, 250, 0.137);
+    color: snow;
+}
+
+#title {
+    padding: 1.5% 0px;
+    font-size: 3em;
+    text-align: center;
+    letter-spacing: .1em;
+    border-bottom: 3px solid rgba(255, 250, 250, 0.329);
+    opacity: 0.85;
+}
+#title:hover{
+    opacity: 1;
+}
+
+#body{
+    padding: 5%;
+}
+
+#form1{
+    text-align: center;
+}
+
+.button{
+    width: 30%;
+    opacity: 0.9;
+    font-size: 18px;
+}
+.button:hover{
+    background-color: rgb(43, 43, 43);
+    border: 2px solid snow;
+    color: snow;
+}
+
+#buttonX{
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.txt{
+    width: 40%;
+    background-color: rgba(255, 250, 250, 0.822);
+    opacity: 0.8;
+    border: 2px solid snow;
+    padding: 5px;
+    margin-bottom: 3px;
+    font-size: 18px;
+}
+
+.txt:focus{
+    opacity: 1;
+}
+
+li {
+    list-style-type: none;
+    margin-left: 7%;
+    padding: 5px;
+    border: 1px solid rgba(255, 250, 250, 0);
+}
+li:hover{
+    background-color: rgba(255, 250, 250, 0.041);
+    border: 1px solid snow;
+}
+ul {
+    margin-top: 3%;
+    text-align: center;
+    opacity: 0.8;
+    font-size: 25px;
+}
+
+#del{
+    cursor: pointer;
+    opacity: 0.3;
+}
+
+#del:hover{
+    opacity: 0.8;
+    
+}

@@ -29,15 +29,24 @@ export class AppComponent {
   add(): void{
     this.todoService.add(this.todoForm.value.title);
     this.todos = this.todoService.findAll();
+    this.todoForm.reset();
   }
 
-/*   onAdd(name: string){
-    this.todoService.addToDo(name);
-  }
+ removeAll(): void{
+    var result = confirm("Czy jesteś pewien?");
+    if(result){
+      this.todoService.removeAll();
+      this.todos = this.todoService.findAll();
+    }
+  } 
 
-  onClear(){
-    this.todoService.removeAll();
-  } */
+  delete(index: number): void{
+    var result = confirm("Czy jesteś pewien?");
+    if(result){
+      this.todoService.delete(index);
+      this.todos = this.todoService.findAll();
+    }
+  }
 
 }
 
