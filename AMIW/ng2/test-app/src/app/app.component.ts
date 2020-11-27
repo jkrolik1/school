@@ -13,6 +13,9 @@ export class AppComponent {
   
   todoForm: FormGroup;
   todos: string[];
+  todosDone: string[];
+
+  style2 = {'text-decoration': 'line-through'};
 
   constructor(
     private todoService: TodoService,
@@ -24,12 +27,26 @@ export class AppComponent {
       title: ['',[Validators.required]]
     });    
     this.todos = this.todoService.findAll();
+    this.todosDone = this.todoService.findAll2();
   }
 
   add(): void{
     this.todoService.add(this.todoForm.value.title);
     this.todos = this.todoService.findAll();
+    this.todosDone = this.todoService.findAll2();
     this.todoForm.reset();
+  }
+
+  done(index: number): void{
+    this.todoService.done(index);
+    this.todos = this.todoService.findAll();
+    this.todosDone = this.todoService.findAll2();
+  }
+
+  undone(index: number): void{
+    this.todoService.undone(index);
+    this.todos = this.todoService.findAll();
+    this.todosDone = this.todoService.findAll2();
   }
 
  removeAll(): void{
@@ -37,6 +54,7 @@ export class AppComponent {
     if(result){
       this.todoService.removeAll();
       this.todos = this.todoService.findAll();
+      this.todosDone = this.todoService.findAll2();
     }
   } 
 
@@ -45,7 +63,25 @@ export class AppComponent {
     if(result){
       this.todoService.delete(index);
       this.todos = this.todoService.findAll();
+      this.todosDone = this.todoService.findAll2();
     }
+  }
+  delete2(index: number): void{
+    var result = confirm("Czy jesteś pewien?");
+    if(result){
+      this.todoService.delete2(index);
+      this.todos = this.todoService.findAll();
+      this.todosDone = this.todoService.findAll2();
+    }
+  }
+
+  goUp(index: number): void{
+    if(index == 0){
+      var result = confirm("Jestem już na górze.");
+    }
+    this.todoService.goUp(index);
+    this.todos = this.todoService.findAll();
+    this.todosDone = this.todoService.findAll2();
   }
 
 }
