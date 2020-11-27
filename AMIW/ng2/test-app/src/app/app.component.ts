@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms'
+import { readdirSync } from 'fs';
 import { TodoService } from './todo.service';
 
 @Component({
@@ -15,7 +16,8 @@ export class AppComponent {
   todos: string[];
   todosDone: string[];
 
-  style2 = {'text-decoration': 'line-through'};
+  style2 = {'text-decoration': 'line-through',
+            'color': 'rgb(150, 150, 150)'};
 
   constructor(
     private todoService: TodoService,
