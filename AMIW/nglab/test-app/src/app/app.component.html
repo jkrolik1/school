@@ -5,7 +5,7 @@
     </div>
 
     <ul>
-        <li *ngFor="let item of todos">{{item}}</li>
+        <li *ngFor="let item of todos">{{item.label}} --- {{item.date}}</li>
     </ul>
 
     <button (click)="onClear()" class="button1">Wyczyść</button>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import * as moment from 'moment';
 import { TodoService } from './todo.service';
 
 @Component({
@@ -9,7 +10,13 @@ import { TodoService } from './todo.service';
 
 
 export class AppComponent {
-  todos = []
+  private todos = [
+    {
+      "label": "Zadanie przykładowe",
+      "date": moment().toDate()
+    }
+  ];
+
   
   constructor(private todoService: TodoService) { }
 

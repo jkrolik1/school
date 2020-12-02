@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
+import * as moment from 'moment';
 import { of } from 'rxjs/internal/observable/of';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodoService {
-  private todos = ['a','b','c'];
+  private todos = [
+    {
+      "label": "Zadanie przykładowe",
+      "date": moment().format('MMMM Do YYYY, h:mm:ss a')
+    }
+  ];
 
   constructor() {}
 
@@ -14,7 +20,10 @@ export class TodoService {
   }
 
   addToDo(todo: string){
-    this.todos.push(todo);
+    this.todos.push({
+      "label": todo,
+      "date": moment().format('MMMM Do YYYY, h:mm:ss a')
+    });
   }
 
   removeAll(){
