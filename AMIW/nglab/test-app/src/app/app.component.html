@@ -4,8 +4,10 @@
         <button (click)="onAdd(in.value)" class="button1">Dodaj</button>
     </div>
 
+    <item>sss</item>
+
     <ul>
-        <li *ngFor="let item of todos">{{item.label}} --- ({{item.date | date}})</li>
+        <li *ngFor="let item of todos">{{item.label}} ({{item.date | date}})</li>
     </ul>
 
     <button (click)="onClear()" class="button1">Wyczyść</button>
