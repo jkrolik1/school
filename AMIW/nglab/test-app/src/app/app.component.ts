@@ -13,7 +13,7 @@ export class AppComponent {
   private todos = [
     {
       "label": "Zadanie przykładowe",
-      "date": moment().toDate()
+      "date": moment().format('MMMM Do YYYY, h:mm:ss a')
     }
   ];
 
