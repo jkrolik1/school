@@ -9,7 +9,7 @@ export class TodoService {
   private todos = [
     {
       "label": "Zadanie przykładowe",
-      "date": moment().format('MMMM Do YYYY, h:mm:ss a')
+      "date": 211212121
     }
   ];
 
@@ -22,7 +22,7 @@ export class TodoService {
   addToDo(todo: string){
     this.todos.push({
       "label": todo,
-      "date": moment().format('MMMM Do YYYY, h:mm:ss a')
+      "date": Date.now()
     });
   }
 
