@@ -1,1 +1,19 @@
-<p>item works!</p>
+<ul>
+    <li *ngFor="let item of todos; let i = index">
+        {{item.title}} 
+        <span id="dateStyle"><br style="display:block;"/>
+            {{item.date}}
+        </span> 
+        <div id="del" (click)="goUp(i)" style="float:right;">Na górę</div><br/>
+        <div id="del" (click)="done(i)" style="float:right;">Zrobione</div><br/>
+        <div id="del" (click)="delete(i)" style="float:right;">Usuń mnie</div><br/>
+    </li>
+    <li *ngFor="let item2 of todosDone; let i = index" [ngStyle]="style2">
+        {{item2.title}} 
+        <span id="dateStyle"><br style="display:block;"/>
+            {{item2.date}}
+        </span> 
+        <div id="del" (click)="undone(i)" style="float:right;">Nie zrobione</div><br/>
+        <div id="del" (click)="delete2(i)" style="float:right;">Usuń mnie</div><br/>
+    </li>
+</ul>

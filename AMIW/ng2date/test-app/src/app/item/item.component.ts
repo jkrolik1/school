@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Validators, FormGroup, FormBuilder } from '@angular/forms'
+import { TodoService } from '../todo.service';
 
 @Component({
   selector: 'app-item',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ItemComponent implements OnInit {
 
-  constructor() { }
+  private todoForm: FormGroup;
+  private todos: { title: string; date: string; }[];
+  private todosDone: { title: string; date: string; }[];
 
-  ngOnInit(): void {
+  constructor(
+    private todoService: TodoService,
+    private FormBuilder: FormBuilder
+  ) { }
+
+  ngOnInit(){
+    this.todoForm = this.FormBuilder.group({
+      title: ['',[Validators.required]]
+    });    
+    this.todos = this.todoService.findAll();
+    this.todosDone = this.todoService.findAll2();
   }
 
 }
