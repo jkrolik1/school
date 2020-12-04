@@ -11,9 +11,9 @@ import { TodoService } from './todo.service';
 
 export class AppComponent {
   
-  private todoForm: FormGroup;
-  private todos: { title: string; date: string; }[];
-  private todosDone: { title: string; date: string; }[];
+  todoForm: FormGroup;
+  todos: { title: string; date: string; }[];
+  todosDone: { title: string; date: string; }[];
 
   style2 = {'text-decoration': 'line-through',
             'color': 'rgb(150, 150, 150)'};
