@@ -14,12 +14,9 @@ export class AppComponent {
   todoForm: FormGroup;
   todos: { title: string; date: string; }[];
   todosDone: { title: string; date: string; }[];
-<<<<<<< HEAD
 
   style2 = {'text-decoration': 'line-through',
             'color': 'rgb(150, 150, 150)'};
-=======
->>>>>>> d2f5248f14cf48ce6057343d8b557ad7ddc89eb8
 
   constructor(
     private todoService: TodoService,
@@ -41,6 +38,18 @@ export class AppComponent {
     this.todoForm.reset();
   }
 
+  done(index: number): void{
+    this.todoService.done(index);
+    this.todos = this.todoService.findAll();
+    this.todosDone = this.todoService.findAll2();
+  }
+
+  undone(index: number): void{
+    this.todoService.undone(index);
+    this.todos = this.todoService.findAll();
+    this.todosDone = this.todoService.findAll2();
+  }
+
  removeAll(): void{
     var result = confirm("Czy jesteś pewien?");
     if(result){
@@ -49,5 +58,32 @@ export class AppComponent {
       this.todosDone = this.todoService.findAll2();
     }
   } 
+
+  delete(index: number): void{
+    var result = confirm("Czy jesteś pewien?");
+    if(result){
+      this.todoService.delete(index);
+      this.todos = this.todoService.findAll();
+      this.todosDone = this.todoService.findAll2();
+    }
+  }
+  delete2(index: number): void{
+    var result = confirm("Czy jesteś pewien?");
+    if(result){
+      this.todoService.delete2(index);
+      this.todos = this.todoService.findAll();
+      this.todosDone = this.todoService.findAll2();
+    }
+  }
+
+  goUp(index: number): void{
+    if(index == 0){
+      var result = confirm("Jestem już na górze.");
+    }
+    this.todoService.goUp(index);
+    this.todos = this.todoService.findAll();
+    this.todosDone = this.todoService.findAll2();
+  }
+
 }
 
