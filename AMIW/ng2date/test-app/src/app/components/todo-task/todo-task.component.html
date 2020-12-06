@@ -1,0 +1,19 @@
+<ul>
+  <li *ngFor="let open of openTasks; let i = index">
+    {{open.title}}
+    <span id="dateStyle"><br style="display:block;" />
+      {{open.date}}
+    </span>
+    <div id="del" (click)="onGoUp(i)" style="float:right;">Na górę</div><br />
+    <div id="del" (click)="onDone(i)" style="float:right;">Zrobione</div><br />
+    <div id="del" (click)="onDelete(i)" style="float:right;">Usuń mnie</div><br />
+  </li>
+  <li *ngFor="let done of doneTasks; let i = index" [ngStyle]="style2">
+    {{done.title}}
+    <span id="dateStyle"><br style="display:block;" />
+      {{done.date}}
+    </span>
+    <div id="del" (click)="onUndone(i)" style="float:right;">Nie zrobione</div><br />
+    <div id="del" (click)="onDelete2(i)" style="float:right;">Usuń mnie</div><br />
+  </li>
+</ul>

@@ -1,0 +1,12 @@
+    <div id="body">
+      <div id="form1">
+        <input type="text" #in placeholder="Tytuł zadania" class="txt" (keyup.enter)="onAdd()"
+          [(ngModel)]="todos.title">
+        <div id="buttonX">
+          <input type="submit" value="Dodaj zadanie" class="button" (click)="onAdd()">
+        </div>
+      </div>
+      <div id="form1">
+        <input type="submit" value="Wyczyść listę" class="button" (click)="onRemoveAll()">
+      </div>
+    </div>
