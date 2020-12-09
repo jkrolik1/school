@@ -6,12 +6,7 @@ import { of } from 'rxjs/internal/observable/of';
   providedIn: 'root'
 })
 export class TodoService {
-  private todos = [
-    {
-      "label": "Zadanie przykładowe",
-      "date": 123
-    }
-  ];
+  private todos = [];
 
   constructor() {}
 
@@ -22,7 +17,7 @@ export class TodoService {
   addToDo(todo: string){
     this.todos.push({
       "label": todo,
-      "date": 123
+      "date": moment()
     });
   }
 

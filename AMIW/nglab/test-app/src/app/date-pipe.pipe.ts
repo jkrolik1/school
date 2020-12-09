@@ -6,8 +6,9 @@ import * as moment from 'moment';
 })
 export class DatePipePipe implements PipeTransform {
 
-  transform(value: unknown, ...args: unknown[]): unknown {
-    return moment().startOf('hour').fromNow(); ;
+  transform(value: moment.Moment, ...args: unknown[]): string {
+    const t = value.format();
+    return t;
   }
 
 }
