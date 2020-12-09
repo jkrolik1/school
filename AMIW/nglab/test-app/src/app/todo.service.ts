@@ -9,7 +9,7 @@ export class TodoService {
   private todos = [
     {
       "label": "Zadanie przykładowe",
-      "date": 211212121
+      "date": 123
     }
   ];
 
@@ -22,7 +22,7 @@ export class TodoService {
   addToDo(todo: string){
     this.todos.push({
       "label": todo,
-      "date": Date.now()
+      "date": 123
     });
   }
 
