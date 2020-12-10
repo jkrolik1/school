@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
 import * as moment from 'moment';
 
@@ -8,7 +7,24 @@ import * as moment from 'moment';
 export class TodotimePipe implements PipeTransform {
 
   transform(value: number, ...args: unknown[]): string {
-    return moment(value).lang("pl").fromNow();
+
+    const a = moment();
+    const b = moment(value);
+    const hours = a.diff(b, 'hours');
+
+    if (hours < 23) {
+      return moment(value).lang("pl").fromNow();
+    } else {
+      moment(value).calendar(null,{
+        lastDay : '[Yesterday]',
+        sameDay : '[Today]',
+        nextDay : '[Tomorrow]',
+        lastWeek : '[last] dddd',
+        nextWeek : 'dddd',
+        sameElse : 'L'
+      })
+      return moment(value).lang("pl").calendar();
+    }
   }
 
 }
