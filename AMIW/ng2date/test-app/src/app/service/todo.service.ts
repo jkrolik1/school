@@ -32,7 +32,7 @@ export class TodoService {
   add(task: { title: any; date: string; }): void {
     this.openTasks.push({
       title: task.title,
-      date: moment().format('MMM Do YY - LT'),
+      date: new Date(),
     });
     localStorage.setItem('todoOpenTasks', JSON.stringify(this.openTasks));
   }
