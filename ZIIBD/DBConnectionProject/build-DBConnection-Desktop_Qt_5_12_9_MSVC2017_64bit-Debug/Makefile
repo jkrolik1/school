@@ -222,6 +222,7 @@ Makefile: ..\DBConnection\DBConnection.pro D:\Qt_v5.12.9\5.12.9\msvc2017_64\mksp
 		D:\Qt_v5.12.9\5.12.9\msvc2017_64\mkspecs\features\qt_config.prf \
 		D:\Qt_v5.12.9\5.12.9\msvc2017_64\mkspecs\win32-msvc\qmake.conf \
 		D:\Qt_v5.12.9\5.12.9\msvc2017_64\mkspecs\features\spec_post.prf \
+		.qmake.stash \
 		D:\Qt_v5.12.9\5.12.9\msvc2017_64\mkspecs\features\exclusive_builds.prf \
 		D:\Qt_v5.12.9\5.12.9\msvc2017_64\mkspecs\common\msvc-version.conf \
 		D:\Qt_v5.12.9\5.12.9\msvc2017_64\mkspecs\features\toolchain.prf \
@@ -397,6 +398,7 @@ D:\Qt_v5.12.9\5.12.9\msvc2017_64\mkspecs\features\qt_functions.prf:
 D:\Qt_v5.12.9\5.12.9\msvc2017_64\mkspecs\features\qt_config.prf:
 D:\Qt_v5.12.9\5.12.9\msvc2017_64\mkspecs\win32-msvc\qmake.conf:
 D:\Qt_v5.12.9\5.12.9\msvc2017_64\mkspecs\features\spec_post.prf:
+.qmake.stash:
 D:\Qt_v5.12.9\5.12.9\msvc2017_64\mkspecs\features\exclusive_builds.prf:
 D:\Qt_v5.12.9\5.12.9\msvc2017_64\mkspecs\common\msvc-version.conf:
 D:\Qt_v5.12.9\5.12.9\msvc2017_64\mkspecs\features\toolchain.prf:
