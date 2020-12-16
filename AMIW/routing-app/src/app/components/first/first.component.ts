@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FirstServiceService } from './../../services/first-service.service';
 
 @Component({
   selector: 'app-first',
@@ -7,17 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FirstComponent implements OnInit {
 
-  joke: any;
+  joke: any[];
 
-  constructor() { }
+  constructor(private FirstService: FirstServiceService) { }
 
   ngOnInit(): void {
-    fetch('https://api.jokes.one/jod')
-    .then(response => response.json())
-    .then(data => {
-      var joke = data.contents.jokes[0].joke.text;
-      this.joke = joke;
+    this.FirstService.disp().subscribe((open) => {
+      this.joke = open;
     });
+
       
   }
 
