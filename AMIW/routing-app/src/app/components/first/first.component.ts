@@ -7,9 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FirstComponent implements OnInit {
 
+  joke: any;
+
   constructor() { }
 
   ngOnInit(): void {
+    fetch('https://api.jokes.one/jod')
+    .then(response => response.json())
+    .then(data => {
+      var joke = data.contents.jokes[0].joke.text;
+      this.joke = joke;
+    });
+      
   }
 
 }
