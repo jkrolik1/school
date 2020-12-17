@@ -8,9 +8,13 @@ import { FirstServiceService } from './../../services/first-service.service';
 })
 export class SecondComponent implements OnInit {
 
-  constructor() { }
+  joke2: String;
+
+  constructor(private FirstService: FirstServiceService) { }
 
   ngOnInit(): void {
+    this.FirstService.best2().subscribe((open) => {
+      this.joke2 = open;
+    });
   }
-
 }
