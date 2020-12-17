@@ -6,10 +6,10 @@ import { ThirdComponent } from './components/third/third.component';
 import { BestAllComponent } from './components/bestall/bestall.component';
 
 const routes: Routes = [
-  { path: 'first-component', component: FirstComponent },
-  { path: 'second-component', component: SecondComponent },
-  { path: 'third-component', component: ThirdComponent },
-  { path: 'bestall-component', component: BestAllComponent },
+  { path: 'the-best-today-animals', component: FirstComponent },
+  { path: 'the-best-today-blonde', component: SecondComponent },
+  { path: 'the-best-today-knockknock', component: ThirdComponent },
+  { path: 'the-best-today', component: BestAllComponent },
 ];
 
 @NgModule({
