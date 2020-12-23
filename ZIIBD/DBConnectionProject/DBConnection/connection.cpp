@@ -8,9 +8,7 @@ Connection::Connection()
 bool Connection::create_connection()
 {
     QSqlDatabase db=QSqlDatabase::addDatabase("QODBC");
-    db.setHostName("155.158.112.45");
-    db.setPort(1521);
-    db.setDatabaseName("oltpstud");
+    db.setDatabaseName("oracle");
     db.setUserName("ziibd19");
     db.setPassword("haslo1");
 
