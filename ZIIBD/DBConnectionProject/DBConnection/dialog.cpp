@@ -14,7 +14,14 @@ Dialog::Dialog(QWidget *parent)
 
     if(ok)
     {
-        ui->textEdit->setText("Dobrze");
+        QSqlQuery q;
+        if(q.exec("SELECT * FROM employees"))
+        {
+            while(q.next())
+            {
+                ui->textEdit->setText(q.value(1).toString());
+            }
+        }
     }
     else
     {
