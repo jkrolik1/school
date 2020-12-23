@@ -3,6 +3,8 @@
 #include <QSqlDatabase>
 #include "connection.h"
 
+#include <QSqlQueryModel>
+
 Dialog::Dialog(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::Dialog)
@@ -12,22 +14,23 @@ Dialog::Dialog(QWidget *parent)
     Connection c;
     bool ok = c.create_connection();
 
+    QSqlQueryModel *model = new QSqlQueryModel();
+
     if(ok)
     {
         QSqlQuery q;
-        if(q.exec("SELECT * FROM employees"))
+        q.prepare("SELECT * FROM employees");
+        if(q.exec())
         {
-            while(q.next())
-            {
-                ui->textEdit->setText(q.value(1).toString());
-            }
+            model->setQuery(q);
+            ui->tableView->setModel(model);
         }
+
     }
     else
     {
-        ui->textEdit->setText("Zle");
+        delete model;
     }
-
 }
 
 Dialog::~Dialog()
