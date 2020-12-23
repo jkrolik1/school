@@ -33,3 +33,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 QT += sql
+INCPATH +=d:\oraclexe\app\oracle\product\11.2.0\server\oci\include
+LIBS+=-Ld:\oraclexe\app\oracle\product\11.2.0\server\oci\lib\msvc
