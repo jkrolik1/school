@@ -1,15 +1,29 @@
 #include "dialog.h"
 #include "ui_dialog.h"
+#include "dialog2.h"
+#include "ui_dialog2.h"
+
 #include <QSqlDatabase>
 #include "connection.h"
-
 #include <QSqlQueryModel>
+#include <QStandardItemModel>
 
 Dialog::Dialog(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::Dialog)
 {
     ui->setupUi(this);
+
+    QString cs1="QPushButton {"
+                    "font-size: 15px;"
+                    "background-color: rgb(128,128,128);"
+                    "color: white;"
+                "}"
+                 "QPushButton:hover {"
+                    "background-color: white;"
+                    "color: black;"
+                 "}";
+    ui->pushButton->setStyleSheet(cs1);
 
     Connection c;
     bool ok = c.create_connection();
@@ -24,8 +38,10 @@ Dialog::Dialog(QWidget *parent)
         {
             model->setQuery(q);
             ui->tableView->setModel(model);
+            ui->tableView->setColumnWidth(0,230);
+            ui->tableView->horizontalHeader()->setSectionResizeMode
+                    (QHeaderView::Stretch);
         }
-
     }
     else
     {
@@ -41,4 +57,18 @@ Dialog::~Dialog()
 void Dialog::on_pushButton_clicked()
 {
     Dialog::close();
+}
+
+void Dialog::on_tableView_doubleClicked(const QModelIndex &index)
+{
+    Dialog2 *subDialog = new Dialog2;
+    int row = index.row();
+    QString x =
+            ui->tableView->model()->data
+            (ui->tableView->model()->index(row,0)).toString();
+
+    subDialog->setWindowTitle("Tabela " + x);
+    subDialog->show();
+
+    subDialog->TableManager(x);
 }
