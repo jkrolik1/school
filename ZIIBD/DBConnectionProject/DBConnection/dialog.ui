@@ -6,16 +6,73 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>581</width>
-    <height>302</height>
+    <width>305</width>
+    <height>455</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_2">
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(64,64,64);</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="3" column="0">
+    <widget class="Line" name="line_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QTableView" name="tableView">
+     <property name="styleSheet">
+      <string notr="true">background-color: 	rgb(64,64,64);
+</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QPushButton" name="pushButton">
+     <property name="styleSheet">
+      <string notr="true">font-size: 15px;
+background-color: rgb(128,128,128);
+color: 	rgb(64,64,64);</string>
+     </property>
+     <property name="text">
+      <string>Wyjdź</string>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0">
-    <widget class="QTableView" name="tableView"/>
+    <widget class="QLabel" name="label">
+     <property name="styleSheet">
+      <string notr="true">font-size: 18px;
+color: rgb(220,220,220);</string>
+     </property>
+     <property name="text">
+      <string>Połaczenie z bazą danych</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="styleSheet">
+      <string notr="true">font-size: 15px;
+background-color: rgb(128,128,128);
+color: 	rgb(64,64,64);</string>
+     </property>
+     <property name="text">
+      <string>Wybierz tabelę</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

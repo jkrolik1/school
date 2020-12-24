@@ -19,7 +19,7 @@ Dialog::Dialog(QWidget *parent)
     if(ok)
     {
         QSqlQuery q;
-        q.prepare("SELECT * FROM employees");
+        q.prepare("SELECT table_name as \"Tabele w bazie\" FROM user_tables");
         if(q.exec())
         {
             model->setQuery(q);
@@ -38,3 +38,7 @@ Dialog::~Dialog()
     delete ui;
 }
 
+void Dialog::on_pushButton_clicked()
+{
+    Dialog::close();
+}
