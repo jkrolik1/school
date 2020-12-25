@@ -5,7 +5,6 @@
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
 #include <unordered_map>
-#include <vector>
 
 QVector<QLabel*> la;
 QVector<QLineEdit*> le;

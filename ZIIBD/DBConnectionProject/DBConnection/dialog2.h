@@ -26,6 +26,8 @@ private slots:
 
     void on_pushButton_3_clicked();
 
+    void on_pushButton_2_clicked();
+
 private:
     QString tableName;
     Ui::Dialog2 *ui;

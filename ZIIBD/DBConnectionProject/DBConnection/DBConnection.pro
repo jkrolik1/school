@@ -20,21 +20,27 @@ SOURCES += \
     dialog2.cpp \
     main.cpp \
     dialog.cpp \
+    queries/choseforupdate.cpp \
     queries/deletefrom.cpp \
-    queries/insert.cpp
+    queries/insert.cpp \
+    queries/updatetable.cpp
 
 HEADERS += \
     connection.h \
     dialog.h \
     dialog2.h \
+    queries/choseforupdate.h \
     queries/deletefrom.h \
-    queries/insert.h
+    queries/insert.h \
+    queries/updatetable.h
 
 FORMS += \
     dialog.ui \
     dialog2.ui \
+    queries/choseforupdate.ui \
     queries/deletefrom.ui \
-    queries/insert.ui
+    queries/insert.ui \
+    queries/updatetable.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

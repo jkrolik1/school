@@ -4,6 +4,8 @@
 
 #include "queries/insert.h"
 #include "queries/deletefrom.h"
+#include "queries/updatetable.h"
+#include "queries/choseforupdate.h"
 
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
@@ -82,5 +84,20 @@ void Dialog2::on_pushButton_3_clicked()
     deleteX->show();
     deleteX->setTableName(tableName);
     deleteX->deleteData();
+    Dialog2::close();
+}
+
+void Dialog2::on_pushButton_2_clicked()
+{
+    choseForUpdate *cfu = new choseForUpdate;
+    QString tableName = getTableName();
+
+    cfu->setTableName(tableName);
+
+    cfu->setWindowTitle("Wybierz rekord");
+
+    cfu->choseLine();
+    cfu->show();
+
     Dialog2::close();
 }
