@@ -82,7 +82,7 @@ void Insert::insertData(QString tableName)
     for(auto t : newRows)
     {
         la.append(new QLabel(this));
-        la[it]->setText("Wypełnij " + t.first);
+        la[it]->setText(t.first);
         la[it]->setGeometry(ax,ay,300,30);
         la[it]->resize(300,30);
         la[it]->show();

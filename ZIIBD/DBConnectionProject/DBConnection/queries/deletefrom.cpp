@@ -4,6 +4,7 @@
 
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
+#include <QMessageBox>
 
 deleteFrom::deleteFrom(QWidget *parent) :
     QDialog(parent),
@@ -46,17 +47,13 @@ deleteFrom::~deleteFrom()
 
 void deleteFrom::on_tableView_doubleClicked(const QModelIndex &index)
 {
-    ui->tableView_2->resize(0,0);
-
     int row = index.row();
-    QString y =
-            ui->tableView->model()->data
-            (ui->tableView->model()->index(row,0)).toString();
     QSqlQueryModel *model5 = new QSqlQueryModel();
-    QSqlQuery delQ;
-    QString tableName = getTableName();
-    QString h;
-    QSqlQuery columnName0;
+    QString tableName = getTableName(), columnName = "",
+            deleteID = ui->tableView->model()->
+                        data(ui->tableView->model()->index(row,0)).toString();
+    QSqlQuery delQ, columnName0;
+    QMessageBox warnMessage;
 
     columnName0.prepare
             ("select COLUMN_NAME from ALL_TAB_COLUMNS where TABLE_NAME='"
@@ -69,15 +66,35 @@ void deleteFrom::on_tableView_doubleClicked(const QModelIndex &index)
         QModelIndex newIndex = ui->tableView_2->model()->index(0,0);
         int row2 = newIndex.row();
         int col2 = newIndex.column();
-        h = ui->tableView_2->model()->data
+        columnName = ui->tableView_2->model()->data
                 (ui->tableView_2->model()->index(row2,col2)).toString();
     }
 
     delQ.prepare
-            ("DELETE FROM " + tableName + " WHERE " + h + " = ?");
-    delQ.addBindValue(y);
+            ("DELETE FROM " + tableName + " WHERE " + columnName + " = ?");
+    delQ.addBindValue(deleteID);
 
-    delQ.exec();
+    QMessageBox msgBox(
+                QMessageBox::Question,
+                "Potwierdzenie usunięcia rekordu",
+                "Czy usunąć rekord, gdzie " + columnName + " = " + deleteID + " ?",
+                QMessageBox::Yes | QMessageBox::No);
 
+    msgBox.setButtonText(QMessageBox::Yes, "Usuń");
+    msgBox.setButtonText(QMessageBox::No, "Wyjdź");
+    deleteFrom::setWindowOpacity(0.9);
 
+    switch(msgBox.exec())
+    {
+        case QMessageBox::Yes:
+            delQ.exec();
+            deleteFrom::close();
+        break;
+        case QMessageBox::No:
+            deleteFrom::close();
+        break;
+        default:
+            deleteFrom::close();
+        break;
+    }
 }

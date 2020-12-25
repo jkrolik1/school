@@ -71,14 +71,16 @@ void Dialog2::on_pushButton_clicked()
     insertX->show();
     insertX->setTableName(tableName);
     insertX->insertData(tableName);
+    Dialog2::close();
 }
 
 void Dialog2::on_pushButton_3_clicked()
 {
     deleteFrom *deleteX = new deleteFrom;
     QString tableName = getTableName();
-    deleteX->setWindowTitle("Usuń rekord do tabeli " + tableName);
+    deleteX->setWindowTitle("Usuń rekord z tabeli " + tableName);
     deleteX->show();
     deleteX->setTableName(tableName);
     deleteX->deleteData();
+    Dialog2::close();
 }
