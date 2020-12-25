@@ -8,11 +8,15 @@
 #include <QSqlQueryModel>
 #include <QStandardItemModel>
 
+#include <memory>
+
 Dialog::Dialog(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::Dialog)
 {
     ui->setupUi(this);
+
+    //setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::CustomizeWindowHint);
 
     QString cs1="QPushButton {"
                     "font-size: 15px;"
@@ -71,4 +75,5 @@ void Dialog::on_tableView_doubleClicked(const QModelIndex &index)
     subDialog->show();
 
     subDialog->TableManager(x);
+    subDialog->setTableName(x);
 }

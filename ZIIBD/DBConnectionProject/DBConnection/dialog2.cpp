@@ -2,6 +2,8 @@
 #include "ui_dialog2.h"
 #include "connection.h"
 
+#include "queries/insert.h"
+
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
 
@@ -23,6 +25,16 @@ Dialog2::Dialog2(QWidget *parent) :
     ui->pushButton_2->setStyleSheet(cs1);
     ui->pushButton_3->setStyleSheet(cs1);
     ui->pushButton_4->setStyleSheet(cs1);
+}
+
+void Dialog2::setTableName(QString tableName)
+{
+    this->tableName = tableName;
+}
+
+QString Dialog2::getTableName()
+{
+    return this->tableName;
 }
 
 void Dialog2::TableManager(QString x)
@@ -48,4 +60,13 @@ Dialog2::~Dialog2()
 void Dialog2::on_pushButton_4_clicked()
 {
     Dialog2::close();
+}
+
+void Dialog2::on_pushButton_clicked()
+{
+    Insert *insertX = new Insert;
+    QString tableName = getTableName();
+    insertX->setWindowTitle("Dodaj rekord do tabeli " + tableName);
+    insertX->show();
+    insertX->insertData(tableName);
 }

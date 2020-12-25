@@ -15,12 +15,17 @@ class Dialog2 : public QDialog
 public:
     explicit Dialog2(QWidget *parent = nullptr);
     void TableManager(QString);
+    void setTableName(QString);
+    QString getTableName();
     ~Dialog2();
 
 private slots:
     void on_pushButton_4_clicked();
 
+    void on_pushButton_clicked();
+
 private:
+    QString tableName;
     Ui::Dialog2 *ui;
 };
 

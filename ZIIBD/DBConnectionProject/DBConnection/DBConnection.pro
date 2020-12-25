@@ -19,16 +19,19 @@ SOURCES += \
     connection.cpp \
     dialog2.cpp \
     main.cpp \
-    dialog.cpp
+    dialog.cpp \
+    queries/insert.cpp
 
 HEADERS += \
     connection.h \
     dialog.h \
-    dialog2.h
+    dialog2.h \
+    queries/insert.h
 
 FORMS += \
     dialog.ui \
-    dialog2.ui
+    dialog2.ui \
+    queries/insert.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
