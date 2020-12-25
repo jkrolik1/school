@@ -6,7 +6,6 @@
 #include <QSqlQueryModel>
 #include <unordered_map>
 #include <vector>
-#include <math.h>
 
 QVector<QLabel*> la;
 QVector<QLineEdit*> le;
@@ -29,6 +28,8 @@ Insert::Insert(QWidget *parent) :
     ui->pushButton->setStyleSheet(cs1);
 
     ui->lineEdit_2->setVisible(0);
+    ui->label->setVisible(0);
+    ui->lineEdit->setVisible(0);
 }
 
 QString Insert::getLabelStyle()
@@ -58,7 +59,7 @@ void Insert::insertData(QString tableName)
     QString x;
     int it = 0;
     int ax=10,ay=10;
-    int ax2=200,ay2=13;
+    int ax2=220,ay2=13;
 
     columnsNames.prepare
             ("select COLUMN_NAME from ALL_TAB_COLUMNS where TABLE_NAME='"
@@ -81,7 +82,7 @@ void Insert::insertData(QString tableName)
     for(auto t : newRows)
     {
         la.append(new QLabel(this));
-        la[it]->setText(t.first);
+        la[it]->setText("Wypełnij " + t.first);
         la[it]->setGeometry(ax,ay,300,30);
         la[it]->resize(300,30);
         la[it]->show();
@@ -134,6 +135,9 @@ void Insert::on_pushButton_clicked()
     insertQuery.exec();
 
     QSqlDatabase::database().commit();
+
+    le.clear();
+    la.clear();
 
     Insert::close();
 }

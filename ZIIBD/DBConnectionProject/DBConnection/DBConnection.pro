@@ -20,17 +20,20 @@ SOURCES += \
     dialog2.cpp \
     main.cpp \
     dialog.cpp \
+    queries/deletefrom.cpp \
     queries/insert.cpp
 
 HEADERS += \
     connection.h \
     dialog.h \
     dialog2.h \
+    queries/deletefrom.h \
     queries/insert.h
 
 FORMS += \
     dialog.ui \
     dialog2.ui \
+    queries/deletefrom.ui \
     queries/insert.ui
 
 # Default rules for deployment.

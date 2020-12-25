@@ -3,6 +3,7 @@
 #include "connection.h"
 
 #include "queries/insert.h"
+#include "queries/deletefrom.h"
 
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
@@ -70,4 +71,14 @@ void Dialog2::on_pushButton_clicked()
     insertX->show();
     insertX->setTableName(tableName);
     insertX->insertData(tableName);
+}
+
+void Dialog2::on_pushButton_3_clicked()
+{
+    deleteFrom *deleteX = new deleteFrom;
+    QString tableName = getTableName();
+    deleteX->setWindowTitle("Usuń rekord do tabeli " + tableName);
+    deleteX->show();
+    deleteX->setTableName(tableName);
+    deleteX->deleteData();
 }
