@@ -68,5 +68,6 @@ void Dialog2::on_pushButton_clicked()
     QString tableName = getTableName();
     insertX->setWindowTitle("Dodaj rekord do tabeli " + tableName);
     insertX->show();
+    insertX->setTableName(tableName);
     insertX->insertData(tableName);
 }

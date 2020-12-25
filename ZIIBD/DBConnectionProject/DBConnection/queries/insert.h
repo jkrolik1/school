@@ -16,12 +16,25 @@ class Insert : public QDialog
 public:
     explicit Insert(QWidget *parent = nullptr);
     void insertData(QString);
+    QString getLabelStyle();
+    QString getLineEditStyle();
+    void setTableName(QString);
+    QString getTableName();
     ~Insert();
 
 private slots:
     void on_pushButton_clicked();
 
 private:
+    QString tableName;
+    QString cs1="QLabel {"
+                "font-size: 15px;"
+                "color: rgb(220,220,220);"
+                "}";
+    QString cs2="QLineEdit {"
+                "font-size: 13px;"
+                "color: rgb(220,220,220);"
+                "}";
     std::unordered_map<QString,QString> newRows;
     Ui::Insert *ui;
 };
