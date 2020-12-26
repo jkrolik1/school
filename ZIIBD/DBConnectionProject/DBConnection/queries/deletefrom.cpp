@@ -77,7 +77,7 @@ void deleteFrom::on_tableView_doubleClicked(const QModelIndex &index)
     QMessageBox msgBox(
                 QMessageBox::Question,
                 "Potwierdzenie usunięcia rekordu",
-                "Czy usunąć rekord, gdzie " + columnName + " = " + deleteID + " ?",
+                "Czy usunąć rekord, gdzie " + columnName + " = " + deleteID + "?",
                 QMessageBox::Yes | QMessageBox::No);
 
     msgBox.setButtonText(QMessageBox::Yes, "Usuń");

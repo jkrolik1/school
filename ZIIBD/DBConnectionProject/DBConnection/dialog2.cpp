@@ -15,6 +15,11 @@ Dialog2::Dialog2(QWidget *parent) :
     ui(new Ui::Dialog2)
 {
     ui->setupUi(this);
+
+    setWindowFlags(Qt::WindowMinimizeButtonHint |
+                   Qt::WindowMaximizeButtonHint |
+                   Qt::WindowCloseButtonHint);
+
     QString cs1="QPushButton {"
                     "font-size: 15px;"
                     "background-color: rgb(128,128,128);"

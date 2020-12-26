@@ -4,6 +4,7 @@
 
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
+#include <QSqlError>
 #include <unordered_map>
 #include <QMessageBox>
 
@@ -21,7 +22,7 @@ updateTable::updateTable(QWidget *parent) :
     ui->tableView_3->setVisible(0);
     ui->label->setVisible(0);
     ui->lineEdit->setVisible(0);
-    ui->lineEdit_2->setVisible(0);
+    //ui->lineEdit_2->setVisible(0);
 }
 
 void updateTable::updateData(const QModelIndex &index, QString name)
@@ -79,6 +80,7 @@ void updateTable::updateData(const QModelIndex &index, QString name)
             int col2 = newIndex.column();
             iValue = ui->tableView->model()->data
                     (ui->tableView->model()->index(row2,col2)).toString();
+            ui->lineEdit_2->insert(QString::number(row2) + " PPPP " + QString::number(col2));
         }
 
         la2.append(new QLabel(this));
@@ -136,8 +138,10 @@ updateTable::~updateTable()
 void updateTable::on_pushButton_clicked()
 {
     QSqlQuery updateQuery;
-    QString tableName = getTableName(), query;
+    QString tableName = getTableName(), query, h = "";
     QRegExp re("\\d*");
+    int o = 0;
+    bool ok = false;
 
     query = "UPDATE " + getTableName() + " SET ";
 
@@ -157,7 +161,7 @@ void updateTable::on_pushButton_clicked()
         {
             query += "\"";
             query += la2[c]->text();
-            query += "\" = '?', ";
+            query += "\" = ?, ";
         }
     }
 
@@ -168,20 +172,62 @@ void updateTable::on_pushButton_clicked()
 
     for(int c = 0; c < le2.size(); ++c)
     {
-        updateQuery.addBindValue(le2[c]->text());
+        if(re.exactMatch(le2[c]->text()))
+        {
+            o = (le2[c]->text()).toInt(&ok);
+            if (ok)
+                updateQuery.addBindValue(o);
+        }
+        else
+        {
+            h = le2[c]->text();
+            ui->lineEdit_2->insert(h + " ");
+            updateQuery.addBindValue(h);
+        }
     }
 
     QMessageBox msgBox(
                 QMessageBox::Question,
-                "Potwierdzenie usunięcia rekordu",
-                query,
+                "Potwierdzenie zmiany rekordu",
+                "Czy chcesz zatwierdzić swoje zmiany?",
                 QMessageBox::Yes | QMessageBox::No);
 
-    msgBox.exec();
+    QMessageBox msgInfo(
+                QMessageBox::Information,
+                "Status operacji zmiany",
+                "Wprowadzono zmiany",
+                QMessageBox::Ok);
+    QMessageBox msgCritical(
+                QMessageBox::Critical,
+                "Status operacji zmiany",
+                "Wystąpił błąd. Nie wprowadzono zmian.\n" + query,
+                QMessageBox::Cancel);
 
-    updateQuery.exec();
+    msgBox.setButtonText(QMessageBox::Yes, "Zmień");
+    msgBox.setButtonText(QMessageBox::No, "Wyjdź");
+    msgCritical.setButtonText(QMessageBox::Cancel, "Wyjdź");
 
-    QSqlDatabase::database().commit();
+    updateTable::setWindowOpacity(0.9);
+
+    switch(msgBox.exec())
+    {
+        case QMessageBox::Yes:
+            if(updateQuery.exec())
+            {
+                QSqlDatabase::database().commit();
+                msgInfo.exec();
+                updateTable::close();
+            }
+            else
+                msgCritical.exec();
+        break;
+        case QMessageBox::No:
+            updateTable::close();
+        break;
+        default:
+            updateTable::close();
+        break;
+    }
 
     updateTable::close();
 }

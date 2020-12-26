@@ -16,7 +16,11 @@ Dialog::Dialog(QWidget *parent)
 {
     ui->setupUi(this);
 
+    // Frameless
     //setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint | Qt::CustomizeWindowHint);
+    setWindowFlags(Qt::WindowMinimizeButtonHint |
+                   Qt::WindowMaximizeButtonHint |
+                   Qt::WindowCloseButtonHint);
 
     QString cs1="QPushButton {"
                     "font-size: 15px;"
