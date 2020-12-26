@@ -32,7 +32,12 @@ void updateTable::updateData(const QModelIndex &index, QString name)
     int it = 0;
     int ax=10,ay=10;
     int ax2=220,ay2=13;
-    int row = index.row();
+    int row;
+    QRegExp re("\\d*");
+
+    le2.clear();
+    la2.clear();
+    newRows.clear();
 
     columnName0Q = "select COLUMN_NAME from ALL_TAB_COLUMNS where TABLE_NAME='"
             +tableName.toUpper()+"'";
@@ -49,6 +54,7 @@ void updateTable::updateData(const QModelIndex &index, QString name)
                 (ui->tableView->model()->index(row2,col2)).toString();
     }
 
+    row = model7->rowCount();
     for(int i=0; i<row; ++i)
     {
         x = ui->tableView->model()->
@@ -62,8 +68,6 @@ void updateTable::updateData(const QModelIndex &index, QString name)
         myQuery = ("select " + t.first + " from " + getTableName() +
                    " where " + columnName + " = '" + name + "'");
         values.prepare(myQuery);
-
-        ui->lineEdit_2->setText(myQuery);
 
         if(values.exec())
         {
@@ -98,7 +102,10 @@ void updateTable::updateData(const QModelIndex &index, QString name)
         delete model8;
     }
 
-    foreQ = " where " + columnName + " = '" + name + "'";
+    if(re.exactMatch(name))
+        foreQ = " where " + columnName + " = " + name;
+    else
+        foreQ = " where " + columnName + " = '" + name + "'";
 }
 
 QString updateTable::getLabelStyle()
@@ -130,20 +137,39 @@ void updateTable::on_pushButton_clicked()
 {
     QSqlQuery updateQuery;
     QString tableName = getTableName(), query;
+    QRegExp re("\\d*");
 
     query = "UPDATE " + getTableName() + " SET ";
 
+    //QSqlQuery q;
+    //q.prepare("alter table " + getTableName() + " disable foreign key cascade;");
+    //q.exec();
 
     for(int c = 0; c < la2.size(); ++c)
     {
-        query += la2[c]->text();
-        query += " = \"";
-        query += le2[c]->text();
-        query += "\", ";
+        if(re.exactMatch(le2[c]->text()))
+        {
+            query += "\"";
+            query += la2[c]->text();
+            query += "\" = ?, ";
+        }
+        else
+        {
+            query += "\"";
+            query += la2[c]->text();
+            query += "\" = '?', ";
+        }
     }
 
     query = query.mid(0,query.size()-2);
     query += foreQ;
+
+    updateQuery.prepare(query);
+
+    for(int c = 0; c < le2.size(); ++c)
+    {
+        updateQuery.addBindValue(le2[c]->text());
+    }
 
     QMessageBox msgBox(
                 QMessageBox::Question,
@@ -153,14 +179,9 @@ void updateTable::on_pushButton_clicked()
 
     msgBox.exec();
 
-    updateQuery.prepare(query);
     updateQuery.exec();
 
     QSqlDatabase::database().commit();
-
-
-    le2.clear();
-    la2.clear();
 
     updateTable::close();
 }

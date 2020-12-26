@@ -29,6 +29,7 @@ Insert::Insert(QWidget *parent) :
     ui->lineEdit_2->setVisible(0);
     ui->label->setVisible(0);
     ui->lineEdit->setVisible(0);
+    ui->lineEdit_3->setVisible(0);
 }
 
 QString Insert::getLabelStyle()
@@ -59,6 +60,8 @@ void Insert::insertData(QString tableName)
     int it = 0;
     int ax=10,ay=10;
     int ax2=220,ay2=13;
+    le.clear();
+    la.clear();
 
     columnsNames.prepare
             ("select COLUMN_NAME from ALL_TAB_COLUMNS where TABLE_NAME='"
@@ -97,6 +100,10 @@ void Insert::insertData(QString tableName)
 
         it += 1;
     }
+
+    ui->lineEdit_3->setText(QString::number(la.size()));
+
+    newRows.clear();
 }
 
 Insert::~Insert()
@@ -134,9 +141,6 @@ void Insert::on_pushButton_clicked()
     insertQuery.exec();
 
     QSqlDatabase::database().commit();
-
-    le.clear();
-    la.clear();
 
     Insert::close();
 }

@@ -94,7 +94,7 @@ void Dialog2::on_pushButton_2_clicked()
 
     cfu->setTableName(tableName);
 
-    cfu->setWindowTitle("Wybierz rekord");
+    cfu->setWindowTitle("Wybierz rekord do zmiany");
 
     cfu->choseLine();
     cfu->show();
