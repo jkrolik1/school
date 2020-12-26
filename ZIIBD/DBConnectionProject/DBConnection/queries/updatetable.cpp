@@ -11,7 +11,7 @@
 QVector<QLabel*> la2;
 QVector<QLineEdit*> le2;
 QString foreQ = "";
-QSqlQueryModel *model7 = nullptr;
+QSqlQueryModel *model7 = nullptr, *model8 = nullptr, *model9 = nullptr;
 
 updateTable::updateTable(QWidget *parent) :
     QDialog(parent),
@@ -23,14 +23,17 @@ updateTable::updateTable(QWidget *parent) :
     ui->tableView_3->setVisible(0);
     ui->label->setVisible(0);
     ui->lineEdit->setVisible(0);
-    //ui->lineEdit_2->setVisible(0);
+    ui->lineEdit_2->setVisible(0);
 }
 
 void updateTable::updateData(const QModelIndex &index, QString name)
 {
     model7 = new QSqlQueryModel();
-    QSqlQuery columnsNames, values, columnName0;
-    QString x, columnName = "", iValue = "", myQuery, columnName0Q;
+    model8 = new QSqlQueryModel();
+    model9 = new QSqlQueryModel();
+    QSqlQuery idQ, values, columnName, constaint, it2;
+    QString x,y, columnID, iValue = "", myQuery, columnNameQ, constaintQ, itQ;
+    QString tableName = getTableName();
     int it = 0;
     int ax=10,ay=10;
     int ax2=220,ay2=13;
@@ -43,34 +46,79 @@ void updateTable::updateData(const QModelIndex &index, QString name)
     la2.clear();
     newRows.clear();
 
-    columnName0Q = "select COLUMN_NAME from ALL_TAB_COLUMNS where TABLE_NAME='"
+    columnNameQ =
+            "select COLUMN_NAME, data_type from ALL_TAB_COLUMNS where TABLE_NAME='"
             +tableName.toUpper()+"'";
-    columnName0.prepare(columnName0Q);
+    columnName.prepare(columnNameQ);
 
-    if(columnName0.exec())
+    if(columnName.exec())
     {
-        model7->setQuery(columnName0);
+        model7->setQuery(columnName);
         ui->tableView->setModel(model7);
-        QModelIndex newIndex = ui->tableView->model()->index(0,0);
-        int row2 = newIndex.row();
-        int col2 = newIndex.column();
-        columnName = ui->tableView->model()->data
-                (ui->tableView->model()->index(row2,col2)).toString();
+    }
+
+    columnID =  "SELECT cols.column_name "
+                "FROM all_constraints cons, all_cons_columns cols "
+                "WHERE cols.table_name = '" + tableName.toUpper() + "' "
+                "AND cons.constraint_type = 'P' "
+                "AND cons.constraint_name = cols.constraint_name "
+                "AND cons.owner = cols.owner "
+                "ORDER BY cols.table_name, cols.position";
+    idQ.prepare(columnID);
+
+    if(idQ.exec())
+    {
+        model8->setQuery(idQ);
+        ui->tableView_2->setModel(model8);
+        columnID =
+                ui->tableView_2->model()->data
+                (ui->tableView_2->model()->index(0,0)).toString();
     }
 
     row = model7->rowCount();
     for(int i=0; i<row; ++i)
     {
-        x = ui->tableView->model()->
+        x = ui->tableView->model()->    // column name
                  data(ui->tableView->model()->index(i,0)).toString();
-        newRows.insert(std::pair<QString,QString>(x,""));
+        y = ui->tableView->model()->    // column type
+                 data(ui->tableView->model()->index(i,1)).toString();
+
+        newRows.insert(std::pair<QString,QString>(x,y));
     }
+
+    // disable constraints
+    constaintQ =    "SELECT constraint_name "
+                    "FROM user_cons_columns "
+                    "WHERE table_name = '" + tableName.toUpper() + "'";
+    constaint.prepare(constaintQ);
+
+    if(constaint.exec())
+    {
+        model9->setQuery(constaint);
+        ui->tableView->setModel(model9);
+        row = model9->rowCount();
+
+        for(int d=0; d<row; ++d)
+        {
+            constaintQ =
+                    ui->tableView->model()->data
+                    (ui->tableView->model()->index(d,0)).toString();
+
+            itQ = "alter table " + tableName + " DISABLE constraint " +
+                    constaintQ;
+
+            it2.prepare(itQ);
+            it2.exec();
+        }
+    }
+    //
 
     for(auto &&t : newRows)
     {
         QSqlQueryModel *model8 = new QSqlQueryModel();
-        myQuery = ("select " + t.first + " from " + getTableName() +
-                   " where " + columnName + " = '" + name + "'");
+
+        myQuery = ("select " + t.first + " from " + tableName +
+                   " where " + columnID + " = '" + name + "'");
         values.prepare(myQuery);
 
         if(values.exec())
@@ -83,7 +131,6 @@ void updateTable::updateData(const QModelIndex &index, QString name)
             int col2 = newIndex.column();
             iValue = ui->tableView->model()->data
                     (ui->tableView->model()->index(row2,col2)).toString();
-            ui->lineEdit_2->insert(QString::number(row2) + " PPPP " + QString::number(col2));
         }
 
         la2.append(new QLabel(this));
@@ -108,9 +155,9 @@ void updateTable::updateData(const QModelIndex &index, QString name)
     }
 
     if(re.exactMatch(name))
-        foreQ = " where " + columnName + " = " + name;
+        foreQ = " where " + columnID + " = " + name;
     else
-        foreQ = " where " + columnName + " = '" + name + "'";
+        foreQ = " where " + columnID + " = '" + name + "'";
 }
 
 QString updateTable::getLabelStyle()
@@ -140,6 +187,12 @@ updateTable::~updateTable()
     delete model7;
     model7 = NULL;
 
+    delete model8;
+    model8 = NULL;
+
+    delete model9;
+    model9 = NULL;
+
     for(auto &&leItem : le2)   { delete leItem; leItem = NULL; }
     le2.clear();
     for(auto &&laItem : la2)   { delete laItem; laItem = NULL; }
@@ -155,10 +208,6 @@ void updateTable::on_pushButton_clicked()
     bool ok = false;
 
     query = "UPDATE " + tableName + " SET ";
-
-    //QSqlQuery q;
-    //q.prepare("alter table " + getTableName() + " disable foreign key cascade;");
-    //q.exec();
 
     for(int c = 0; c < la2.size(); ++c)
     {
@@ -192,7 +241,6 @@ void updateTable::on_pushButton_clicked()
         else
         {
             h = le2[c]->text();
-            ui->lineEdit_2->insert(h + " ");
             updateQuery.addBindValue(h);
         }
     }
@@ -228,6 +276,35 @@ void updateTable::on_pushButton_clicked()
                 QSqlDatabase::database().commit();
                 msgInfo.exec();
                 updateTable::close();
+
+                // enable constraints
+                QString constaintQ =    "SELECT constraint_name "
+                                        "FROM user_cons_columns "
+                                        "WHERE table_name = '" + tableName.toUpper() + "'";
+                QSqlQuery constaint;
+                constaint.prepare(constaintQ);
+
+                if(constaint.exec())
+                {
+                    model9->setQuery(constaint);
+                    ui->tableView->setModel(model9);
+                    int row = model9->rowCount();
+
+                    for(int d=0; d<row; ++d)
+                    {
+                        constaintQ =
+                                ui->tableView->model()->data
+                                (ui->tableView->model()->index(d,0)).toString();
+
+                        QString itQ = "alter table " + tableName + " ENABLE constraint " +
+                                constaintQ;
+
+                        QSqlQuery it2;
+                        it2.prepare(itQ);
+                        it2.exec();
+                    }
+                }
+                //
             }
             else
                 msgCritical.exec();
