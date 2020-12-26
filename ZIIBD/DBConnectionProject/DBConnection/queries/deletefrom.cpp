@@ -12,6 +12,8 @@ deleteFrom::deleteFrom(QWidget *parent) :
     ui(new Ui::deleteFrom)
 {
     ui->setupUi(this);
+    ui->tableView_2->setVisible(0);
+    ui->lineEdit->setVisible(0);
 }
 
 void deleteFrom::deleteData()
@@ -45,45 +47,51 @@ deleteFrom::~deleteFrom()
 {
     delete model3;
     delete model5;
+    delete model6;
     delete ui;
 
     model3 = NULL;
     model5 = NULL;
+    model6 = NULL;
 }
 
 void deleteFrom::on_tableView_doubleClicked(const QModelIndex &index)
 {
     int row = index.row();
     model5 = new QSqlQueryModel();
-    QString tableName = getTableName(), columnName = "",
+    model6 = new QSqlQueryModel();
+    QString tableName = getTableName(), columnID = "",
             deleteID = ui->tableView->model()->
                         data(ui->tableView->model()->index(row,0)).toString();
-    QSqlQuery delQ, columnName0;
+    QSqlQuery delQ, idQ;
     QMessageBox warnMessage;
 
-    columnName0.prepare
-            ("select COLUMN_NAME from ALL_TAB_COLUMNS where TABLE_NAME='"
-            +tableName.toUpper()+"'");
-    if(columnName0.exec())
+    columnID =  "SELECT cols.column_name "
+                "FROM all_constraints cons, all_cons_columns cols "
+                "WHERE cols.table_name = '" + tableName.toUpper() + "' "
+                "AND cons.constraint_type = 'P' "
+                "AND cons.constraint_name = cols.constraint_name "
+                "AND cons.owner = cols.owner "
+                "ORDER BY cols.table_name, cols.position";
+    idQ.prepare(columnID);
+
+    if(idQ.exec())
     {
-        model5->setQuery(columnName0);
-        ui->tableView_2->setModel(model5);
-        ui->tableView_2->setVisible(0);
-        QModelIndex newIndex = ui->tableView_2->model()->index(0,0);
-        int row2 = newIndex.row();
-        int col2 = newIndex.column();
-        columnName = ui->tableView_2->model()->data
-                (ui->tableView_2->model()->index(row2,col2)).toString();
+        model6->setQuery(idQ);
+        ui->tableView_2->setModel(model6);
+        columnID =
+                ui->tableView_2->model()->data
+                (ui->tableView_2->model()->index(0,0)).toString();
     }
 
     delQ.prepare
-            ("DELETE FROM " + tableName + " WHERE " + columnName + " = ?");
+            ("DELETE FROM " + tableName + " WHERE " + columnID + " = ?");
     delQ.addBindValue(deleteID);
 
     QMessageBox msgBox(
                 QMessageBox::Question,
                 "Potwierdzenie usunięcia rekordu",
-                "Czy usunąć rekord, gdzie " + columnName + " = " + deleteID + "?",
+                "Czy usunąć rekord, gdzie " + columnID + " = " + deleteID + "?",
                 QMessageBox::Yes | QMessageBox::No);
 
     msgBox.setButtonText(QMessageBox::Yes, "Usuń");

@@ -89,9 +89,9 @@ color: 	white;
   <widget class="QLineEdit" name="lineEdit_3">
    <property name="geometry">
     <rect>
-     <x>410</x>
+     <x>406</x>
      <y>410</y>
-     <width>16</width>
+     <width>20</width>
      <height>21</height>
     </rect>
    </property>

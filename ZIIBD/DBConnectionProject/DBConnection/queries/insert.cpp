@@ -54,7 +54,7 @@ void Insert::insertData(QString tableName)
 {
     model2 = new QSqlQueryModel();
     QSqlQuery columnsNames;
-    QString x;
+    QString x,y;
     int it = 0;
     int ax=10,ay=10;
     int ax2=220,ay2=13;
@@ -65,7 +65,7 @@ void Insert::insertData(QString tableName)
     la.clear();
 
     columnsNames.prepare
-            ("select COLUMN_NAME from ALL_TAB_COLUMNS where TABLE_NAME='"
+            ("select COLUMN_NAME,data_type from ALL_TAB_COLUMNS where TABLE_NAME='"
             +tableName.toUpper()+"'");
     if(columnsNames.exec())
     {
@@ -79,7 +79,9 @@ void Insert::insertData(QString tableName)
     {
          x = ui->tableView->model()->
                  data(ui->tableView->model()->index(i,0)).toString();
-        newRows.insert(std::pair<QString,QString>(x,""));
+         y = ui->tableView->model()->
+                  data(ui->tableView->model()->index(i,1)).toString();
+        newRows.insert(std::pair<QString,QString>(x,y));
     }
 
     for(auto &&t : newRows)
@@ -101,8 +103,6 @@ void Insert::insertData(QString tableName)
 
         it += 1;
     }
-
-    ui->lineEdit_3->setText(QString::number(la.size()));
 
     newRows.clear();
 }
