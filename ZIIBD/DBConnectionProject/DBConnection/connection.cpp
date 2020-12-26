@@ -7,7 +7,8 @@ Connection::Connection()
 
 bool Connection::create_connection()
 {
-    QSqlDatabase db=QSqlDatabase::addDatabase("QODBC");
+    db = QSqlDatabase::database();
+    db = QSqlDatabase::addDatabase("QODBC");
     db.setDatabaseName("oracle");
     db.setUserName("ziibd19");
     db.setPassword("haslo1");
@@ -18,4 +19,9 @@ bool Connection::create_connection()
         test = true;
 
     return test;
+}
+
+Connection::~Connection()
+{
+    //db.close();
 }

@@ -9,7 +9,10 @@ class Connection
 {
 public:
     Connection();
+    ~Connection();
     bool create_connection();
+private:
+    QSqlDatabase db;
 };
 
 #endif // CONNECTION_H

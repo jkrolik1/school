@@ -10,6 +10,7 @@
 
 #include <memory>
 
+
 Dialog::Dialog(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::Dialog)
@@ -36,7 +37,7 @@ Dialog::Dialog(QWidget *parent)
     Connection c;
     bool ok = c.create_connection();
 
-    QSqlQueryModel *model = new QSqlQueryModel();
+    model = new QSqlQueryModel();
 
     if(ok)
     {
@@ -59,7 +60,12 @@ Dialog::Dialog(QWidget *parent)
 
 Dialog::~Dialog()
 {
+    delete subDialog;
+    delete model;
     delete ui;
+
+    subDialog = NULL;
+    model = NULL;
 }
 
 void Dialog::on_pushButton_clicked()
@@ -69,7 +75,7 @@ void Dialog::on_pushButton_clicked()
 
 void Dialog::on_tableView_doubleClicked(const QModelIndex &index)
 {
-    Dialog2 *subDialog = new Dialog2;
+    subDialog = new Dialog2;
     int row = index.row();
     QString x =
             ui->tableView->model()->data

@@ -2,6 +2,8 @@
 #define CHOSEFORUPDATE_H
 
 #include <QDialog>
+#include <QSqlQueryModel>
+#include <queries/updatetable.h>
 
 namespace Ui {
 class choseForUpdate;
@@ -22,6 +24,8 @@ private slots:
     void on_tableView_doubleClicked(const QModelIndex &index);
 
 private:
+    QSqlQueryModel *model = nullptr;
+    updateTable *updateX = nullptr;
     QString tableName;
     Ui::choseForUpdate *ui;
 };

@@ -10,6 +10,7 @@
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
 
+
 Dialog2::Dialog2(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog2)
@@ -47,7 +48,7 @@ QString Dialog2::getTableName()
 
 void Dialog2::TableManager(QString x)
 {
-    QSqlQueryModel *model = new QSqlQueryModel();
+    model = new QSqlQueryModel();
 
     QSqlQuery q;
     q.prepare("SELECT * FROM " + x);
@@ -62,7 +63,16 @@ void Dialog2::TableManager(QString x)
 
 Dialog2::~Dialog2()
 {
+    delete cfu;
+    delete deleteX;
+    delete insertX;
+    delete model;
     delete ui;
+
+    cfu = NULL;
+    deleteX = NULL;
+    insertX = NULL;
+    model = NULL;
 }
 
 void Dialog2::on_pushButton_4_clicked()
@@ -72,7 +82,7 @@ void Dialog2::on_pushButton_4_clicked()
 
 void Dialog2::on_pushButton_clicked()
 {
-    Insert *insertX = new Insert;
+    insertX = new Insert;
     QString tableName = getTableName();
     insertX->setWindowTitle("Dodaj rekord do tabeli " + tableName);
     insertX->show();
@@ -83,7 +93,7 @@ void Dialog2::on_pushButton_clicked()
 
 void Dialog2::on_pushButton_3_clicked()
 {
-    deleteFrom *deleteX = new deleteFrom;
+    deleteX = new deleteFrom;
     QString tableName = getTableName();
     deleteX->setWindowTitle("Usuń rekord z tabeli " + tableName);
     deleteX->show();
@@ -94,7 +104,7 @@ void Dialog2::on_pushButton_3_clicked()
 
 void Dialog2::on_pushButton_2_clicked()
 {
-    choseForUpdate *cfu = new choseForUpdate;
+    cfu = new choseForUpdate;
     QString tableName = getTableName();
 
     cfu->setTableName(tableName);

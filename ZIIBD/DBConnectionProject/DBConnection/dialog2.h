@@ -3,6 +3,11 @@
 
 #include <QDialog>
 #include <QSqlDatabase>
+#include <QSqlQueryModel>
+
+#include <queries/insert.h>
+#include <queries/choseforupdate.h>
+#include <queries/deletefrom.h>
 
 namespace Ui {
 class Dialog2;
@@ -29,6 +34,10 @@ private slots:
     void on_pushButton_2_clicked();
 
 private:
+    QSqlQueryModel *model = nullptr;
+    Insert *insertX = nullptr;
+    deleteFrom *deleteX = nullptr;
+    choseForUpdate *cfu = nullptr;
     QString tableName;
     Ui::Dialog2 *ui;
 };

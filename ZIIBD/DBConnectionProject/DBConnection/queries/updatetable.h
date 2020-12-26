@@ -4,6 +4,9 @@
 #include <QDialog>
 
 #include <unordered_map>
+#include <QLabel>
+#include <QLineEdit>
+#include <QSqlQueryModel>
 
 namespace Ui {
 class updateTable;

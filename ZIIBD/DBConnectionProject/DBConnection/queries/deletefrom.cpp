@@ -6,6 +6,7 @@
 #include <QSqlQueryModel>
 #include <QMessageBox>
 
+
 deleteFrom::deleteFrom(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::deleteFrom)
@@ -15,7 +16,7 @@ deleteFrom::deleteFrom(QWidget *parent) :
 
 void deleteFrom::deleteData()
 {
-    QSqlQueryModel *model3 = new QSqlQueryModel();
+    model3 = new QSqlQueryModel();
     QSqlQuery tableViewForDel;
     QString tableName = getTableName();
 
@@ -42,13 +43,18 @@ QString deleteFrom::getTableName()
 
 deleteFrom::~deleteFrom()
 {
+    delete model3;
+    delete model5;
     delete ui;
+
+    model3 = NULL;
+    model5 = NULL;
 }
 
 void deleteFrom::on_tableView_doubleClicked(const QModelIndex &index)
 {
     int row = index.row();
-    QSqlQueryModel *model5 = new QSqlQueryModel();
+    model5 = new QSqlQueryModel();
     QString tableName = getTableName(), columnName = "",
             deleteID = ui->tableView->model()->
                         data(ui->tableView->model()->index(row,0)).toString();

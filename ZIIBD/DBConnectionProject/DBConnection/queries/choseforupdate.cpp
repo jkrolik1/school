@@ -7,6 +7,7 @@
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
 
+
 choseForUpdate::choseForUpdate(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::choseForUpdate)
@@ -16,7 +17,7 @@ choseForUpdate::choseForUpdate(QWidget *parent) :
 
 void choseForUpdate::choseLine()
 {
-    QSqlQueryModel *model = new QSqlQueryModel();
+    model = new QSqlQueryModel();
 
     QSqlQuery q;
     q.prepare("SELECT * FROM " + getTableName());
@@ -41,12 +42,17 @@ QString choseForUpdate::getTableName()
 
 choseForUpdate::~choseForUpdate()
 {
+    delete model;
+    delete updateX;
     delete ui;
+
+    model = NULL;
+    updateX = NULL;
 }
 
 void choseForUpdate::on_tableView_doubleClicked(const QModelIndex &index)
 {
-    updateTable *updateX = new updateTable;
+    updateX = new updateTable;
     QString tableName = getTableName();
 
     updateX->setTableName(tableName);

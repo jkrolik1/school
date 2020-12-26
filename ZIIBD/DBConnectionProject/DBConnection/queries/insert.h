@@ -2,6 +2,9 @@
 #define INSERT_H
 
 #include <QDialog>
+#include <QSqlQueryModel>
+#include <QLabel>
+#include <QLineEdit>
 
 #include <unordered_map>
 
@@ -26,6 +29,9 @@ private slots:
     void on_pushButton_clicked();
 
 private:
+    QVector<QLabel*> la;
+    QVector<QLineEdit*> le;
+    QSqlQueryModel *model2 = nullptr;
     QString tableName;
     QString cs1="QLabel {"
                 "font-size: 15px;"

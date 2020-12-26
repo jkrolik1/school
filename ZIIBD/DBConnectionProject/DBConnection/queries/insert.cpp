@@ -6,8 +6,6 @@
 #include <QSqlQueryModel>
 #include <unordered_map>
 
-QVector<QLabel*> la;
-QVector<QLineEdit*> le;
 
 Insert::Insert(QWidget *parent) :
     QDialog(parent),
@@ -54,13 +52,16 @@ QString Insert::getTableName()
 
 void Insert::insertData(QString tableName)
 {
-    QSqlQueryModel *model2 = new QSqlQueryModel();
+    model2 = new QSqlQueryModel();
     QSqlQuery columnsNames;
     QString x;
     int it = 0;
     int ax=10,ay=10;
     int ax2=220,ay2=13;
+
+    for(auto &&leItem : le)   { delete leItem; leItem = NULL; }
     le.clear();
+    for(auto &&laItem : la)   { delete laItem; laItem = NULL; }
     la.clear();
 
     columnsNames.prepare
@@ -81,7 +82,7 @@ void Insert::insertData(QString tableName)
         newRows.insert(std::pair<QString,QString>(x,""));
     }
 
-    for(auto t : newRows)
+    for(auto &&t : newRows)
     {
         la.append(new QLabel(this));
         la[it]->setText(t.first);
@@ -108,7 +109,14 @@ void Insert::insertData(QString tableName)
 
 Insert::~Insert()
 {
+    delete model2;
+    model2 = NULL;
     delete ui;
+
+    for(auto &&leItem : le)   { delete leItem; leItem = NULL; }
+    le.clear();
+    for(auto &&laItem : la)   { delete laItem; laItem = NULL; }
+    la.clear();
 }
 
 void Insert::on_pushButton_clicked()

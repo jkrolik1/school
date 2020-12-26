@@ -11,6 +11,7 @@
 QVector<QLabel*> la2;
 QVector<QLineEdit*> le2;
 QString foreQ = "";
+QSqlQueryModel *model7 = nullptr;
 
 updateTable::updateTable(QWidget *parent) :
     QDialog(parent),
@@ -27,7 +28,7 @@ updateTable::updateTable(QWidget *parent) :
 
 void updateTable::updateData(const QModelIndex &index, QString name)
 {
-    QSqlQueryModel *model7 = new QSqlQueryModel();
+    model7 = new QSqlQueryModel();
     QSqlQuery columnsNames, values, columnName0;
     QString x, columnName = "", iValue = "", myQuery, columnName0Q;
     int it = 0;
@@ -36,7 +37,9 @@ void updateTable::updateData(const QModelIndex &index, QString name)
     int row;
     QRegExp re("\\d*");
 
+    for(auto &&leItem : le2)   { delete leItem; leItem = NULL; }
     le2.clear();
+    for(auto &&laItem : la2)   { delete laItem; laItem = NULL; }
     la2.clear();
     newRows.clear();
 
@@ -63,7 +66,7 @@ void updateTable::updateData(const QModelIndex &index, QString name)
         newRows.insert(std::pair<QString,QString>(x,""));
     }
 
-    for(auto t : newRows)
+    for(auto &&t : newRows)
     {
         QSqlQueryModel *model8 = new QSqlQueryModel();
         myQuery = ("select " + t.first + " from " + getTableName() +
@@ -133,6 +136,14 @@ QString updateTable::getTableName()
 updateTable::~updateTable()
 {
     delete ui;
+
+    delete model7;
+    model7 = NULL;
+
+    for(auto &&leItem : le2)   { delete leItem; leItem = NULL; }
+    le2.clear();
+    for(auto &&laItem : la2)   { delete laItem; laItem = NULL; }
+    la2.clear();
 }
 
 void updateTable::on_pushButton_clicked()
@@ -143,7 +154,7 @@ void updateTable::on_pushButton_clicked()
     int o = 0;
     bool ok = false;
 
-    query = "UPDATE " + getTableName() + " SET ";
+    query = "UPDATE " + tableName + " SET ";
 
     //QSqlQuery q;
     //q.prepare("alter table " + getTableName() + " disable foreign key cascade;");
