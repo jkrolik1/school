@@ -87,6 +87,45 @@ void updateTable::updateData(const QModelIndex &index, QString name)
     }
 
     // disable constraints
+
+    constaintQ =    "SELECT p.constraint_name, c.constraint_name "
+                    "FROM all_constraints p "
+                    "JOIN all_constraints c ON(p.constraint_name=c.r_constraint_name) "
+                    "WHERE (p.constraint_type = 'P' OR p.constraint_type = 'U') "
+                    "AND c.constraint_type = 'R' "
+                    "AND p.table_name = '" + tableName.toUpper() + "'";
+    constaint.prepare(constaintQ);
+
+    if(constaint.exec())
+    {
+        model9->setQuery(constaint);
+        ui->tableView->setModel(model9);
+        row = model9->rowCount();
+
+        for(int d=0; d<row; ++d)
+        {
+            constaintQ =
+                    ui->tableView->model()->data
+                    (ui->tableView->model()->index(d,0)).toString();
+
+            itQ = "alter table " + tableName + " DISABLE constraint " +
+                    constaintQ;
+
+            it2.prepare(itQ);
+            it2.exec();
+
+            constaintQ =
+                    ui->tableView->model()->data
+                    (ui->tableView->model()->index(d,1)).toString();
+
+            itQ = "alter table " + tableName + " DISABLE constraint " +
+                    constaintQ;
+
+            it2.prepare(itQ);
+            it2.exec();
+        }
+    }
+
     constaintQ =    "SELECT constraint_name "
                     "FROM user_cons_columns "
                     "WHERE table_name = '" + tableName.toUpper() + "'";
@@ -292,14 +331,17 @@ void updateTable::on_pushButton_clicked()
     QString constaintQ =    "SELECT constraint_name "
                             "FROM user_cons_columns "
                             "WHERE table_name = '" + tableName.toUpper() + "'";
-    QSqlQuery constaint;
+    QSqlQuery constaint, it2;
     constaint.prepare(constaintQ);
+
+    QString itQ;
+    int row;
 
     if(constaint.exec())
     {
         model9->setQuery(constaint);
         ui->tableView->setModel(model9);
-        int row = model9->rowCount();
+        row = model9->rowCount();
 
         for(int d=0; d<row; ++d)
         {
@@ -307,14 +349,52 @@ void updateTable::on_pushButton_clicked()
                     ui->tableView->model()->data
                     (ui->tableView->model()->index(d,0)).toString();
 
-            QString itQ = "alter table " + tableName + " ENABLE constraint " +
+            itQ = "alter table " + tableName + " ENABLE constraint " +
                     constaintQ;
 
-            QSqlQuery it2;
             it2.prepare(itQ);
             it2.exec();
         }
     }
+
+    constaintQ =    "SELECT p.constraint_name, c.constraint_name "
+                    "FROM all_constraints p "
+                    "JOIN all_constraints c ON(p.constraint_name=c.r_constraint_name) "
+                    "WHERE (p.constraint_type = 'P' OR p.constraint_type = 'U') "
+                    "AND c.constraint_type = 'R' "
+                    "AND p.table_name = '" + tableName.toUpper() + "'";
+    constaint.prepare(constaintQ);
+
+    if(constaint.exec())
+    {
+        model9->setQuery(constaint);
+        ui->tableView->setModel(model9);
+        row = model9->rowCount();
+
+        for(int d=0; d<row; ++d)
+        {
+            constaintQ =
+                    ui->tableView->model()->data
+                    (ui->tableView->model()->index(d,0)).toString();
+
+            itQ = "alter table " + tableName + " ENABLE constraint " +
+                    constaintQ;
+
+            it2.prepare(itQ);
+            it2.exec();
+
+            constaintQ =
+                    ui->tableView->model()->data
+                    (ui->tableView->model()->index(d,1)).toString();
+
+            itQ = "alter table " + tableName + " ENABLE constraint " +
+                    constaintQ;
+
+            it2.prepare(itQ);
+            it2.exec();
+        }
+    }
+
     //
 
     updateTable::close();
