@@ -26,7 +26,7 @@ updateTable::updateTable(QWidget *parent) :
     ui->lineEdit_2->setVisible(0);
 }
 
-void updateTable::updateData(const QModelIndex &index, QString name)
+bool updateTable::updateData(const QModelIndex &index, QString name)
 {
     model7 = new QSqlQueryModel();
     model8 = new QSqlQueryModel();
@@ -73,6 +73,22 @@ void updateTable::updateData(const QModelIndex &index, QString name)
         columnID =
                 ui->tableView_2->model()->data
                 (ui->tableView_2->model()->index(0,0)).toString();
+    }
+
+    if (columnID.isEmpty())
+    {
+        QMessageBox msgCritical(
+                    QMessageBox::Critical,
+                    "Pojawił się błąd!",
+                    "Nie jesteśmy w stanie dokonac zmian, ponieważ tabela "
+                    + tableName + " nie ma klucza podstawowego.",
+                    QMessageBox::Cancel);
+
+        msgCritical.setButtonText(QMessageBox::Cancel, "Wyjdź");
+
+        msgCritical.exec();
+        updateTable::close();
+        return 0;
     }
 
     row = model7->rowCount();
@@ -197,6 +213,8 @@ void updateTable::updateData(const QModelIndex &index, QString name)
         foreQ = " where " + columnID + " = " + name;
     else
         foreQ = " where " + columnID + " = '" + name + "'";
+
+    return 1;
 }
 
 QString updateTable::getLabelStyle()
@@ -397,5 +415,6 @@ void updateTable::on_pushButton_clicked()
 
     //
 
+    QSqlDatabase::database().commit();
     updateTable::close();
 }
