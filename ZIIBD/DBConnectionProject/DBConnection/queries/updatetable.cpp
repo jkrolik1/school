@@ -258,21 +258,38 @@ updateTable::~updateTable()
 
 void updateTable::on_pushButton_clicked()
 {
-    QSqlQuery updateQuery;
-    QString tableName = getTableName(), query, h = "";
+    QSqlQuery updateQuery, dateQ, sessionQ;
+    QString tableName = getTableName(), query, h = "", date;
     QRegExp re("\\d*");
     int o = 0;
-    bool ok = false;
+    bool ok = false, end = false;
+    QMessageBox msgCritical2(
+                QMessageBox::Critical,
+                "Status zmian",
+                "Wystąpił błąd. Nie wprowadzono zmian, "
+                "ponieważ wpisana data ma nieprawidłowy format. "
+                "Spróbuj wprowadzić datę w formacie DD/MM/RRRR",
+                QMessageBox::Cancel);
+
+    msgCritical2.setButtonText(QMessageBox::Cancel, "Wyjdź");
 
     query = "UPDATE " + tableName + " SET ";
 
     for(int c = 0; c < la2.size(); ++c)
     {
-        if(re.exactMatch(le2[c]->text()))
+        if(newRows[la2[c]->text()] == "DATE")
         {
             query += "\"";
             query += la2[c]->text();
-            query += "\" = ?, ";
+            query += "\" = '?', ";
+        }
+        else if(newRows[la2[c]->text()] == "VARCHAR" ||
+                newRows[la2[c]->text()] == "VARCHAR2" ||
+                newRows[la2[c]->text()] == "CHAR")
+        {
+            query += "\"";
+            query += la2[c]->text();
+            query += "\" = '?', ";
         }
         else
         {
@@ -289,6 +306,27 @@ void updateTable::on_pushButton_clicked()
 
     for(int c = 0; c < le2.size(); ++c)
     {
+        if(newRows[la2[c]->text()] == "DATE")
+        {
+            date =  "select to_date('"
+                    + le2[c]->text() +
+                    "','DD/MM/YYYY') "
+                    "result from dual";
+            dateQ.prepare(date);
+
+            if(dateQ.exec())
+            {
+                h = le2[c]->text();
+                updateQuery.addBindValue(h);
+                continue;
+            }
+            else
+            {
+                msgCritical2.exec();
+                end = true;
+                break;
+            }
+        }
         if(re.exactMatch(le2[c]->text()))
         {
             o = (le2[c]->text()).toInt(&ok);
@@ -307,7 +345,6 @@ void updateTable::on_pushButton_clicked()
                 "Potwierdzenie zmiany rekordu",
                 "Czy chcesz zatwierdzić swoje zmiany?",
                 QMessageBox::Yes | QMessageBox::No);
-
     QMessageBox msgInfo(
                 QMessageBox::Information,
                 "Status operacji zmiany",
@@ -325,24 +362,27 @@ void updateTable::on_pushButton_clicked()
 
     updateTable::setWindowOpacity(0.9);
 
-    switch(msgBox.exec())
+    if(!end)
     {
-        case QMessageBox::Yes:
-            if(updateQuery.exec())
-            {
-                QSqlDatabase::database().commit();
-                msgInfo.exec();
+        switch(msgBox.exec())
+        {
+            case QMessageBox::Yes:
+                if(updateQuery.exec())
+                {
+                    QSqlDatabase::database().commit();
+                    msgInfo.exec();
+                    updateTable::close();
+                }
+                else
+                    msgCritical.exec();
+            break;
+            case QMessageBox::No:
                 updateTable::close();
-            }
-            else
-                msgCritical.exec();
-        break;
-        case QMessageBox::No:
-            updateTable::close();
-        break;
-        default:
-            updateTable::close();
-        break;
+            break;
+            default:
+                updateTable::close();
+            break;
+        }
     }
 
     // enable constraints
