@@ -7,6 +7,8 @@
 #include <QLineEdit>
 
 #include <unordered_map>
+#include <tuple>
+#include <vector>
 
 namespace Ui {
 class Insert;
@@ -23,6 +25,14 @@ public:
     QString getLineEditStyle();
     void setTableName(QString);
     QString getTableName();
+    std::tuple<bool,std::vector<QString>> validation();
+
+    bool checkDATE(QString);
+    bool checkNUMBER(QString);
+    bool checkVARCHAR2(QString);
+    bool checkCHAR(QString);
+    bool checkTIMESTAMP(QString);
+
     ~Insert();
 
 private slots:
