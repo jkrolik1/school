@@ -7,6 +7,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QSqlQueryModel>
+#include <QCalendarWidget>
 
 namespace Ui {
 class updateTable;

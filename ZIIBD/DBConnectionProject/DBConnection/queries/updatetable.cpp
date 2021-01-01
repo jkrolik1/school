@@ -5,11 +5,15 @@
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
 #include <QSqlError>
-#include <unordered_map>
 #include <QMessageBox>
+#include <QCalendarWidget>
+
+#include <unordered_map>
+
 
 QVector<QLabel*> la2;
 QVector<QLineEdit*> le2;
+QVector<QCalendarWidget*> calendars2;
 QString foreQ = "";
 QSqlQueryModel *model7 = nullptr, *model8 = nullptr, *model9 = nullptr;
 
@@ -40,10 +44,13 @@ bool updateTable::updateData(const QModelIndex &index, QString name)
     int row;
     QRegExp re("\\d*");
 
+
     for(auto &&leItem : le2)   { delete leItem; leItem = NULL; }
     le2.clear();
     for(auto &&laItem : la2)   { delete laItem; laItem = NULL; }
     la2.clear();
+    for(auto &&calendars2Item : calendars2) { delete calendars2Item; calendars2Item = NULL; }
+    calendars2.clear();
     newRows.clear();
 
     columnNameQ =
@@ -196,6 +203,20 @@ bool updateTable::updateData(const QModelIndex &index, QString name)
         la2[it]->setStyleSheet(this->getLabelStyle());
         ay += 30;
 
+
+        if (t.second == "DATE")
+        {
+            calendars2.append(new QCalendarWidget);
+            calendars2.back()->setGridVisible(true);
+
+            if (la2.size()-1 == it)
+                calendars2.back()->setWindowTitle(la2[it]->text());
+            calendars2.back()->setSelectedDate(QDate(2002,10,2));
+            calendars2.back()->show();
+
+            // Jeżeli doubleclick to calendars2.back()->close();
+        }
+
         le2.append(new QLineEdit(this));
         le2[it]->setGeometry(ax2,ay2,200,25);
         le2[it]->resize(200,25);
@@ -254,6 +275,8 @@ updateTable::~updateTable()
     le2.clear();
     for(auto &&laItem : la2)   { delete laItem; laItem = NULL; }
     la2.clear();
+    for(auto &&calendars2Item : calendars2) { delete calendars2Item; calendars2Item = NULL; }
+    calendars2.clear();
 }
 
 void updateTable::on_pushButton_clicked()
