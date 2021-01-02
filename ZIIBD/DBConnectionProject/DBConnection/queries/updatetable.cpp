@@ -28,7 +28,7 @@ updateTable::updateTable(QWidget *parent) :
     ui->lineEdit_2->setVisible(0);
 }
 
-bool updateTable::updateData(const QModelIndex &index, QString name)
+bool updateTable::updateData(QString name)
 {
     model7 = new QSqlQueryModel();
     model8 = new QSqlQueryModel();
@@ -266,7 +266,7 @@ updateTable::~updateTable()
 void updateTable::on_pushButton_clicked()
 {
     QSqlQuery updateQuery;
-    QString tableName = getTableName(), query, h = "", date;
+    QString tableName = getTableName(), query;
     bool end = false;
     QMessageBox msgCritical2(
                 QMessageBox::Critical,

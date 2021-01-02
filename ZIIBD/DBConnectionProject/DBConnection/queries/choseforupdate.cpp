@@ -63,7 +63,7 @@ void choseForUpdate::on_tableView_doubleClicked(const QModelIndex &index)
             ui->tableView->model()->data
             (ui->tableView->model()->index(row,0)).toString();
 
-    if(updateX->updateData(index, x))
+    if(updateX->updateData(x))
         updateX->show();
 
     choseForUpdate::close();

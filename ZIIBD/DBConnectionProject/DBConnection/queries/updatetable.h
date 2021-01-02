@@ -20,7 +20,7 @@ public:
     explicit updateTable(QWidget *parent = nullptr);
     void setTableName(QString);
     QString getTableName();
-    bool updateData(const QModelIndex &, QString);
+    bool updateData(QString);
     QString getLabelStyle();
     QString getLineEditStyle();
     ~updateTable();
