@@ -87,6 +87,7 @@ void Dialog2::on_pushButton_clicked()
     insertX->setWindowTitle("Dodaj rekord do tabeli " + tableName);
     insertX->show();
     insertX->setTableName(tableName);
+    insertX->setDateFormat("YYYY-MM-DD");
     insertX->insertData(tableName);
     Dialog2::close();
 }

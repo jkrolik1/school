@@ -23,6 +23,8 @@ public:
     bool updateData(QString);
     QString getLabelStyle();
     QString getLineEditStyle();
+    void setDateFormat(QString);
+    QString getDateFormat();
     ~updateTable();
 
 private slots:
@@ -31,7 +33,7 @@ private slots:
 private:
     std::unordered_map<QString,QString> newRows;
     Ui::updateTable *ui;
-    QString tableName;
+    QString tableName, dateFormat;
     QString cs1="QLabel {"
                 "font-size: 15px;"
                 "color: rgb(220,220,220);"

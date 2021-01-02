@@ -56,6 +56,7 @@ void choseForUpdate::on_tableView_doubleClicked(const QModelIndex &index)
     QString tableName = getTableName();
 
     updateX->setTableName(tableName);
+    updateX->setDateFormat("YYYY-MM-DD");
     updateX->setWindowTitle("Zmień w tabeli " + tableName);
 
     int row = index.row();

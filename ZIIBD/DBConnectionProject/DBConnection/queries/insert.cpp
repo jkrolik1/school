@@ -32,6 +32,16 @@ Insert::Insert(QWidget *parent) :
     ui->lineEdit_3->setVisible(0);
 }
 
+void Insert::setDateFormat(QString df)
+{
+    this->dateFormat = df;
+}
+
+QString Insert::getDateFormat()
+{
+    return this->dateFormat;
+}
+
 std::tuple<bool,std::vector<QString>> Insert::validation()
 {
     std::tuple<bool,std::vector<QString>> returnTuple;
@@ -135,7 +145,7 @@ bool Insert::checkNUMBER(QString x)
 
 bool Insert::checkVARCHAR2(QString x)
 {
-    QRegExp re("[a-zA-Z]+");
+    QRegExp re("[a-zA-Z0-9.,:; ]+");
 
     if(re.exactMatch(x))
         return true;
@@ -147,7 +157,7 @@ bool Insert::checkCHAR(QString x)
 {
     // fixed length ???
 
-    QRegExp re("[a-zA-Z]+");
+    QRegExp re("[a-zA-Z0-9.,:; ]+");
 
     if(re.exactMatch(x))
         return true;
@@ -252,7 +262,7 @@ Insert::~Insert()
 void Insert::on_pushButton_clicked()
 {
     QSqlQuery insertQuery;
-    QString tableName = getTableName();
+    QString tableName = getTableName(), dateFormat = getDateFormat();
     QString query = "INSERT INTO " + tableName +" (";
 
 
@@ -272,18 +282,35 @@ void Insert::on_pushButton_clicked()
     query = query.mid(0,query.size()-2);
     query += ") VALUES (";
 
-    for(int s = 0; s < la.size(); ++s)
-        query += "?, ";
+    for(int s = 0; s < le.size(); ++s)
+    {
+        if(newRows[la[s]->text()] == "NUMBER")
+        {
+            query += le[s]->text();
+            query += ", ";
+        }
+        else if(newRows[la[s]->text()] == "DATE")
+        {
+            query += "to_date('";
+            query += le[s]->text();
+            query += "','";
+            query += dateFormat;
+            query += "'), ";
+        }
+        else
+        {
+            query += "'";
+            query += le[s]->text();
+            query += "'";
+            query += ", ";
+        }
+    }
 
     QString subString = query.mid(0,query.size()-2);
 
     subString += ')';
 
     insertQuery.prepare(subString);
-
-    for(int h = 0; h < la.size(); ++h)
-        insertQuery.addBindValue(le[h]->text());
-
     insertQuery.exec();
 
     QSqlDatabase::database().commit();

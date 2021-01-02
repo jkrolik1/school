@@ -23,8 +23,13 @@ public:
     void insertData(QString);
     QString getLabelStyle();
     QString getLineEditStyle();
+
     void setTableName(QString);
     QString getTableName();
+
+    void setDateFormat(QString);
+    QString getDateFormat();
+
     std::tuple<bool,std::vector<QString>> validation();
 
     bool checkDATE(QString);
@@ -42,7 +47,7 @@ private:
     QVector<QLabel*> la;
     QVector<QLineEdit*> le;
     QSqlQueryModel *model2 = nullptr;
-    QString tableName;
+    QString tableName, dateFormat;
     QString cs1="QLabel {"
                 "font-size: 15px;"
                 "color: rgb(220,220,220);"

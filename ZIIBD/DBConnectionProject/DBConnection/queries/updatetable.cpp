@@ -28,6 +28,16 @@ updateTable::updateTable(QWidget *parent) :
     ui->lineEdit_2->setVisible(0);
 }
 
+void updateTable::setDateFormat(QString df)
+{
+    this->dateFormat = df;
+}
+
+QString updateTable::getDateFormat()
+{
+    return this->dateFormat;
+}
+
 bool updateTable::updateData(QString name)
 {
     model7 = new QSqlQueryModel();
@@ -266,14 +276,14 @@ updateTable::~updateTable()
 void updateTable::on_pushButton_clicked()
 {
     QSqlQuery updateQuery;
-    QString tableName = getTableName(), query;
+    QString tableName = getTableName(), query, dateFormat = getDateFormat();
     bool end = false;
     QMessageBox msgCritical2(
                 QMessageBox::Critical,
                 "Status zmian",
                 "Wystąpił błąd. Nie wprowadzono zmian, "
                 "ponieważ wpisana data ma nieprawidłowy format. "
-                "Spróbuj wprowadzić datę w formacie YYYY-MM-DD",
+                "Spróbuj wprowadzić datę w formacie " + dateFormat,
                 QMessageBox::Cancel);
 
     msgCritical2.setButtonText(QMessageBox::Cancel, "Wyjdź");
@@ -288,7 +298,9 @@ void updateTable::on_pushButton_clicked()
             query += la2[c]->text();
             query += "\" = to_date('";
             query += le2[c]->text();
-            query += "','YYYY-MM-DD'), ";
+            query += "','";
+            query += dateFormat;
+            query += "'), ";
         }
         else if(newRows[la2[c]->text()] == "VARCHAR" ||
                 newRows[la2[c]->text()] == "VARCHAR2" ||
