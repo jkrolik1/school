@@ -6,7 +6,7 @@
 #include <QSqlQueryModel>
 #include <QSqlError>
 #include <QMessageBox>
-
+#include <QDebug>
 #include <unordered_map>
 
 
@@ -202,6 +202,10 @@ bool updateTable::updateData(const QModelIndex &index, QString name)
         le2.append(new QLineEdit(this));
         le2[it]->setGeometry(ax2,ay2,200,25);
         le2[it]->resize(200,25);
+
+        if (newRows[la2[it]->text()] == "DATE")
+            iValue = iValue.mid(0,10);
+
         le2[it]->setText(iValue);
         le2[it]->show();
         le2[it]->setStyleSheet(this->getLineEditStyle());
@@ -261,17 +265,15 @@ updateTable::~updateTable()
 
 void updateTable::on_pushButton_clicked()
 {
-    QSqlQuery updateQuery, dateQ, sessionQ;
+    QSqlQuery updateQuery;
     QString tableName = getTableName(), query, h = "", date;
-    QRegExp re("\\d*");
-    int o = 0;
-    bool ok = false, end = false;
+    bool end = false;
     QMessageBox msgCritical2(
                 QMessageBox::Critical,
                 "Status zmian",
                 "Wystąpił błąd. Nie wprowadzono zmian, "
                 "ponieważ wpisana data ma nieprawidłowy format. "
-                "Spróbuj wprowadzić datę w formacie DD/MM/RRRR",
+                "Spróbuj wprowadzić datę w formacie YYYY-MM-DD",
                 QMessageBox::Cancel);
 
     msgCritical2.setButtonText(QMessageBox::Cancel, "Wyjdź");
@@ -284,7 +286,9 @@ void updateTable::on_pushButton_clicked()
         {
             query += "\"";
             query += la2[c]->text();
-            query += "\" = '?', ";
+            query += "\" = to_date('";
+            query += le2[c]->text();
+            query += "','YYYY-MM-DD'), ";
         }
         else if(newRows[la2[c]->text()] == "VARCHAR" ||
                 newRows[la2[c]->text()] == "VARCHAR2" ||
@@ -292,13 +296,17 @@ void updateTable::on_pushButton_clicked()
         {
             query += "\"";
             query += la2[c]->text();
-            query += "\" = '?', ";
+            query += "\" = '";
+            query += le2[c]->text();
+            query += "', ";
         }
         else
         {
             query += "\"";
             query += la2[c]->text();
-            query += "\" = ?, ";
+            query += "\" = ";
+            query += le2[c]->text();
+            query += ", ";
         }
     }
 
@@ -306,42 +314,6 @@ void updateTable::on_pushButton_clicked()
     query += foreQ;
 
     updateQuery.prepare(query);
-
-    for(int c = 0; c < le2.size(); ++c)
-    {
-        if(newRows[la2[c]->text()] == "DATE")
-        {
-            date =  "select to_date('"
-                    + le2[c]->text() +
-                    "','DD/MM/YYYY') "
-                    "result from dual";
-            dateQ.prepare(date);
-
-            if(dateQ.exec())
-            {
-                h = le2[c]->text();
-                updateQuery.addBindValue(h);
-                continue;
-            }
-            else
-            {
-                msgCritical2.exec();
-                end = true;
-                break;
-            }
-        }
-        if(re.exactMatch(le2[c]->text()))
-        {
-            o = (le2[c]->text()).toInt(&ok);
-            if (ok)
-                updateQuery.addBindValue(o);
-        }
-        else
-        {
-            h = le2[c]->text();
-            updateQuery.addBindValue(h);
-        }
-    }
 
     QMessageBox msgBox(
                 QMessageBox::Question,
@@ -356,7 +328,7 @@ void updateTable::on_pushButton_clicked()
     QMessageBox msgCritical(
                 QMessageBox::Critical,
                 "Status operacji zmiany",
-                "Wystąpił błąd. Nie wprowadzono zmian.\n" + query,
+                "Wystąpił błąd. Nie wprowadzono zmian.\n",
                 QMessageBox::Cancel);
 
     msgBox.setButtonText(QMessageBox::Yes, "Zmień");
