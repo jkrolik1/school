@@ -11,6 +11,9 @@ deleteFrom::deleteFrom(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::deleteFrom)
 {
+    setWindowFlags(Qt::WindowMinimizeButtonHint |
+                   Qt::WindowMaximizeButtonHint |
+                   Qt::WindowCloseButtonHint);
     ui->setupUi(this);
     ui->tableView_2->setVisible(0);
     ui->lineEdit->setVisible(0);

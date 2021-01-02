@@ -12,6 +12,9 @@ choseForUpdate::choseForUpdate(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::choseForUpdate)
 {
+    setWindowFlags(Qt::WindowMinimizeButtonHint |
+                   Qt::WindowMaximizeButtonHint |
+                   Qt::WindowCloseButtonHint);
     ui->setupUi(this);
 }
 

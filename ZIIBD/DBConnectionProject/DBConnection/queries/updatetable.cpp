@@ -35,6 +35,152 @@ updateTable::updateTable(QWidget *parent) :
     ui->lineEdit_2->setVisible(0);
 }
 
+template<typename t>
+std::vector<t> updateTable::uniqueVector(std::vector<t>& input)
+{
+    typename std::vector<t>::iterator it;
+    std::sort(input.begin(),input.end());
+    it = std::unique(input.begin(),input.end());
+    input.resize(std::distance(input.begin(),it));
+
+    return input;
+}
+
+std::tuple<bool,std::vector<QString>> updateTable::validation()
+{
+    std::tuple<bool,std::vector<QString>> returnTuple;
+    std::vector<QString> errorColumnNames;
+    QString columnType,currentValue;
+    int intIterator = 0;
+    bool returnBool = true;
+    unsigned int sizeMap = newRows.size(), sizeLa = la2.size(), sizeLe = le2.size();
+
+    if (!((sizeMap == sizeLa) && (sizeLa == sizeLe) && (sizeMap == sizeLe)))
+        return std::make_tuple(false, errorColumnNames);
+
+    for(auto &&dt : newRows)
+    {
+        columnType = dt.second;
+        currentValue = le2[intIterator]->text();
+
+        if (currentValue.isEmpty())
+        {
+            returnBool = false;
+            errorColumnNames.push_back(la2[intIterator]->text());
+        }
+
+        if (columnType == "DATE")
+        {
+            if (!(checkDATE(currentValue)))
+            {
+                returnBool = false;
+                errorColumnNames.push_back(la2[intIterator]->text());
+            }
+        }
+        else if (columnType == "NUMBER")
+        {
+            if (!(checkNUMBER(currentValue)))
+            {
+                returnBool = false;
+                errorColumnNames.push_back(la2[intIterator]->text());
+            }
+        }
+        else if (columnType == "VARCHAR2")
+        {
+            if (!(checkVARCHAR2(currentValue)))
+            {
+                returnBool = false;
+                errorColumnNames.push_back(la2[intIterator]->text());
+            }
+        }
+        else if (columnType == "CHAR")
+        {
+            if (!(checkCHAR(currentValue)))
+            {
+                returnBool = false;
+                errorColumnNames.push_back(la2[intIterator]->text());
+            }
+        }
+        else if (columnType == "TIMESTAMP")
+        {
+            if (!(checkTIMESTAMP(currentValue)))
+            {
+                returnBool = false;
+                errorColumnNames.push_back(la2[intIterator]->text());
+            }
+        }
+        else
+        {
+            // other type
+        }
+
+        intIterator += 1;
+    }
+
+    return std::make_tuple(returnBool, errorColumnNames);
+}
+
+bool updateTable::checkDATE(QString x)
+{
+    QSqlQuery date;
+    QString dFormat = getDateFormat();
+
+    date.prepare(   "select to_date('"
+                    + x +
+                    "','" + dFormat + "') "
+                    "result from dual"
+                );
+
+    if(date.exec())
+        return true;
+
+    return false;
+}
+
+bool updateTable::checkNUMBER(QString x)
+{
+    bool ok = false,ok2 = true;
+    x.toInt(&ok);
+
+    for (int i=0; i<x.size(); ++i)
+    {
+        if (!(x[i].isDigit()))
+        {
+            ok2 = false;
+            break;
+        }
+    }
+
+    return ok && ok2;
+}
+
+bool updateTable::checkVARCHAR2(QString x)
+{
+    QRegExp re("[a-zA-Z0-9.,:; ]+");
+
+    if(re.exactMatch(x))
+        return true;
+
+    return false;
+}
+
+bool updateTable::checkCHAR(QString x)
+{
+    // fixed length ???
+
+    QRegExp re("[a-zA-Z0-9.,:; ]+");
+
+    if(re.exactMatch(x))
+        return true;
+
+    return false;
+}
+
+bool updateTable::checkTIMESTAMP(QString x)
+{
+    return true;
+}
+
 QString updateTable::getPushButtonStyle()
 {
     return this->cs3;
@@ -302,7 +448,7 @@ updateTable::~updateTable()
 void updateTable::updateClicked()
 {
     QSqlQuery updateQuery;
-    QString tableName = getTableName(), query, dateFormat = getDateFormat();
+    QString tableName = getTableName(), query, dateFormat = getDateFormat(), errorColumns;
     bool end = false;
     QMessageBox msgCritical2(
                 QMessageBox::Critical,
@@ -311,8 +457,36 @@ void updateTable::updateClicked()
                 "ponieważ wpisana data ma nieprawidłowy format. "
                 "Spróbuj wprowadzić datę w formacie " + dateFormat,
                 QMessageBox::Cancel);
+    bool status = std::get<0>(validation());
+    typedef std::vector<QString> errorsV;
+        errorsV columnsError = std::get<1>(validation());
+        errorsV columnsError2 = uniqueVector(columnsError);
 
     msgCritical2.setButtonText(QMessageBox::Cancel, "Wyjdź");
+
+
+    if (!(status))
+    {
+        for (auto &&y : columnsError2)
+        {
+            errorColumns += y;
+            errorColumns += ", ";
+        }
+
+        QMessageBox msgCritical2(
+                    QMessageBox::Critical,
+                    "Błąd walidacji",
+                    "Wystąpił błąd. Nie wprowadzono zmian.\n"
+                    "Poprawy wymagają wpisane wartości w kolumnach: \n"
+                    + errorColumns.mid(0,errorColumns.size()-2),
+                    QMessageBox::Cancel);
+        msgCritical2.setButtonText(QMessageBox::Cancel, "Wyjdź");
+
+        qInfo() << "Validation ERROR";
+        msgCritical2.exec();
+        updateTable::close();
+        return;
+    }
 
     query = "UPDATE " + tableName + " SET ";
 
