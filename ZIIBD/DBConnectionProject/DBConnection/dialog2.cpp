@@ -107,13 +107,9 @@ void Dialog2::on_pushButton_2_clicked()
 {
     cfu = new choseForUpdate;
     QString tableName = getTableName();
-
     cfu->setTableName(tableName);
-
     cfu->setWindowTitle("Wybierz rekord do zmiany");
-
     cfu->choseLine();
     cfu->show();
-
     Dialog2::close();
 }

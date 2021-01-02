@@ -5,8 +5,11 @@
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
 #include <unordered_map>
+#include <algorithm>
+#include <iterator>
 
-#include<QDebug>
+#include <QDebug>
+#include <QMessageBox>
 
 
 Insert::Insert(QWidget *parent) :
@@ -30,6 +33,17 @@ Insert::Insert(QWidget *parent) :
     ui->label->setVisible(0);
     ui->lineEdit->setVisible(0);
     ui->lineEdit_3->setVisible(0);
+}
+
+template<typename t>
+std::vector<t> Insert::uniqueVector(std::vector<t>& input)
+{
+    typename std::vector<t>::iterator it;
+    std::sort(input.begin(),input.end());
+    it = std::unique(input.begin(),input.end());
+    input.resize(std::distance(input.begin(),it));
+
+    return input;
 }
 
 void Insert::setDateFormat(QString df)
@@ -118,12 +132,19 @@ std::tuple<bool,std::vector<QString>> Insert::validation()
 
 bool Insert::checkDATE(QString x)
 {
-    //QRegExp re("^[12][0-9]{3}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$");
+    QSqlQuery date;
+    QString dFormat = getDateFormat();
 
-    //if(re.exactMatch(x))
+    date.prepare(   "select to_date('"
+                    + x +
+                    "','" + dFormat + "') "
+                    "result from dual"
+                );
+
+    if(date.exec())
         return true;
 
-    //return false;
+    return false;
 }
 
 bool Insert::checkNUMBER(QString x)
@@ -262,13 +283,45 @@ Insert::~Insert()
 void Insert::on_pushButton_clicked()
 {
     QSqlQuery insertQuery;
-    QString tableName = getTableName(), dateFormat = getDateFormat();
+    QString tableName = getTableName(), dateFormat = getDateFormat(), errorColumns;
     QString query = "INSERT INTO " + tableName +" (";
+    bool status = std::get<0>(validation());
+    typedef std::vector<QString> errorsV;
+        errorsV columnsError = std::get<1>(validation());
+        errorsV columnsError2 = uniqueVector(columnsError);
+    QMessageBox msgInfo(
+                QMessageBox::Information,
+                "Status operacji",
+                "Dodano rekord.",
+                QMessageBox::Ok);
+    QMessageBox msgCritical(
+                QMessageBox::Critical,
+                "Status operacji",
+                "Wystąpił błąd. Nie dodano rekordu.\n",
+                QMessageBox::Cancel);
 
 
-    if (!(std::get<0>(validation())))
+    msgCritical.setButtonText(QMessageBox::Cancel, "Wyjdź");
+
+    if (!(status))
     {
+        for (auto &&y : columnsError2)
+        {
+            errorColumns += y;
+            errorColumns += ", ";
+        }
+
+        QMessageBox msgCritical2(
+                    QMessageBox::Critical,
+                    "Błąd walidacji",
+                    "Wystąpił błąd. Nie dodano rekordu.\n"
+                    "Poprawy wymagają wpisane wartości w kolumnach: \n"
+                    + errorColumns.mid(0,errorColumns.size()-2),
+                    QMessageBox::Cancel);
+        msgCritical2.setButtonText(QMessageBox::Cancel, "Wyjdź");
+
         qInfo() << "Validation ERROR";
+        msgCritical2.exec();
         Insert::close();
         return;
     }
@@ -311,9 +364,14 @@ void Insert::on_pushButton_clicked()
     subString += ')';
 
     insertQuery.prepare(subString);
-    insertQuery.exec();
 
-    QSqlDatabase::database().commit();
+    if (insertQuery.exec())
+    {
+        msgInfo.exec();
+        QSqlDatabase::database().commit();
+    }
+    else
+        msgCritical.exec();
 
     Insert::close();
 }

@@ -23,6 +23,8 @@ public:
     void insertData(QString);
     QString getLabelStyle();
     QString getLineEditStyle();
+    template<typename t>
+    std::vector<t> uniqueVector(std::vector<t>&);
 
     void setTableName(QString);
     QString getTableName();
