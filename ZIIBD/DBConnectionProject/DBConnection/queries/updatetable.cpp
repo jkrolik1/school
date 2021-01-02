@@ -7,11 +7,14 @@
 #include <QSqlError>
 #include <QMessageBox>
 #include <QDebug>
+#include <QPushButton>
 #include <unordered_map>
 
 
 QVector<QLabel*> la2;
 QVector<QLineEdit*> le2;
+QFormLayout *formLayout = nullptr;
+QPushButton *button = nullptr;
 QString foreQ = "";
 QSqlQueryModel *model7 = nullptr, *model8 = nullptr, *model9 = nullptr;
 
@@ -19,6 +22,10 @@ updateTable::updateTable(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::updateTable)
 {
+    setWindowFlags(Qt::WindowMinimizeButtonHint |
+                   Qt::WindowMaximizeButtonHint |
+                   Qt::WindowCloseButtonHint);
+
     ui->setupUi(this);
     ui->tableView->setVisible(0);
     ui->tableView_2->setVisible(0);
@@ -26,6 +33,11 @@ updateTable::updateTable(QWidget *parent) :
     ui->label->setVisible(0);
     ui->lineEdit->setVisible(0);
     ui->lineEdit_2->setVisible(0);
+}
+
+QString updateTable::getPushButtonStyle()
+{
+    return this->cs3;
 }
 
 void updateTable::setDateFormat(QString df)
@@ -43,6 +55,8 @@ bool updateTable::updateData(QString name)
     model7 = new QSqlQueryModel();
     model8 = new QSqlQueryModel();
     model9 = new QSqlQueryModel();
+    formLayout = new QFormLayout();
+    button = new QPushButton("Zmień");
     QSqlQuery idQ, values, columnName, constaint, it2;
     QString x,y, columnID, iValue = "", myQuery, columnNameQ, constaintQ, itQ;
     QString tableName = getTableName();
@@ -221,10 +235,17 @@ bool updateTable::updateData(QString name)
         le2[it]->setStyleSheet(this->getLineEditStyle());
         ay2 += 30;
 
+        formLayout->addRow(la2[it], le2[it]);
+
         it += 1;
 
         delete model8;
     }
+
+    button->setStyleSheet(this->getPushButtonStyle());
+    connect(button, SIGNAL(clicked()), this, SLOT(updateClicked()));
+    formLayout->addWidget(button);
+    setLayout(formLayout);
 
     if(re.exactMatch(name))
         foreQ = " where " + columnID + " = " + name;
@@ -267,13 +288,18 @@ updateTable::~updateTable()
     delete model9;
     model9 = NULL;
 
+    delete formLayout;
+    formLayout = NULL;
+    delete button;
+    button = NULL;
+
     for(auto &&leItem : le2)   { delete leItem; leItem = NULL; }
     le2.clear();
     for(auto &&laItem : la2)   { delete laItem; laItem = NULL; }
     la2.clear();
 }
 
-void updateTable::on_pushButton_clicked()
+void updateTable::updateClicked()
 {
     QSqlQuery updateQuery;
     QString tableName = getTableName(), query, dateFormat = getDateFormat();

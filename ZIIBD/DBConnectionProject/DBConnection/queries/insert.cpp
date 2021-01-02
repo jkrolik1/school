@@ -4,35 +4,25 @@
 
 #include <QSqlDatabase>
 #include <QSqlQueryModel>
+#include <QPushButton>
+#include <QDebug>
+#include <QMessageBox>
+
 #include <unordered_map>
 #include <algorithm>
 #include <iterator>
-
-#include <QDebug>
-#include <QMessageBox>
 
 
 Insert::Insert(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Insert)
 {
+    setWindowFlags(Qt::WindowMinimizeButtonHint |
+                   Qt::WindowMaximizeButtonHint |
+                   Qt::WindowCloseButtonHint);
     ui->setupUi(this);
-
-    QString cs1="QPushButton {"
-                    "font-size: 15px;"
-                    "background-color: rgb(128,128,128);"
-                    "color: white;"
-                "}"
-                 "QPushButton:hover {"
-                    "background-color: white;"
-                    "color: black;"
-                 "}";
-    ui->pushButton->setStyleSheet(cs1);
-
-    ui->lineEdit_2->setVisible(0);
     ui->label->setVisible(0);
     ui->lineEdit->setVisible(0);
-    ui->lineEdit_3->setVisible(0);
 }
 
 template<typename t>
@@ -201,6 +191,11 @@ QString Insert::getLineEditStyle()
     return this->cs2;
 }
 
+QString Insert::getPushButtonStyle()
+{
+    return this->cs3;
+}
+
 void Insert::setTableName(QString tableName)
 {
     this->tableName = tableName;
@@ -214,6 +209,8 @@ QString Insert::getTableName()
 void Insert::insertData(QString tableName)
 {
     model2 = new QSqlQueryModel();
+    formLayout = new QFormLayout();
+    button = new QPushButton("Dodaj");
     QSqlQuery columnsNames;
     QString x,y;
     int it = 0;
@@ -264,12 +261,24 @@ void Insert::insertData(QString tableName)
         le[it]->setStyleSheet(this->getLineEditStyle());
         ay2 += 30;
 
+        formLayout->addRow(la[it], le[it]);
+
         it += 1;
     }
+
+    button->setStyleSheet(this->getPushButtonStyle());
+    connect(button, SIGNAL(clicked()), this, SLOT(addClicked()));
+    formLayout->addWidget(button);
+    setLayout(formLayout);
 }
 
 Insert::~Insert()
 {
+    delete formLayout;
+    formLayout = NULL;
+    delete button;
+    button = NULL;
+
     delete model2;
     model2 = NULL;
     delete ui;
@@ -280,7 +289,7 @@ Insert::~Insert()
     la.clear();
 }
 
-void Insert::on_pushButton_clicked()
+void Insert::addClicked()
 {
     QSqlQuery insertQuery;
     QString tableName = getTableName(), dateFormat = getDateFormat(), errorColumns;
