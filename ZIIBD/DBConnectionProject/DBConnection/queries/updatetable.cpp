@@ -391,6 +391,7 @@ bool updateTable::updateData(QString name)
     button->setStyleSheet(this->getPushButtonStyle());
     connect(button, SIGNAL(clicked()), this, SLOT(updateClicked()));
     formLayout->addWidget(button);
+    setLayout(formLayout);
 
     if(re.exactMatch(name))
         foreQ = " where " + columnID + " = " + name;
