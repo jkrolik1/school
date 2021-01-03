@@ -156,7 +156,7 @@ bool updateTable::checkNUMBER(QString x)
 
 bool updateTable::checkVARCHAR2(QString x)
 {
-    QRegExp re("[a-zA-Z0-9.,:; ]+");
+    QRegExp re("[a-zA-Z0-9.,:;_-'() ]+");
 
     if(re.exactMatch(x))
         return true;
@@ -168,7 +168,7 @@ bool updateTable::checkCHAR(QString x)
 {
     // fixed length ???
 
-    QRegExp re("[a-zA-Z0-9.,:; ]+");
+    QRegExp re("[a-zA-Z0-9.,:;_-'() ]+");
 
     if(re.exactMatch(x))
         return true;
