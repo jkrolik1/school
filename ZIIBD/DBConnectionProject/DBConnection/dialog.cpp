@@ -2,6 +2,7 @@
 #include "ui_dialog.h"
 #include "dialog2.h"
 #include "ui_dialog2.h"
+#include "queries/usercommand.h"
 
 #include <QSqlDatabase>
 #include "connection.h"
@@ -33,6 +34,7 @@ Dialog::Dialog(QWidget *parent)
                     "color: black;"
                  "}";
     ui->pushButton->setStyleSheet(cs1);
+    ui->pushButton_2->setStyleSheet(cs1);
 
     Connection c;
     bool ok = c.create_connection();
@@ -86,4 +88,12 @@ void Dialog::on_tableView_doubleClicked(const QModelIndex &index)
 
     subDialog->TableManager(x);
     subDialog->setTableName(x);
+}
+
+void Dialog::on_pushButton_2_clicked()
+{
+    userQuery = new UserCommand;
+    userQuery->setWindowTitle("Wpisz swoje polecenie do bazy");
+    userQuery->doQuery();
+    userQuery->show();
 }

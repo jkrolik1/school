@@ -23,7 +23,8 @@ SOURCES += \
     queries/choseforupdate.cpp \
     queries/deletefrom.cpp \
     queries/insert.cpp \
-    queries/updatetable.cpp
+    queries/updatetable.cpp \
+    queries/usercommand.cpp
 
 HEADERS += \
     connection.h \
@@ -32,7 +33,8 @@ HEADERS += \
     queries/choseforupdate.h \
     queries/deletefrom.h \
     queries/insert.h \
-    queries/updatetable.h
+    queries/updatetable.h \
+    queries/usercommand.h
 
 FORMS += \
     dialog.ui \
@@ -40,7 +42,8 @@ FORMS += \
     queries/choseforupdate.ui \
     queries/deletefrom.ui \
     queries/insert.ui \
-    queries/updatetable.ui
+    queries/updatetable.ui \
+    queries/usercommand.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
