@@ -1,5 +1,6 @@
 #include "usercommand.h"
 #include "ui_usercommand.h"
+#include "dialog.h"
 #include <QPushButton>
 #include <QLineEdit>
 #include <QSqlQuery>
@@ -47,30 +48,40 @@ void UserCommand::setCommand(QString commandParam)
     this->command = commandParam;
 }
 
-void UserCommand::doQuery()
+void UserCommand::doQuery(QString oldQuery)
 {
     formLayout = new QFormLayout;
     button = new QPushButton;
+    buttonExit = new QPushButton;
     title = new QLabel;
     writeLine = new QLineEdit;
 
     button->setStyleSheet(this->getPushButtonStyle());
+    buttonExit->setStyleSheet(this->getPushButtonStyle());
     title->setStyleSheet(this->getLabelStyle());
     writeLine->setStyleSheet(this->getLineEditStyle());
 
+    if (!(oldQuery.isEmpty()))
+        writeLine->setText(oldQuery);
+
     title->setText("Wpisz swoje polecenia do wykonania");
     button->setText("Wykonaj");
+    buttonExit->setText("Wyjdź");
 
     formLayout->addWidget(title);
     formLayout->addWidget(writeLine);
     formLayout->addWidget(button);
+    formLayout->addWidget(buttonExit);
 
-    connect(button,
-            SIGNAL(clicked()),
-            this,
-            SLOT(userQueryRealization()));
+    connect(button,SIGNAL(clicked()),this,SLOT(userQueryRealization()));
+    connect(buttonExit,SIGNAL(clicked()),this,SLOT(userCommandClose()));
 
     setLayout(formLayout);
+}
+
+void UserCommand::userCommandClose()
+{
+    UserCommand::close();
 }
 
 void UserCommand::userQueryRealization()
@@ -89,7 +100,8 @@ void UserCommand::userQueryRealization()
     QMessageBox msgCritical(
                 QMessageBox::Critical,
                 "Status operacji",
-                "Wystąpił błąd. Nie wprowadzono polecenia.\n",
+                "Wystąpił błąd. "
+                "Nie wprowadzono polecenia lub polecenie jest błędne.\n",
                 QMessageBox::Cancel);
 
     msgBox.setButtonText(QMessageBox::Yes, "Wykonaj");
@@ -114,6 +126,10 @@ void UserCommand::userQueryRealization()
                 else
                 {
                     msgCritical.exec();
+                    UserCommand *uc = new UserCommand;
+                    uc->setWindowTitle("Wpisz swoje polecenie do bazy");
+                    uc->doQuery(this->getCommand());
+                    uc->show();
                     UserCommand::close();
                 }
             break;
@@ -124,13 +140,10 @@ void UserCommand::userQueryRealization()
         }
     }
     else
-    {
         msgCritical.exec();
-        UserCommand::close();
-    }
 
 
-    if (this->command.mid(0,6).toUpper() == "SELECT")
+    if ((this->command.mid(0,6).toUpper() == "SELECT") && (ownQuery.exec()))
         this->implSELECT();
 }
 
@@ -163,6 +176,7 @@ UserCommand::~UserCommand()
     delete writeLine;
     delete model;
     delete resulfOfSELECT;
+    delete buttonExit;
 
     formLayout = NULL;
     button = NULL;
@@ -170,7 +184,7 @@ UserCommand::~UserCommand()
     writeLine = NULL;
     model = NULL;
     resulfOfSELECT = NULL;
-
+    buttonExit = NULL;
 
     delete ui;
 }

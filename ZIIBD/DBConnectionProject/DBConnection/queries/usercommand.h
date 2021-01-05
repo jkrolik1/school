@@ -18,7 +18,7 @@ class UserCommand : public QDialog
 
 public:
     explicit UserCommand(QWidget *parent = nullptr);
-    void doQuery();
+    void doQuery(QString);
     QString getPushButtonStyle();
     QString getLabelStyle();
     QString getLineEditStyle();
@@ -29,11 +29,12 @@ public:
 
 private slots:
     void userQueryRealization();
+    void userCommandClose();
 
 private:
     Ui::UserCommand *ui;
     QFormLayout *formLayout = nullptr;
-    QPushButton *button = nullptr;
+    QPushButton *button = nullptr, *buttonExit = nullptr;
     QLabel *title = nullptr;
     QSqlQueryModel *model = nullptr;
     QTableView *resulfOfSELECT = nullptr;

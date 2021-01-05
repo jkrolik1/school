@@ -94,6 +94,6 @@ void Dialog::on_pushButton_2_clicked()
 {
     userQuery = new UserCommand;
     userQuery->setWindowTitle("Wpisz swoje polecenie do bazy");
-    userQuery->doQuery();
+    userQuery->doQuery("");
     userQuery->show();
 }
