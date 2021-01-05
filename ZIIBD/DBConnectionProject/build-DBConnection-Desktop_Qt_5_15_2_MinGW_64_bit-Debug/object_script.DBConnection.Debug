@@ -1,0 +1,16 @@
+debug/connection.o
+debug/dialog2.o
+debug/main.o
+debug/dialog.o
+debug/choseforupdate.o
+debug/deletefrom.o
+debug/insert.o
+debug/updatetable.o
+debug/usercommand.o
+debug/moc_dialog.o
+debug/moc_dialog2.o
+debug/moc_choseforupdate.o
+debug/moc_deletefrom.o
+debug/moc_insert.o
+debug/moc_updatetable.o
+debug/moc_usercommand.o

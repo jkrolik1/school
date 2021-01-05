@@ -1,0 +1,16 @@
+release/connection.o
+release/dialog2.o
+release/main.o
+release/dialog.o
+release/choseforupdate.o
+release/deletefrom.o
+release/insert.o
+release/updatetable.o
+release/usercommand.o
+release/moc_dialog.o
+release/moc_dialog2.o
+release/moc_choseforupdate.o
+release/moc_deletefrom.o
+release/moc_insert.o
+release/moc_updatetable.o
+release/moc_usercommand.o
