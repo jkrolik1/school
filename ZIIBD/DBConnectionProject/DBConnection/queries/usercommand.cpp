@@ -1,6 +1,5 @@
 #include "usercommand.h"
 #include "ui_usercommand.h"
-#include "dialog.h"
 #include <QPushButton>
 #include <QLineEdit>
 #include <QSqlQuery>
@@ -126,7 +125,7 @@ void UserCommand::userQueryRealization()
                 else
                 {
                     msgCritical.exec();
-                    UserCommand *uc = new UserCommand;
+                    uc = new UserCommand;
                     uc->setWindowTitle("Wpisz swoje polecenie do bazy");
                     uc->doQuery(this->getCommand());
                     uc->show();
@@ -177,6 +176,7 @@ UserCommand::~UserCommand()
     delete model;
     delete resulfOfSELECT;
     delete buttonExit;
+    delete uc;
 
     formLayout = NULL;
     button = NULL;
@@ -185,6 +185,7 @@ UserCommand::~UserCommand()
     model = NULL;
     resulfOfSELECT = NULL;
     buttonExit = NULL;
+    uc = NULL;
 
     delete ui;
 }

@@ -38,6 +38,7 @@ private:
     QLabel *title = nullptr;
     QSqlQueryModel *model = nullptr;
     QTableView *resulfOfSELECT = nullptr;
+    UserCommand *uc = nullptr;
     QString command;
     QString cs1="QLabel {"
                 "font-size: 17px;"
