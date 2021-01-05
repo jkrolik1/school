@@ -191,11 +191,6 @@ QString Insert::getLineEditStyle()
     return this->cs2;
 }
 
-QString Insert::getRedLineEditStyle()
-{
-    return this->csRed;
-}
-
 QString Insert::getPushButtonStyle()
 {
     return this->cs3;
@@ -211,7 +206,7 @@ QString Insert::getTableName()
     return this->tableName;
 }
 
-void Insert::insertData(QString tableName, std::vector<QString> oldDataVector, std::vector<QString> redColumns)
+void Insert::insertData(QString tableName, std::vector<QString> oldDataVector)
 {
     model2 = new QSqlQueryModel();
     formLayout = new QFormLayout();
@@ -219,10 +214,9 @@ void Insert::insertData(QString tableName, std::vector<QString> oldDataVector, s
     buttonExit = new QPushButton("Wyjdź");
     QSqlQuery columnsNames;
     QString x,y;
-    int it = 0, it2 = 0;
+    int it = 0;
     int ax=10,ay=10;
     int ax2=220,ay2=13;
-    bool newLeStyle = false;
 
     for(auto &&leItem : le)   { delete leItem; leItem = NULL; }
     le.clear();
@@ -257,16 +251,6 @@ void Insert::insertData(QString tableName, std::vector<QString> oldDataVector, s
         {
             la.append(new QLabel(this));
             la[it]->setText(t.first);
-
-            if (!(redColumns.empty()))
-            {
-                if (la[it]->text() == redColumns[it2])
-                {
-                    newLeStyle = true;
-                    it2 += 1;
-                }
-            }
-
             la[it]->setGeometry(ax,ay,300,30);
             la[it]->resize(300,30);
             la[it]->show();
@@ -277,18 +261,12 @@ void Insert::insertData(QString tableName, std::vector<QString> oldDataVector, s
             le[it]->setGeometry(ax2,ay2,200,25);
             le[it]->resize(200,25);
             le[it]->show();
-
-            if (newLeStyle)
-                le[it]->setStyleSheet(this->getRedLineEditStyle());
-            else
-                le[it]->setStyleSheet(this->getLineEditStyle());
-
+            le[it]->setStyleSheet(this->getLineEditStyle());
             ay2 += 30;
 
             formLayout->addRow(la[it], le[it]);
 
             it += 1;
-            newLeStyle = false;
         }
     }
     else
@@ -297,16 +275,6 @@ void Insert::insertData(QString tableName, std::vector<QString> oldDataVector, s
         {
             la.append(new QLabel(this));
             la[it]->setText(t.first);
-
-            if (!(redColumns.empty()))
-            {
-                if (la[it]->text() == redColumns[it2])
-                {
-                    newLeStyle = true;
-                    it2 += 1;
-                }
-            }
-
             la[it]->setGeometry(ax,ay,300,30);
             la[it]->resize(300,30);
             la[it]->show();
@@ -318,18 +286,12 @@ void Insert::insertData(QString tableName, std::vector<QString> oldDataVector, s
             le[it]->resize(200,25);
             le[it]->setText(oldDataVector[it]);
             le[it]->show();
-
-            if (newLeStyle)
-                le[it]->setStyleSheet(this->getRedLineEditStyle());
-            else
-                le[it]->setStyleSheet(this->getLineEditStyle());
-
+            le[it]->setStyleSheet(this->getLineEditStyle());
             ay2 += 30;
 
             formLayout->addRow(la[it], le[it]);
 
             it += 1;
-            newLeStyle = false;
         }
     }
 
@@ -382,7 +344,7 @@ void Insert::addClicked()
                 QMessageBox::Ok);
     QMessageBox msgCritical(
                 QMessageBox::Critical,
-                "Błąd w poleceniu SQL",
+                "Status operacji",
                 "Wystąpił błąd. Nie dodano rekordu.\n",
                 QMessageBox::Cancel);
     std::vector<QString> oldDataVector;
@@ -418,9 +380,10 @@ void Insert::addClicked()
         newInsert->show();
         newInsert->setTableName(tableName);
         newInsert->setDateFormat("YYYY-MM-DD");
-        newInsert->insertData(tableName,oldDataVector,columnsError2);
+        newInsert->insertData(tableName,oldDataVector);
 
         Insert::close();
+
         return;
     }
 
@@ -477,7 +440,7 @@ void Insert::addClicked()
         newInsert->show();
         newInsert->setTableName(tableName);
         newInsert->setDateFormat("YYYY-MM-DD");
-        newInsert->insertData(tableName,oldDataVector,columnsError2);
+        newInsert->insertData(tableName,oldDataVector);
     }
 
     Insert::close();

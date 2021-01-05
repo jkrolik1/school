@@ -57,7 +57,6 @@ void choseForUpdate::on_tableView_doubleClicked(const QModelIndex &index)
 {
     updateX = new updateTable;
     QString tableName = getTableName();
-    std::vector<QString> emptyVector;
 
     updateX->setTableName(tableName);
     updateX->setDateFormat("YYYY-MM-DD");
@@ -68,7 +67,7 @@ void choseForUpdate::on_tableView_doubleClicked(const QModelIndex &index)
             ui->tableView->model()->data
             (ui->tableView->model()->index(row,0)).toString();
 
-    if(updateX->updateData(x,emptyVector))
+    if(updateX->updateData(x))
         updateX->show();
 
     choseForUpdate::close();

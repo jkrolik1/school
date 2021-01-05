@@ -22,10 +22,9 @@ public:
     explicit updateTable(QWidget *parent = nullptr);
     void setTableName(QString);
     QString getTableName();
-    bool updateData(QString,std::vector<QString>);
+    bool updateData(QString);
     QString getLabelStyle();
     QString getLineEditStyle();
-    QString getRedLineEditStyle();
     void setDateFormat(QString);
     QString getDateFormat();
     QString getPushButtonStyle();
@@ -66,12 +65,6 @@ private:
                     "background-color: white;"
                     "color: black;"
                  "}";
-    QString csRed =
-                "QLineEdit {"
-                "font-size: 13px;"
-                "color: rgb(220,220,220);"
-                "border: 1px solid rgb(220,20,60);"
-                "}";
     QString columnIDvalue;
 };
 

@@ -21,14 +21,13 @@ class Insert : public QDialog
 
 public:
     explicit Insert(QWidget *parent = nullptr);
-    void insertData(QString, std::vector<QString>, std::vector<QString>);
+    void insertData(QString, std::vector<QString>);
 
     template<typename t>
     std::vector<t> uniqueVector(std::vector<t>&);
 
     QString getLabelStyle();
     QString getLineEditStyle();
-    QString getRedLineEditStyle();
     QString getPushButtonStyle();
 
     void setTableName(QString);
@@ -77,12 +76,6 @@ private:
                     "background-color: white;"
                     "color: black;"
                  "}";
-    QString csRed =
-                "QLineEdit {"
-                "font-size: 13px;"
-                "color: rgb(220,220,220);"
-                "border: 1px solid rgb(220,20,60);"
-                "}";
     std::unordered_map<QString,QString> newRows;
     Ui::Insert *ui;
 };

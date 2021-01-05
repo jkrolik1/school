@@ -201,12 +201,7 @@ void updateTable::setColumnIDvalue(QString parametr)
     this->columnIDvalue = parametr;
 }
 
-QString updateTable::getRedLineEditStyle()
-{
-    return this->csRed;
-}
-
-bool updateTable::updateData(QString name, std::vector<QString> redColumns)
+bool updateTable::updateData(QString name)
 {
     this->setColumnIDvalue(name);
     model7 = new QSqlQueryModel();
@@ -217,12 +212,11 @@ bool updateTable::updateData(QString name, std::vector<QString> redColumns)
     QSqlQuery idQ, values, columnName, constaint, it2;
     QString x,y, columnID, iValue = "", myQuery, columnNameQ, constaintQ, itQ;
     QString tableName = getTableName();
-    int it = 0, it_ = 0;
+    int it = 0;
     int ax=10,ay=10;
     int ax2=220,ay2=13;
     int row;
     QRegExp re("\\d*");
-    bool redStyle = false;
 
 
     for(auto &&leItem : le2)   { delete leItem; leItem = NULL; }
@@ -375,16 +369,6 @@ bool updateTable::updateData(QString name, std::vector<QString> redColumns)
 
         la2.append(new QLabel(this));
         la2[it]->setText(t.first);
-
-        if (!(redColumns.empty()))
-        {
-            if (la2[it]->text() == redColumns[it_])
-            {
-                it_ += 1;
-                redStyle = true;
-            }
-        }
-
         la2[it]->setGeometry(ax,ay,300,30);
         la2[it]->resize(300,30);
         la2[it]->show();
@@ -400,18 +384,12 @@ bool updateTable::updateData(QString name, std::vector<QString> redColumns)
 
         le2[it]->setText(iValue);
         le2[it]->show();
-
-        if (redStyle)
-            le2[it]->setStyleSheet(this->getRedLineEditStyle());
-        else
-            le2[it]->setStyleSheet(this->getLineEditStyle());
-
+        le2[it]->setStyleSheet(this->getLineEditStyle());
         ay2 += 30;
 
         formLayout->addRow(la2[it], le2[it]);
 
         it += 1;
-        redStyle = false;
 
         delete model8;
     }
@@ -521,7 +499,7 @@ void updateTable::updateClicked()
         newUpdate->setDateFormat("YYYY-MM-DD");
         newUpdate->setWindowTitle("Zmień w tabeli " + tableName);
 
-        if(newUpdate->updateData(this->columnIDvalue,columnsError2))
+        if(newUpdate->updateData(this->columnIDvalue))
             newUpdate->show();
 
         updateTable::close();
@@ -579,7 +557,7 @@ void updateTable::updateClicked()
                 QMessageBox::Ok);
     QMessageBox msgCritical(
                 QMessageBox::Critical,
-                "Błąd w poleceniu SQL",
+                "Status operacji zmiany",
                 "Wystąpił błąd. Nie wprowadzono zmian.\n",
                 QMessageBox::Cancel);
 
@@ -607,7 +585,7 @@ void updateTable::updateClicked()
                     newUpdate->setDateFormat("YYYY-MM-DD");
                     newUpdate->setWindowTitle("Zmień w tabeli " + tableName);
 
-                    if(newUpdate->updateData(this->columnIDvalue,columnsError2))
+                    if(newUpdate->updateData(this->columnIDvalue))
                         newUpdate->show();
                 }
             break;
