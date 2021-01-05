@@ -33,7 +33,6 @@ void deleteFrom::deleteData()
         ui->tableView->horizontalHeader()->setSectionResizeMode
                 (QHeaderView::Stretch);
     }
-
 }
 
 void deleteFrom::setTableName(QString tableName)
@@ -61,13 +60,25 @@ deleteFrom::~deleteFrom()
 void deleteFrom::on_tableView_doubleClicked(const QModelIndex &index)
 {
     int row = index.row();
-    model5 = new QSqlQueryModel();
-    model6 = new QSqlQueryModel();
     QString tableName = getTableName(), columnID = "",
             deleteID = ui->tableView->model()->
                         data(ui->tableView->model()->index(row,0)).toString();
     QSqlQuery delQ, idQ;
-    QMessageBox warnMessage;
+    QMessageBox warnMessage,
+                msgInfo(
+                    QMessageBox::Information,
+                    "Status operacji",
+                    "Usunięto rekord.",
+                    QMessageBox::Ok),
+                msgCritical(
+                    QMessageBox::Critical,
+                    "Status operacji",
+                    "Wystąpił błąd. Nie usunięto rekordu.\n",
+                    QMessageBox::Cancel);
+    model5 = new QSqlQueryModel();
+    model6 = new QSqlQueryModel();
+
+    msgCritical.setButtonText(QMessageBox::Cancel, "Wyjdź");
 
     columnID =  "SELECT cols.column_name "
                 "FROM all_constraints cons, all_cons_columns cols "
@@ -104,14 +115,15 @@ void deleteFrom::on_tableView_doubleClicked(const QModelIndex &index)
     switch(msgBox.exec())
     {
         case QMessageBox::Yes:
-            delQ.exec();
-            deleteFrom::close();
+            if (delQ.exec())
+                msgInfo.exec();
+            else
+                msgCritical.exec();
         break;
         case QMessageBox::No:
-            deleteFrom::close();
-        break;
         default:
-            deleteFrom::close();
         break;
     }
+
+    deleteFrom::close();
 }

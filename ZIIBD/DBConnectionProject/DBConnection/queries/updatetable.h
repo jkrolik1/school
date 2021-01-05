@@ -2,7 +2,6 @@
 #define UPDATETABLE_H
 
 #include <QDialog>
-
 #include <unordered_map>
 #include <QLabel>
 #include <QLineEdit>
@@ -37,6 +36,7 @@ public:
     std::tuple<bool,std::vector<QString>> validation();
     template<typename t>
     std::vector<t> uniqueVector(std::vector<t>&);
+    void setColumnIDvalue(QString);
     ~updateTable();
 
 private slots:
@@ -46,6 +46,7 @@ private:
     std::unordered_map<QString,QString> newRows;
     Ui::updateTable *ui;
     QString tableName, dateFormat;
+    updateTable *newUpdate = nullptr;
     QString cs1="QLabel {"
                 "font-size: 15px;"
                 "color: rgb(220,220,220);"
@@ -64,6 +65,7 @@ private:
                     "background-color: white;"
                     "color: black;"
                  "}";
+    QString columnIDvalue;
 };
 
 #endif // UPDATETABLE_H

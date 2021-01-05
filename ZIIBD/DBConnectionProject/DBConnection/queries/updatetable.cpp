@@ -196,8 +196,14 @@ QString updateTable::getDateFormat()
     return this->dateFormat;
 }
 
+void updateTable::setColumnIDvalue(QString parametr)
+{
+    this->columnIDvalue = parametr;
+}
+
 bool updateTable::updateData(QString name)
 {
+    this->setColumnIDvalue(name);
     model7 = new QSqlQueryModel();
     model8 = new QSqlQueryModel();
     model9 = new QSqlQueryModel();
@@ -439,6 +445,9 @@ updateTable::~updateTable()
     delete button;
     button = NULL;
 
+    delete newUpdate;
+    newUpdate = NULL;
+
     for(auto &&leItem : le2)   { delete leItem; leItem = NULL; }
     le2.clear();
     for(auto &&laItem : la2)   { delete laItem; laItem = NULL; }
@@ -461,6 +470,7 @@ void updateTable::updateClicked()
     typedef std::vector<QString> errorsV;
         errorsV columnsError = std::get<1>(validation());
         errorsV columnsError2 = uniqueVector(columnsError);
+    newUpdate = new updateTable;
 
     msgCritical2.setButtonText(QMessageBox::Cancel, "Wyjdź");
 
@@ -484,6 +494,14 @@ void updateTable::updateClicked()
 
         qInfo() << "Validation ERROR";
         msgCritical2.exec();
+
+        newUpdate->setTableName(tableName);
+        newUpdate->setDateFormat("YYYY-MM-DD");
+        newUpdate->setWindowTitle("Zmień w tabeli " + tableName);
+
+        if(newUpdate->updateData(this->columnIDvalue))
+            newUpdate->show();
+
         updateTable::close();
         return;
     }
@@ -561,7 +579,15 @@ void updateTable::updateClicked()
                     updateTable::close();
                 }
                 else
+                {
                     msgCritical.exec();
+                    newUpdate->setTableName(tableName);
+                    newUpdate->setDateFormat("YYYY-MM-DD");
+                    newUpdate->setWindowTitle("Zmień w tabeli " + tableName);
+
+                    if(newUpdate->updateData(this->columnIDvalue))
+                        newUpdate->show();
+                }
             break;
             case QMessageBox::No:
                 updateTable::close();
