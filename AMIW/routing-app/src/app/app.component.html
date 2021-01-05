@@ -1,10 +1,19 @@
-<nav>
-  <ul>
-    <li><a routerLink="/bestall-component" routerLinkActive="active">Best Component</a></li>
-    <li><a routerLink="/first-component" routerLinkActive="active">First Component</a></li>
-    <li><a routerLink="/second-component" routerLinkActive="active">Second Component</a></li>
-    <li><a routerLink="/third-component" routerLinkActive="active">Third Component</a></li>
-  </ul>
-</nav>
+<div id = "main">
 
-<router-outlet></router-outlet>
+  <nav>
+    <ul>
+      <li><a routerLink="/the-best-today" routerLinkActive="active">Best joke of the day</a></li>
+      <li><a routerLink="/the-best-today-animals" routerLinkActive="active">Best joke about animals</a></li>
+      <li><a routerLink="/the-best-today-blonde" routerLinkActive="active">Best blonde joke</a></li>
+      <li><a routerLink="/the-best-today-knockknock" routerLinkActive="active">Best knock-knock joke</a></li>
+    </ul>
+  </nav>
+
+  <div id = "jokeField">
+    <router-outlet>
+      <h2 style = "text-decoration: underline;">Let me cheer you up</h2>
+    </router-outlet>
+  </div>
+
+  <div style = "clear: both;"></div>
+</div>
