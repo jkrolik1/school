@@ -21,7 +21,7 @@ class Insert : public QDialog
 
 public:
     explicit Insert(QWidget *parent = nullptr);
-    void insertData(QString);
+    void insertData(QString, std::vector<QString>);
 
     template<typename t>
     std::vector<t> uniqueVector(std::vector<t>&);
@@ -48,13 +48,15 @@ public:
 
 private slots:
     void addClicked();
+    void buttonExitAction();
 
 private:
     QVector<QLabel*> la;
     QVector<QLineEdit*> le;
     QSqlQueryModel *model2 = nullptr;
     QFormLayout *formLayout = nullptr;
-    QPushButton *button = nullptr;
+    QPushButton *button = nullptr, *buttonExit = nullptr;
+    Insert *newInsert = nullptr;
     QString tableName, dateFormat;
     QString cs1="QLabel {"
                 "font-size: 15px;"

@@ -82,13 +82,14 @@ void Dialog2::on_pushButton_4_clicked()
 
 void Dialog2::on_pushButton_clicked()
 {
+    std::vector<QString> oldDataVector;
     insertX = new Insert;
     QString tableName = getTableName();
     insertX->setWindowTitle("Dodaj rekord do tabeli " + tableName);
     insertX->show();
     insertX->setTableName(tableName);
     insertX->setDateFormat("YYYY-MM-DD");
-    insertX->insertData(tableName);
+    insertX->insertData(tableName,oldDataVector);
     Dialog2::close();
 }
 

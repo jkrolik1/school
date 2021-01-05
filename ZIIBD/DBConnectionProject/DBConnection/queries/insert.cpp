@@ -206,11 +206,12 @@ QString Insert::getTableName()
     return this->tableName;
 }
 
-void Insert::insertData(QString tableName)
+void Insert::insertData(QString tableName, std::vector<QString> oldDataVector)
 {
     model2 = new QSqlQueryModel();
     formLayout = new QFormLayout();
     button = new QPushButton("Dodaj");
+    buttonExit = new QPushButton("Wyjdź");
     QSqlQuery columnsNames;
     QString x,y;
     int it = 0;
@@ -244,32 +245,68 @@ void Insert::insertData(QString tableName)
         newRows.insert(std::pair<QString,QString>(x,y));
     }
 
-    for(auto &&t : newRows)
+    if (oldDataVector.empty())
     {
-        la.append(new QLabel(this));
-        la[it]->setText(t.first);
-        la[it]->setGeometry(ax,ay,300,30);
-        la[it]->resize(300,30);
-        la[it]->show();
-        la[it]->setStyleSheet(this->getLabelStyle());
-        ay += 30;
+        for(auto &&t : newRows)
+        {
+            la.append(new QLabel(this));
+            la[it]->setText(t.first);
+            la[it]->setGeometry(ax,ay,300,30);
+            la[it]->resize(300,30);
+            la[it]->show();
+            la[it]->setStyleSheet(this->getLabelStyle());
+            ay += 30;
 
-        le.append(new QLineEdit(this));
-        le[it]->setGeometry(ax2,ay2,200,25);
-        le[it]->resize(200,25);
-        le[it]->show();
-        le[it]->setStyleSheet(this->getLineEditStyle());
-        ay2 += 30;
+            le.append(new QLineEdit(this));
+            le[it]->setGeometry(ax2,ay2,200,25);
+            le[it]->resize(200,25);
+            le[it]->show();
+            le[it]->setStyleSheet(this->getLineEditStyle());
+            ay2 += 30;
 
-        formLayout->addRow(la[it], le[it]);
+            formLayout->addRow(la[it], le[it]);
 
-        it += 1;
+            it += 1;
+        }
+    }
+    else
+    {
+        for(auto &&t : newRows)
+        {
+            la.append(new QLabel(this));
+            la[it]->setText(t.first);
+            la[it]->setGeometry(ax,ay,300,30);
+            la[it]->resize(300,30);
+            la[it]->show();
+            la[it]->setStyleSheet(this->getLabelStyle());
+            ay += 30;
+
+            le.append(new QLineEdit(this));
+            le[it]->setGeometry(ax2,ay2,200,25);
+            le[it]->resize(200,25);
+            le[it]->setText(oldDataVector[it]);
+            le[it]->show();
+            le[it]->setStyleSheet(this->getLineEditStyle());
+            ay2 += 30;
+
+            formLayout->addRow(la[it], le[it]);
+
+            it += 1;
+        }
     }
 
     button->setStyleSheet(this->getPushButtonStyle());
+    buttonExit->setStyleSheet(this->getPushButtonStyle());
     connect(button, SIGNAL(clicked()), this, SLOT(addClicked()));
+    connect(buttonExit, SIGNAL(clicked()), this, SLOT(buttonExitAction()));
     formLayout->addWidget(button);
+    formLayout->addWidget(buttonExit);
     setLayout(formLayout);
+}
+
+void Insert::buttonExitAction()
+{
+    Insert::close();
 }
 
 Insert::~Insert()
@@ -278,15 +315,17 @@ Insert::~Insert()
     formLayout = NULL;
     delete button;
     button = NULL;
-
     delete model2;
     model2 = NULL;
-    delete ui;
+    delete newInsert;
+    newInsert = NULL;
 
     for(auto &&leItem : le)   { delete leItem; leItem = NULL; }
     le.clear();
     for(auto &&laItem : la)   { delete laItem; laItem = NULL; }
     la.clear();
+
+    delete ui;
 }
 
 void Insert::addClicked()
@@ -308,7 +347,11 @@ void Insert::addClicked()
                 "Status operacji",
                 "Wystąpił błąd. Nie dodano rekordu.\n",
                 QMessageBox::Cancel);
+    std::vector<QString> oldDataVector;
 
+
+    for (int p = 0; p < le.size(); ++p)
+        oldDataVector.emplace_back(le[p]->text());
 
     msgCritical.setButtonText(QMessageBox::Cancel, "Wyjdź");
 
@@ -331,7 +374,16 @@ void Insert::addClicked()
 
         qInfo() << "Validation ERROR";
         msgCritical2.exec();
+
+        newInsert = new Insert;
+        newInsert->setWindowTitle("Dodaj rekord do tabeli " + tableName);
+        newInsert->show();
+        newInsert->setTableName(tableName);
+        newInsert->setDateFormat("YYYY-MM-DD");
+        newInsert->insertData(tableName,oldDataVector);
+
         Insert::close();
+
         return;
     }
 
@@ -380,7 +432,16 @@ void Insert::addClicked()
         QSqlDatabase::database().commit();
     }
     else
+    {
         msgCritical.exec();
+
+        newInsert = new Insert;
+        newInsert->setWindowTitle("Dodaj rekord do tabeli " + tableName);
+        newInsert->show();
+        newInsert->setTableName(tableName);
+        newInsert->setDateFormat("YYYY-MM-DD");
+        newInsert->insertData(tableName,oldDataVector);
+    }
 
     Insert::close();
 }
