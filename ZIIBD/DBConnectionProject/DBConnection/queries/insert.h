@@ -76,7 +76,7 @@ private:
                     "background-color: white;"
                     "color: black;"
                  "}";
-    std::unordered_map<QString,QString> newRows;
+    std::vector<std::pair<QString,QString>> newRows;
     Ui::Insert *ui;
 };
 

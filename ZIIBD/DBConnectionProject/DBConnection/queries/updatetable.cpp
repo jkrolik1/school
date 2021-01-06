@@ -278,7 +278,7 @@ bool updateTable::updateData(QString name)
         y = ui->tableView->model()->    // column type
                  data(ui->tableView->model()->index(i,1)).toString();
 
-        newRows.insert(std::pair<QString,QString>(x,y));
+        newRows.emplace_back(std::pair<QString,QString>(x,y));
     }
 
     // disable constraints
@@ -379,7 +379,7 @@ bool updateTable::updateData(QString name)
         le2[it]->setGeometry(ax2,ay2,200,25);
         le2[it]->resize(200,25);
 
-        if (newRows[la2[it]->text()] == "DATE")
+        if (newRows[it].second == "DATE")
             iValue = iValue.mid(0,10);
 
         le2[it]->setText(iValue);
@@ -510,7 +510,7 @@ void updateTable::updateClicked()
 
     for(int c = 0; c < la2.size(); ++c)
     {
-        if(newRows[la2[c]->text()] == "DATE")
+        if(newRows[c].second == "DATE")
         {
             query += "\"";
             query += la2[c]->text();
@@ -520,9 +520,9 @@ void updateTable::updateClicked()
             query += dateFormat;
             query += "'), ";
         }
-        else if(newRows[la2[c]->text()] == "VARCHAR" ||
-                newRows[la2[c]->text()] == "VARCHAR2" ||
-                newRows[la2[c]->text()] == "CHAR")
+        else if(newRows[c].second == "VARCHAR" ||
+                newRows[c].second == "VARCHAR2" ||
+                newRows[c].second == "CHAR")
         {
             query += "\"";
             query += la2[c]->text();

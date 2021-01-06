@@ -43,7 +43,7 @@ private slots:
     void updateClicked();
 
 private:
-    std::unordered_map<QString,QString> newRows;
+    std::vector<std::pair<QString,QString>> newRows;
     Ui::updateTable *ui;
     QString tableName, dateFormat;
     updateTable *newUpdate = nullptr;

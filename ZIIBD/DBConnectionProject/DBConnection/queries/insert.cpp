@@ -242,7 +242,7 @@ void Insert::insertData(QString tableName, std::vector<QString> oldDataVector)
                  data(ui->tableView->model()->index(i,0)).toString();
          y = ui->tableView->model()->
                   data(ui->tableView->model()->index(i,1)).toString();
-        newRows.insert(std::pair<QString,QString>(x,y));
+        newRows.emplace_back(std::pair<QString,QString>(x,y));
     }
 
     if (oldDataVector.empty())
@@ -398,12 +398,12 @@ void Insert::addClicked()
 
     for(int s = 0; s < le.size(); ++s)
     {
-        if(newRows[la[s]->text()] == "NUMBER")
+        if(newRows[s].second == "NUMBER")
         {
             query += le[s]->text();
             query += ", ";
         }
-        else if(newRows[la[s]->text()] == "DATE")
+        else if(newRows[s].second == "DATE")
         {
             query += "to_date('";
             query += le[s]->text();
