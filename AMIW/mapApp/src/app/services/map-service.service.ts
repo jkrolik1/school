@@ -18,7 +18,6 @@ export class MapServiceService {
     .then(response => response.json())
     .then(data => {
       var j = data;
-      console.log(data.weather);
       this.ja = j;
     });
     return of(this.ja);

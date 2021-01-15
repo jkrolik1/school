@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
 import { MapServiceService} from '../app/services/map-service.service'
 import MousePosition from 'ol/control/MousePosition';
-import Map from 'ol/Map';
-import OSM from 'ol/source/OSM';
-import TileLayer from 'ol/layer/Tile';
-import View from 'ol/View';
+import {OSM, Vector as VectorSource} from 'ol/source';
+import {Point} from 'ol/geom';
 import {createStringXY} from 'ol/coordinate';
 import {defaults as defaultControls} from 'ol/control';
+import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer';
+import {useGeographic} from 'ol/proj';
+import {Feature, Map, View} from 'ol/index';
 
-declare let ol: any;
+useGeographic();
+
 
 @Component({
   selector: 'app-root',
@@ -18,7 +20,8 @@ declare let ol: any;
 export class AppComponent {
   
   map: any;
-  xxx: any;
+  place: any = [21.012229, 52.229676];
+  point: any = new Point(this.place);
   
   constructor(private MapService: MapServiceService) { }
 
@@ -33,20 +36,26 @@ export class AppComponent {
   });
 
   ngOnInit() {
-    this.map = new ol.Map({
+    this.map = new Map({
       controls: defaultControls().extend([this.mousePositionControl]),
       layers: [
         new TileLayer({
           source: new OSM(),
-        }) ],
+        }), 
+        new VectorLayer({
+          source: new VectorSource({
+            features: [new Feature(this.point)],
+          }),
+        }),
+      ],
       target: 'map',
       view: new View({
-        center: ol.proj.fromLonLat([21, 52]),
+        center: this.place,
         zoom: 5,
       }),
     });
     this.MapService.getAPI().subscribe((open) => {
-      this.xxx = open;
+      this.point = open;
     });
     
 
