@@ -1,1 +1,8 @@
 <div id="map" class="map"></div>
+<div id="form1">
+    <input type="text" #in placeholder="Lat">
+    <input type="text" #in2 placeholder="Lot">
+    <button (click)="onAdd(in.value,in2.value)" class="button1">Wczytaj</button>
+    <span class="text">{{weather}}</span>
+    <img src={{iconPath}}>
+</div>
