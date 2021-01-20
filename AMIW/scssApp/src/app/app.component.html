@@ -1,0 +1,27 @@
+
+  <div class="container-fluid banner">
+    <div class="row">
+      <div class="col-md-12">
+        <nav class="navbar navbar-md">
+          <div class="navbar-brand">NUMBERS FACTS</div>
+          <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/date-facts" routerLinkActive="active">DATE FACT</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/math-facts" routerLinkActive="active">MATH FACT</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/trivia-facts" routerLinkActive="active">TRIVIA FACT</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/year-facts" routerLinkActive="active">YEAR FACT</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="col-md-8 offset-md-2 info">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,70 @@
+body{
+	margin:0;
+	padding:0;
+	background:#fff;
+	font-family: 'Raleway',sans-serif;
+	color: #fff;
+}
+.banner{
+	height: 100vh;
+	width: 100%;
+    background:url('../app/overlay.png'),url('../app/nums.jpg');
+	background-position: top;
+	background-size:cover;
+    background-repeat: no-repeat;
+    
+    .navbar{
+        margin-top:4%;
+    }
+    .navbar-brand{
+        color: #fff;
+        font-size: 2em;
+        font-weight: 700;
+        margin-left: 10%;
+        letter-spacing: 0.2em;
+    }
+    .nav{
+        margin-right:10%; 
+
+        li{
+            a{
+                color:#aaa;
+                font-size: 1.3em;
+            }
+            a:hover{
+                font-weight: bold;
+            }
+        }
+
+    }
+
+    .info{
+        margin-top:15%;
+        transform: translateY(-15%);
+
+        h1{
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 2px;
+        }
+        p{
+            font-size: 2em;
+            font-weight: 500;
+            color: #aaa;
+            letter-spacing: 2px;
+        }
+        a{
+            margin-left:50%;
+            transform: translateX(-50%);
+            color: #fff;
+            background: #617a8d85;
+            padding:10px 20px; 
+            font-size: 2em;
+            font-weight: 600;
+        }
+        a:hover{
+            background: #b3bfc5a1;
+        }
+    }
+}
