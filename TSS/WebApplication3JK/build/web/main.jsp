@@ -12,6 +12,6 @@
         <title>Zacznij bitwę</title>
     </head>
     <body>
-        <h1>User successfully registered!</h1>
+        <h1>OK!</h1>
     </body>
 </html>

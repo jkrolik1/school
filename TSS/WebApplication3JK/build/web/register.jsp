@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Formularz logowania</title>
+        <title>Formularz rejestracji</title>
     </head>
     <body>
         <h1>Tanks Battle Game</h1>
@@ -19,13 +19,13 @@
         
         <br/><br/>
         
-        <h2>Logowanie</h2>
-        <form action="<%= request.getContextPath() %>/login" method="post">
+        <h2>Rejestracja</h2>
+        <form action="<%= request.getContextPath() %>/registerServlet" method="post">
             Login użytkownika: <input type="text" name="login"/><br/><br/>  
-            Hasło: <input type="password" name="password"/><br/><br/> 
-            <input type="submit" value="Zaloguj"/>  
+            Hasło: <input type="password" name="password"/><br/><br/>  
+            Email <input type="text" name="email"/><br/><br/> 
+            <input type="submit" value="Zarejestruj się"/>  
         </form>  
-        <a href="register.jsp">Zarejestruj</a> 
         
         <br/><br/><br/>
         

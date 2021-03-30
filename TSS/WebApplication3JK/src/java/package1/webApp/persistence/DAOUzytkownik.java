@@ -6,17 +6,38 @@
 package package1.webApp.persistence;
 import package1.webApp.model.User;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  *
  * @author Jakub
  */
 public class DAOUzytkownik {
-    public int registerEmployee(User user) throws ClassNotFoundException {
+    public int loginUser(User user) throws ClassNotFoundException {
+        String SELECT_USERS_SQL = "SELECT * FROM user WHERE login = ? AND password = ?";
+
+        int result = 0;
+
+        Class.forName("com.mysql.jdbc.Driver");
+
+        try (Connection connection = DriverManager
+            .getConnection("jdbc:mysql://localhost:3306/tanksbattle", "root", "");
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USERS_SQL)) {
+            preparedStatement.setString(1, user.getLogin());
+            preparedStatement.setString(2, user.getPassword());
+
+            ResultSet resultSet = preparedStatement.executeQuery(preparedStatement.toString());
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            
+
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+        return result;
+    }
+    
+    public int registerUser(User user) throws ClassNotFoundException {
         String INSERT_USERS_SQL = "INSERT INTO user" +
             "(login, password, email) VALUES " +
             " (?, ?, ?);";
@@ -41,6 +62,7 @@ public class DAOUzytkownik {
         }
         return result;
     }
+    
 
     private void printSQLException(SQLException ex) {
         for (Throwable e: ex) {
