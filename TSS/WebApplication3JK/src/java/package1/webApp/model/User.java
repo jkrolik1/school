@@ -12,14 +12,14 @@ package package1.webApp.model;
 public class User {
     private String login;
     private String password;
-    private String email;
+    private String name;
     
     public User(){}
     
-    public User(String login, String pass, String email){
+    public User(String login, String pass, String name){
         this.login = login;
         this.password = pass;
-        this.email = email;
+        this.name = name;
     }
     
     public String getLogin(){
@@ -30,8 +30,8 @@ public class User {
         return password;
     }
 
-    public String getEmail() {
-        return email;
+    public String getName() {
+        return name;
     }
     
     public void setLogin(String login){
@@ -42,8 +42,8 @@ public class User {
         this.password = password;
     }   
     
-    public void setEmail(String email){
-        this.email = email;
+    public void setName(String name){
+        this.name = name;
     }
     
 }

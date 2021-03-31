@@ -20,10 +20,14 @@
         <br/><br/>
         
         <h2>Logowanie</h2>
-        <form action="<%= request.getContextPath() %>/login" method="post">
+        
+        <h3 style = "color: red;"> ${message} </h2>
+        <h3 style = "color: green;"> ${success} </h2>
+        
+        <form action="loginRegister" method="post">
             Login użytkownika: <input type="text" name="login"/><br/><br/>  
             Hasło: <input type="password" name="password"/><br/><br/> 
-            <input type="submit" value="Zaloguj"/>  
+            <input type="submit" value="logowanie" name="submit"/>  
         </form>  
         <a href="register.jsp">Zarejestruj</a> 
         
