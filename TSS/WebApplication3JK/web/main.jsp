@@ -4,6 +4,7 @@
     Author     : Jakub
 --%>
 
+<%@page import="package1.webApp.persistence.tankDAOimpl"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,5 +14,10 @@
     </head>
     <body>
         <h1>OK!</h1>
+        <% 
+            String login = request.getParameter("login");
+            tanksDAOimpl.getMyTanks(login);
+        %>
+        <div>  </div>
     </body>
 </html>

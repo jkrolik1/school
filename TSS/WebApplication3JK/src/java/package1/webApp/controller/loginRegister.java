@@ -2,6 +2,8 @@ package package1.webApp.controller;
 
 import package1.webApp.persistence.userDAOimpl;
 import package1.webApp.persistence.userDAO;
+import package1.webApp.persistence.tankDAOimpl;
+import package1.webApp.persistence.tankDAO;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -33,8 +35,11 @@ public class loginRegister extends HttpServlet {
         switch (submit) {
             case "logowanie":
                 user = usr.getUser(login, password);
-                if ((user != null) && (user.getName() != null))
+                if ((user != null) && (user.getName() != null)){
+                    tankDAO tnk = new tankDAOimpl();
+                    tnk.getMyTanks(login);
                     ApplicationLogic1.messageOperation(request, response, "success", user.getName(), "main.jsp");
+                }
                 else
                     ApplicationLogic1.messageOperation(request, response, "message", "Nieprawidłowe dane!", "index.jsp");
                 break;
