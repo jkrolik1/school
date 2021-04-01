@@ -18,7 +18,7 @@ public class ApplicationData1 {
     
     public boolean addTank(String name, String country, int armorAmount, int gunCaliber){
         if(!(name.isEmpty()) && (!(country.isEmpty())) && (!(armorAmount==0)) && (!(gunCaliber==0))){
-            Tank tank = new Tank(name,country,armorAmount,gunCaliber);
+            Tank tank = new Tank(name,armorAmount,gunCaliber);
             listOfTanks.add(tank);
         }
         else
@@ -35,7 +35,6 @@ public class ApplicationData1 {
             Tank tank = listOfTanks.get(index);
             String tankInfo = 
                     tank.getName() + " | " + 
-                    tank.getCountry() + " | " + 
                     tank.getArmorAmount() + " | " + 
                     tank.getGunCaliber();
             return tankInfo;

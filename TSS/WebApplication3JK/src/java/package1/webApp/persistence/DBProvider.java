@@ -1,5 +1,7 @@
 package package1.webApp.persistence;
 
+import java.sql.SQLException;
+
 
 public interface DBProvider {
     String user = "root";

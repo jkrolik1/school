@@ -6,12 +6,15 @@ import package1.webApp.persistence.tankDAOimpl;
 import package1.webApp.persistence.tankDAO;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.annotation.WebServlet;
 import package1.webApp.data.ApplicationLogic1;
+import package1.webApp.model.Tank;
 import package1.webApp.model.User;
 
 
@@ -37,7 +40,7 @@ public class loginRegister extends HttpServlet {
                 user = usr.getUser(login, password);
                 if ((user != null) && (user.getName() != null)){
                     tankDAO tnk = new tankDAOimpl();
-                    tnk.getMyTanks(login);
+                    LinkedList myTanks = tnk.getMyTanks(login);
                     ApplicationLogic1.messageOperation(request, response, "success", user.getName(), "main.jsp");
                 }
                 else

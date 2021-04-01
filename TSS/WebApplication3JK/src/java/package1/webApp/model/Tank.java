@@ -11,24 +11,22 @@ package package1.webApp.model;
  */
 public class Tank {
     private String name;
-    private String country;
     private int armorAmount;
     private int gunCaliber;
     
-    public Tank(String name, String country, int armorAmount, int gunCaliber){
+    public Tank(String name, int armorAmount, int gunCaliber){
         setName(name);
-        setCountry(country);
         this.armorAmount = armorAmount;
         this.gunCaliber = gunCaliber;
+    }
+
+    public Tank() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     public void setName(String name){
         if (!name.isEmpty())
             this.name = name;
-    }
-    public void setCountry(String country){
-        if (!country.isEmpty())
-            this.country = country;
     }
     public void setArmorAmount(int armorAmount){
         this.armorAmount = armorAmount;
@@ -39,9 +37,6 @@ public class Tank {
 
     public String getName(){
         return name;
-    }
-    public String getCountry(){
-        return country;
     }
     public int getArmorAmount(){
         return armorAmount;
