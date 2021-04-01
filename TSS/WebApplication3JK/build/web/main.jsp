@@ -14,10 +14,6 @@
     </head>
     <body>
         <h1>OK!</h1>
-        <% 
-            String login = request.getParameter("login");
-            tanksDAOimpl.getMyTanks(login);
-        %>
-        <div>  </div>
+
     </body>
 </html>
