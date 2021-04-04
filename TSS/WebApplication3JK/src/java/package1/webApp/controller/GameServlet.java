@@ -65,6 +65,8 @@ public class GameServlet extends HttpServlet {
                 case "/award":
                     awardBelt(request,response);
                     break;
+                case "/edit":
+                    break;
                 case "/back":
                     try {
                         request.getRequestDispatcher("main.jsp").forward(request, response);
@@ -97,7 +99,12 @@ public class GameServlet extends HttpServlet {
         throws SQLException, IOException, ServletException {
         List<Integer> idTankList = tank.getIdTankList(currentUser.getLogin());
         int warAmount = battlestat.getWarAmount(idTankList);
-        request.setAttribute("warAmount",warAmount);
+        //request.setAttribute("warAmount",warAmount);
+        
+        session = request.getSession(false);
+        session.setAttribute("warAmount",warAmount);
+        session.setMaxInactiveInterval(0);
+        
         try {
             request.getRequestDispatcher("award.jsp").forward(request, response);
         } catch (ServletException | IOException ex) {

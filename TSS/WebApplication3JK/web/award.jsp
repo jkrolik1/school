@@ -12,7 +12,9 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
-        ${warAmount}
+        Twoja liczba bitew: ${warAmount}
+        <form action="ImageServlet" method="post">
+            Pasek postępu <input type="submit" value="wyswietl" name="submit"/>  Im więcej bitew tym pasek postępu jest dłuższy
+        </form>  
     </body>
 </html>

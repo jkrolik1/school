@@ -48,7 +48,7 @@
                             out.print("</td>");
                 %>
                             <td>
-                                <a href="edit?id='<%=tank.getTankId() %>'>">Edit</a>
+                                <a href="edit?id='<%=tank.getTankId() %>'>">Edytuj nazwę</a>
                             </td>
                 <%
                             

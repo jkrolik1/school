@@ -15,7 +15,6 @@
         <h1>Tanks Battle Game</h1>
         <h2>Autor: Krolik Jakub</h2>
         <h3>Przedmiot: Technologie Server Side</h3>
-        <h4>Wydział Nauk Ścisłych i Technicznych - Sosnowiec</h4>
         
         <br/><br/>
         
