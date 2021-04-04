@@ -11,6 +11,7 @@ public interface MealRepository extends JpaRepository<Meal, Integer> {
     //public Optional<Meal> findByCategory(String category);
     public List<Meal> findByCategoryIn(Collection<String> categories);
     public List<Meal> findByFlavorIn(Collection<String> flavors);
+    public List<Meal> findByDifficultyOfCookingIn(Collection<String> flavors);
 
     public Integer findByProteins(Meal meal);
     public Integer findByCarbohydrates(Meal meal);

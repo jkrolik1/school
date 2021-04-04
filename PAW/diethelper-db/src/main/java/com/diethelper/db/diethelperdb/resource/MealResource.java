@@ -17,6 +17,61 @@ public class MealResource {
     @Autowired
     MealRepository mealRepository;
 
+    @GetMapping(value = "/all")
+    private List<Meal> getAll() {
+        return mealRepository.findAll();
+    }
+
+    @GetMapping(value = "/random")
+    private Meal getRandom() {
+        Random rand = new Random();
+        List<Meal> newList = new ArrayList<>(mealRepository.findAll()) ;
+        //Collections.shuffle(newList);
+        int randomElement = rand.nextInt(newList.size());
+        return newList.get(randomElement);
+    }
+
+    @GetMapping(value = "/categories/{categoryId}")
+    private List<Meal> getMealByCategory(@PathVariable("categoryId") List<String> category) {
+        return mealRepository.findByCategoryIn(category);
+    }
+
+    @GetMapping(value = "/flavor/{flavorId}")
+    private List<Meal> getMealByFlavor(@PathVariable("flavorId") List<String> flavor) {
+        return mealRepository.findByFlavorIn(flavor);
+    }
+
+    @GetMapping(value = "/difficultyOfCooking/{difficultyId}")
+    private List<Meal> getMealByDifficultyOfCooking(@PathVariable("difficultyId") List<String> difficultyOfCooking) {
+        return mealRepository.findByDifficultyOfCookingIn(difficultyOfCooking);
+    }
+
+    @GetMapping(value = "/{mealId}")
+    private ResponseEntity<Meal> getMealById(@PathVariable("mealId") int id) {
+        Optional<Meal> opt = mealRepository.findById(id);
+        if (opt.isPresent())
+            return new ResponseEntity<>(opt.get(), HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping(value = "/{mealId}/preparation")
+    private String getMealPreparation(@PathVariable("mealId") int id) {
+        Optional<Meal> opt = mealRepository.findById(id);
+        if (opt.isPresent())
+            return opt.get().getPreparation();
+        else
+            return "Nie ma id w bazie";
+    }
+
+    @GetMapping(value = "/{mealId}/isHealthy")
+    private String getMealHealthyProperty(@PathVariable("mealId") int id) {
+        Optional<Meal> opt = mealRepository.findById(id);
+        if (opt.isPresent())
+            return mealRepository.getOne(id).getIsHealthy() == 1 ? "Zdrowe" : "Nie zdrowe";
+        else
+            return "Nie ma id w bazie";
+    }
+
     @PostMapping(path = "/add")
     public String addNewMeal(@RequestBody Map<String, Object> body) {
         Meal meal = new Meal();
@@ -33,68 +88,5 @@ public class MealResource {
         mealRepository.save(meal);
         return "Success";
     }
-
-    @GetMapping(value = "/all")
-    private List<Meal> getAll() {
-        return mealRepository.findAll();
-    }
-
-    @GetMapping(value = "/random")
-    private Meal getRandom() {
-        Random rand = new Random();
-        List<Meal> newList = new ArrayList<>(mealRepository.findAll()) ;
-        //Collections.shuffle(newList);
-        int randomElement = rand.nextInt(newList.size());
-        return newList.get(randomElement);
-    }
-
-    @GetMapping(value = "/{mealId}")
-    private ResponseEntity<Meal> getMealById(@PathVariable("mealId") int id) {
-        Optional<Meal> opt = mealRepository.findById(id);
-        if (opt.isPresent())
-            return new ResponseEntity<>(opt.get(), HttpStatus.OK);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    @GetMapping(value = "/categories/{categoryId}")
-    private List<Meal> getMealByCategory(@PathVariable("categoryId") List<String> category) {
-        return mealRepository.findByCategoryIn(category);
-    }
-
-    @GetMapping(value = "/flavor/{flavorId}")
-    private List<Meal> getMealByFlavor(@PathVariable("flavorId") List<String> flavor) {
-        return mealRepository.findByFlavorIn(flavor);
-    }
-
-    @GetMapping(value = "/proteinMeals")
-    private List<Meal> getProteinMeals(){
-        List<Meal> oldList = new ArrayList<>(mealRepository.findAll());
-        List<Meal> newList = new ArrayList<>();
-
-        Meal element = null;
-        int proteins = 0;
-        int carbohydrates = 0;
-        int fats = 0;
-
-        for (Iterator<Meal> iter = oldList.iterator(); iter.hasNext(); ) {
-            element = iter.next();
-
-            proteins = mealRepository.findByProteins(element);
-            carbohydrates = mealRepository.findByCarbohydrates(element);
-            fats = mealRepository.findByFats(element);
-
-            //if ((proteins > carbohydrates) && (proteins > fats))
-                newList.add(element);
-        }
-
-        return newList;
-    }
-
-
-
-    //@PostMapping(value = "/load")
-    //public List<Meal> persist(@RequestBody final Meal meals) {
-    //    mealRepository.save(meals);
-    //    return mealRepository.findAll();
-    //}
+    
 }
