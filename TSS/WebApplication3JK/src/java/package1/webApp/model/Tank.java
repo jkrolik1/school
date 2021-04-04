@@ -10,11 +10,17 @@ package package1.webApp.model;
  * @author Jakub
  */
 public class Tank {
+    private int tankId;
     private String name;
     private int armorAmount;
     private int gunCaliber;
+
+    public int getTankId() {
+        return tankId;
+    }
     
-    public Tank(String name, int armorAmount, int gunCaliber){
+    public Tank(int tankId, String name, int armorAmount, int gunCaliber){
+        this.tankId = tankId;
         setName(name);
         this.armorAmount = armorAmount;
         this.gunCaliber = gunCaliber;

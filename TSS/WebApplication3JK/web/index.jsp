@@ -13,9 +13,9 @@
     </head>
     <body>
         <h1>Tanks Battle Game</h1>
-        <h2>Autor: Krolik Jakub <img src="images/tankPhoto.jpg" width="100" height="100"> </h2>
-        <h3>Przedmiot: Technologie Server Side</h3
-        
+        <h2>Autor: Krolik Jakub</h2>
+        <h3>Przedmiot: Technologie Server Side</h3>
+             
         <br/><br/>
         
         <h2>Logowanie</h2>

@@ -5,6 +5,8 @@
 --%>
 
 <%@page import="package1.webApp.persistence.tankDAOimpl"%>
+<%@page import="package1.webApp.model.Tank"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,7 +15,17 @@
         <title>Zacznij bitwę</title>
     </head>
     <body>
-        <h1>OK!</h1>
+        <h1>Pomyślne logowanie!</h1>
+        <h3> Zalogowano na Twój profil: <i>${usrObj.getName()}</i></h3><br/> 
 
+        <a href="<%=request.getContextPath()%>/list">
+            Wyświetl czołgi
+        </a><br/> 
+        <a href="<%=request.getContextPath()%>/award">
+            Wyświetl bitewny pasek postępu
+        </a><br/><br/> 
+        
+        ${listTanks.size()}
+        
     </body>
 </html>

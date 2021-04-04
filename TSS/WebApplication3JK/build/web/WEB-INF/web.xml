@@ -8,6 +8,14 @@
         <servlet-name>UtilServlet1</servlet-name>
         <servlet-class>package1.webApp.main.UtilServlet1</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ImageServlet</servlet-name>
+        <servlet-class>package1.webApp.controller.ImageServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GameServlet</servlet-name>
+        <servlet-class>package1.webApp.controller.GameServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Servlet1</servlet-name>
         <url-pattern>/Servlet1</url-pattern>
@@ -15,6 +23,14 @@
     <servlet-mapping>
         <servlet-name>UtilServlet1</servlet-name>
         <url-pattern>/UtilServlet1</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ImageServlet</servlet-name>
+        <url-pattern>/ImageServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GameServlet</servlet-name>
+        <url-pattern>/GameServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

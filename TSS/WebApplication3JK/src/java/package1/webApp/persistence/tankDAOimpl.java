@@ -25,7 +25,7 @@ public class tankDAOimpl implements tankDAO{
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
-                Tank tank = new Tank(resultSet.getString(1), resultSet.getInt(2), resultSet.getInt(3));
+                Tank tank = new Tank(resultSet.getInt(1), resultSet.getString(2), resultSet.getInt(3), resultSet.getInt(4));
                 tanksList.add(tank);
             }
         }
