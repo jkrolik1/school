@@ -17,6 +17,8 @@ import package1.webApp.data.ApplicationLogic1;
 import package1.webApp.model.Tank;
 import package1.webApp.data.ApplicationLogic1;
 import package1.webApp.model.User;
+import package1.webApp.persistence.battlestatDAO;
+import package1.webApp.persistence.battlestatDAOimpl;
 import package1.webApp.persistence.tankDAO;
 import package1.webApp.persistence.tankDAOimpl;
 
@@ -24,6 +26,7 @@ import package1.webApp.persistence.tankDAOimpl;
 public class GameServlet extends HttpServlet {
 
     private tankDAO tank;
+    private battlestatDAO battlestat;
     private HttpSession session;
     private User currentUser;
     
@@ -31,6 +34,7 @@ public class GameServlet extends HttpServlet {
     @Override
     public void init() {
         tank = new tankDAOimpl();
+        battlestat = new battlestatDAOimpl();
     }
     
     //protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -59,9 +63,9 @@ public class GameServlet extends HttpServlet {
                     listTanks(request,response);
                     break;
                 case "/award":
+                    awardBelt(request,response);
                     break;
                 case "/back":
-                    
                     try {
                         request.getRequestDispatcher("main.jsp").forward(request, response);
                     } catch (ServletException | IOException ex) {
@@ -84,13 +88,22 @@ public class GameServlet extends HttpServlet {
         request.setAttribute("listTanks",listTanks);
         try {
             request.getRequestDispatcher("tanksList.jsp").forward(request, response);
-        } catch (ServletException ex) {
-            Logger.getLogger(ApplicationLogic1.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (ServletException | IOException ex) {
             Logger.getLogger(ApplicationLogic1.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    private void awardBelt(HttpServletRequest request, HttpServletResponse response)
+        throws SQLException, IOException, ServletException {
+        List<Integer> idTankList = tank.getIdTankList(currentUser.getLogin());
+        int warAmount = battlestat.getWarAmount(idTankList);
+        request.setAttribute("warAmount",warAmount);
+        try {
+            request.getRequestDispatcher("award.jsp").forward(request, response);
+        } catch (ServletException | IOException ex) {
+            Logger.getLogger(ApplicationLogic1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     @Override
     public String getServletInfo() {

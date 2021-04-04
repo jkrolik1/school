@@ -46,15 +46,18 @@
                             out.print("<td>");
                                 out.print(tank.getGunCaliber());
                             out.print("</td>");
-                            /*out.print("<td>");
-                                out.print("<a href=\"edit?id='" + tank.getTankId() + "'>");
-                                    out.print("Edytuj");
-                                out.print("</a>");
-                            out.print("</td>");*/
+                %>
+                            <td>
+                                <a href="edit?id='<%=tank.getTankId() %>'>">Edit</a>
+                            </td>
+                <%
+                            
                         out.print("</tr>");    
                     }     
                 %>    
 
+                
+                
             </tbody>
 	</table>
         <a href="<%=request.getContextPath()%>/back">

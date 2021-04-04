@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import package1.webApp.model.Tank;
+import package1.webApp.model.User;
 import package1.webApp.persistence.tankDAO;
 
 public class ApplicationLogic1 implements package1.webApp.persistence.DBProvider{
@@ -68,6 +69,7 @@ public class ApplicationLogic1 implements package1.webApp.persistence.DBProvider
             }
         }
     }
+   
 
 
 }

@@ -36,4 +36,26 @@ public class tankDAOimpl implements tankDAO{
         return (LinkedList) tanksList;
     }
     
+    @Override
+    public LinkedList getIdTankList(String login){
+        String SELECT_ID_QUERY = "SELECT tankId FROM tank WHERE UserLogin = ?";
+        List idTankList = new LinkedList();
+        
+        try {
+            connection = ApplicationLogic1.makeNewConnection();  
+         
+            preparedStatement = connection.prepareStatement(SELECT_ID_QUERY);
+            preparedStatement.setString(1, login);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                idTankList.add(resultSet.getInt(1));
+            }
+        }
+        catch (SQLException e) {
+            ApplicationLogic1.printSQLException(e);
+        }
+        
+        return (LinkedList) idTankList;
+    }
 }
