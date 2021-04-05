@@ -1,11 +1,9 @@
 package com.diethelper.db.diethelperdb.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "Product")
 public class Product {
     @Id
     @GeneratedValue
@@ -19,6 +17,10 @@ public class Product {
     private String proteins;
     @Column(name = "fats")
     private String fats;
+
+    @OneToMany()
+    @JoinColumn(name="ProductproductId")
+    private Preparation preparationObject;
 
     public Product() {
     }
