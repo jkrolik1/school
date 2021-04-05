@@ -72,6 +72,25 @@ public class MealResource {
             return "Nie ma id w bazie";
     }
 
+    @GetMapping(value = "/proteinMeals")
+    private List<Meal> getProteinMeals() {
+        List<Meal> allMeals = new ArrayList<>(mealRepository.findAll());
+        List<Meal> proteinMeals = new ArrayList<Meal>();
+        Meal currentMeal;
+        int proteins = 0, fats = 0, carbohydrates = 0;
+
+        for (int i=0; i<allMeals.size(); ++i){
+            currentMeal = allMeals.get(i);
+            proteins = currentMeal.getProteins();
+            fats = currentMeal.getFats();
+            carbohydrates = currentMeal.getCarbohydrates();
+
+            if ((proteins > fats) && (proteins > carbohydrates))
+                proteinMeals.add(currentMeal);
+        }
+        return proteinMeals;
+    }
+
     @PostMapping(path = "/add")
     public String addNewMeal(@RequestBody Map<String, Object> body) {
         Meal meal = new Meal();
