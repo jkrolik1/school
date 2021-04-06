@@ -2,6 +2,7 @@ package com.diethelper.db.diethelperdb.resource;
 
 import com.diethelper.db.diethelperdb.model.Meal;
 import com.diethelper.db.diethelperdb.repository.MealRepository;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -92,14 +93,37 @@ public class MealResource {
     }
 
     @DeleteMapping(value = "/{mealId}")
-    private String deleteMealById(@PathVariable("mealId") int id) {
-        mealRepository.deleteById(id);
+    private String deleteMealById(@PathVariable("mealId") List<Integer> id) {
+        for (int i=0; i<id.size(); ++i)
+            mealRepository.deleteById(id.get(i));
         return "Usunięto";
     }
 
+    @PutMapping(value = "/{mealId}")
+    private Pair<String,Meal> editMealById(@RequestBody Map<String, Object> body, @PathVariable("mealId") int id) {
+        Optional<Meal> mealToEdit = mealRepository.findById(id);
+        if (mealToEdit.isPresent()){
+            mealToEdit.get().setName(body.get("name").toString());
+            mealToEdit.get().setCategory(body.get("category").toString());
+            mealToEdit.get().setFlavor(body.get("flavor").toString());
+            mealToEdit.get().setDifficultyOfCooking(body.get("difficultyOfCooking").toString());
+            mealToEdit.get().setCalories((Integer) body.get("calories"));
+            mealToEdit.get().setCarbohydrates((Integer) body.get("carbohydrates"));
+            mealToEdit.get().setProteins((Integer) body.get("proteins"));
+            mealToEdit.get().setFats((Integer) body.get("fats"));
+            mealToEdit.get().setIsHealthy((Integer) body.get("isHealthy"));
+            mealToEdit.get().setPreparation(body.get("preparation").toString());
+            mealRepository.save(mealToEdit.get());
+            return new Pair<String,Meal>("Edycja pomyślna",mealToEdit.get());
+        }
+        else
+            return new Pair<String,Meal>("Nie ma id w bazie",null);
+    }
+
     @PostMapping(path = "/add")
-    public @ResponseBody String addNewMeal(@RequestBody Map<String, Object> body) {
+    public @ResponseBody Pair<String,Meal> addNewMeal(@RequestBody Map<String, Object> body) {
         Meal meal = new Meal();
+
         meal.setName(body.get("name").toString());
         meal.setCategory(body.get("category").toString());
         meal.setFlavor(body.get("flavor").toString());
@@ -112,20 +136,136 @@ public class MealResource {
         meal.setPreparation(body.get("preparation").toString());
         mealRepository.save(meal);
 
-        List<String> names = new ArrayList<String>();
-        names.add(meal.getName());
 
-        List<Meal> mealIds = mealRepository.findByNameIn(names);
-
-        String returnIds = "";
-
-        for (int i=0; i<mealIds.size(); ++i){
-            returnIds += mealIds.get(i).getMealId();
-            returnIds += " ";
-        }
-
-
-        return "Dodano posiłek. Jego id to " + returnIds;
+        return new Pair<String,Meal>("Dodano posiłek.", meal);
     }
-    
+
+    @DeleteMapping(value = "/nonHealthy")
+    private String deleteNonHealthyMeals() {
+        List<Meal> nonHealthyMeals = mealRepository.findAll();
+        for (int i=0; i<nonHealthyMeals.size(); ++i)
+            if (nonHealthyMeals.get(i).getIsHealthy() == 0)
+                mealRepository.deleteById(nonHealthyMeals.get(i).getMealId());
+        return "Usunięto";
+    }
+
+    @PutMapping(value = "/{mealId}/nameAndPreparationUpdate")
+    private Pair<String,Meal> editNameAndPreparationById(@RequestBody Map<String, Object> body, @PathVariable("mealId") int id) {
+        Optional<Meal> mealToEdit = mealRepository.findById(id);
+        if (mealToEdit.isPresent()){
+            mealToEdit.get().setName(body.get("name").toString());
+            mealToEdit.get().setPreparation(body.get("preparation").toString());
+            mealRepository.save(mealToEdit.get());
+            return new Pair<String,Meal>("Edycja pomyślna",mealToEdit.get());
+        }
+        else
+            return new Pair<String,Meal>("Nie ma id w bazie",null);
+    }
+
+    @GetMapping(value = "/{mealsNum}/menu")
+    private List<Meal> getMenu(@PathVariable int mealsNum) {
+
+        List<String> sniadanie = new ArrayList<String>();
+        sniadanie.add("śniadanie");
+
+        List<String> obiad = new ArrayList<String>();
+        obiad.add("obiad");
+
+        List<String> kolacja = new ArrayList<String>();
+        kolacja.add("kolacja");
+
+        List<String> allCategory = new ArrayList<String>();
+        allCategory.add("śniadanie");
+        allCategory.add("obiad");
+        allCategory.add("kolacja");
+
+        List<Meal> meals = new ArrayList<>();
+        List<Meal> meals2;
+
+        if (mealsNum == 0) return null;
+        else if (mealsNum == 1) {
+            meals2 = mealRepository.findByCategoryIn(obiad);
+            Collections.shuffle(meals2);
+            meals.add(meals2.get(0));
+            return meals;
+        }
+        else if (mealsNum == 2) {
+            meals2 = mealRepository.findByCategoryIn(sniadanie);
+            Collections.shuffle(meals2);
+            meals.add(meals2.get(0));
+
+            meals2 = mealRepository.findByCategoryIn(obiad);
+            Collections.shuffle(meals2);
+            meals.add(meals2.get(0));
+
+            return meals;
+        }
+        else if (mealsNum == 3) {
+            meals2 = mealRepository.findByCategoryIn(sniadanie);
+            Collections.shuffle(meals2);
+            meals.add(meals2.get(0));
+
+            meals2 = mealRepository.findByCategoryIn(obiad);
+            Collections.shuffle(meals2);
+            meals.add(meals2.get(0));
+
+            meals2 = mealRepository.findByCategoryIn(kolacja);
+            Collections.shuffle(meals2);
+            meals.add(meals2.get(0));
+
+            return meals;
+        }
+        else if (mealsNum == 4) {
+            meals2 = mealRepository.findByCategoryIn(sniadanie);
+            Collections.shuffle(meals2);
+            meals.add(meals2.get(0));
+
+            meals2 = mealRepository.findByCategoryIn(sniadanie);
+            Collections.shuffle(meals2);
+            meals.add(meals2.get(0));
+
+            meals2 = mealRepository.findByCategoryIn(obiad);
+            Collections.shuffle(meals2);
+            meals.add(meals2.get(0));
+
+            meals2 = mealRepository.findByCategoryIn(kolacja);
+            Collections.shuffle(meals2);
+            meals.add(meals2.get(0));
+
+            return meals;
+        }
+        else if (mealsNum == 5) {
+            meals2 = mealRepository.findByCategoryIn(sniadanie);
+            Collections.shuffle(meals2);
+            meals.add(meals2.get(0));
+
+            meals2 = mealRepository.findByCategoryIn(sniadanie);
+            Collections.shuffle(meals2);
+            meals.add(meals2.get(0));
+
+            meals2 = mealRepository.findByCategoryIn(obiad);
+            Collections.shuffle(meals2);
+            meals.add(meals2.get(0));
+
+            meals2 = mealRepository.findByCategoryIn(kolacja);
+            Collections.shuffle(meals2);
+            meals.add(meals2.get(0));
+
+            meals2 = mealRepository.findByCategoryIn(kolacja);
+            Collections.shuffle(meals2);
+            meals.add(meals2.get(0));
+
+            return meals;
+        }
+        else {
+            meals2 = mealRepository.findByCategoryIn(allCategory);
+
+            Collections.shuffle(meals2);
+
+            for (int i=0; i<mealsNum; ++i)
+                meals.add(meals2.get(i));
+
+            return meals;
+        }
+    }
 }
