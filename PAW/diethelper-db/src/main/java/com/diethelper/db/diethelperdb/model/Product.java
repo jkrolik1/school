@@ -18,9 +18,9 @@ public class Product {
     @Column(name = "fats")
     private String fats;
 
-    @OneToMany()
-    @JoinColumn(name="ProductproductId")
-    private Preparation preparationObject;
+    //@OneToMany()
+    //@JoinColumn(name="ProductproductId")
+    //private Preparation preparationObject;
 
     public Product() {
     }

@@ -20,9 +20,9 @@ public class Preparation {
     @JoinColumn(name="mealId")
     private Meal meal;
 
-    @ManyToOne()
-    @JoinColumn(name="productId")
-    private Product product;
+    //@ManyToOne()
+    //@JoinColumn(name="productId")
+    //private Product product;
 
     public Preparation() {
     }

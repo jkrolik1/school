@@ -31,9 +31,9 @@ public class Meal {
     @Column(name = "preparation")
     private String preparation;
 
-    @OneToMany()
-    @JoinColumn(name="MealmealId")
-    private Preparation preparationObject;
+    //@OneToMany()
+    //@JoinColumn(name="MealmealId")
+    //private Preparation preparationObject;
 
     public Meal() {
     }

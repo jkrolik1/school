@@ -46,14 +46,6 @@ public class MealResource {
         return mealRepository.findByDifficultyOfCookingIn(difficultyOfCooking);
     }
 
-    @GetMapping(value = "/{mealId}")
-    private ResponseEntity<Meal> getMealById(@PathVariable("mealId") int id) {
-        Optional<Meal> opt = mealRepository.findById(id);
-        if (opt.isPresent())
-            return new ResponseEntity<>(opt.get(), HttpStatus.OK);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
     @GetMapping(value = "/{mealId}/preparation")
     private String getMealPreparation(@PathVariable("mealId") int id) {
         Optional<Meal> opt = mealRepository.findById(id);
@@ -91,8 +83,22 @@ public class MealResource {
         return proteinMeals;
     }
 
+    @GetMapping(value = "/{mealId}")
+    private ResponseEntity<Meal> getMealById(@PathVariable("mealId") int id) {
+        Optional<Meal> opt = mealRepository.findById(id);
+        if (opt.isPresent())
+            return new ResponseEntity<>(opt.get(), HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping(value = "/{mealId}")
+    private String deleteMealById(@PathVariable("mealId") int id) {
+        mealRepository.deleteById(id);
+        return "Usunięto";
+    }
+
     @PostMapping(path = "/add")
-    public String addNewMeal(@RequestBody Map<String, Object> body) {
+    public @ResponseBody String addNewMeal(@RequestBody Map<String, Object> body) {
         Meal meal = new Meal();
         meal.setName(body.get("name").toString());
         meal.setCategory(body.get("category").toString());
@@ -105,7 +111,21 @@ public class MealResource {
         meal.setIsHealthy(Integer.parseInt(body.get("isHealthy").toString()));
         meal.setPreparation(body.get("preparation").toString());
         mealRepository.save(meal);
-        return "Success";
+
+        List<String> names = new ArrayList<String>();
+        names.add(meal.getName());
+
+        List<Meal> mealIds = mealRepository.findByNameIn(names);
+
+        String returnIds = "";
+
+        for (int i=0; i<mealIds.size(); ++i){
+            returnIds += mealIds.get(i).getMealId();
+            returnIds += " ";
+        }
+
+
+        return "Dodano posiłek. Jego id to " + returnIds;
     }
     
 }
