@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 public interface ProductRepository  extends JpaRepository<Product, Integer> {
    @Query(value ="SELECT product.productId, product.name, product.carbohydrates,product.proteins,product.fats FROM product, preparation"
-           + " where productId = ProductproductId AND MealmealId = :mealId", nativeQuery = true)
+           + " where product.productId = ProductproductId AND MealmealId = :mealId", nativeQuery = true)
     public List<Product> findByMeal(@Param("mealId") int id);
 }
