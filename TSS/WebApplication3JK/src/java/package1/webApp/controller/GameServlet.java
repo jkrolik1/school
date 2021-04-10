@@ -66,6 +66,10 @@ public class GameServlet extends HttpServlet {
                     awardBelt(request,response);
                     break;
                 case "/edit":
+                    editForm(request,response);
+                    break;
+                case "/update":
+                    updateTankName(request,response);
                     break;
                 case "/back":
                     try {
@@ -94,6 +98,16 @@ public class GameServlet extends HttpServlet {
             Logger.getLogger(ApplicationLogic1.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    private void editForm(HttpServletRequest request, HttpServletResponse response)
+        throws SQLException, ServletException, IOException {
+	int id = Integer.parseInt(request.getParameter("id"));
+        tankDAOimpl tankDAOimpl = new tankDAOimpl();
+	Tank tankForChange = tankDAOimpl.getTank(id);
+	RequestDispatcher dispatcher = request.getRequestDispatcher("tankForm.jsp");
+	request.setAttribute("tank", tankForChange);
+	dispatcher.forward(request, response);
+    }
 
     private void awardBelt(HttpServletRequest request, HttpServletResponse response)
         throws SQLException, IOException, ServletException {
@@ -112,9 +126,27 @@ public class GameServlet extends HttpServlet {
         }
     }
 
+    private void updateTankName(HttpServletRequest request, HttpServletResponse response)
+        throws SQLException, ServletException, IOException {
+        
+	int id = Integer.parseInt(request.getParameter("id"));
+        String newName = request.getParameter("name");
+        int armor = Integer.parseInt(request.getParameter("armor"));
+        int gun = Integer.parseInt(request.getParameter("gun"));
+        
+        Tank tank = new Tank(id,newName,armor,gun);
+        
+        tankDAOimpl tankDAOimpl = new tankDAOimpl();
+        
+	tankDAOimpl.updateTank(tank);
+        
+        response.sendRedirect("list");
+    }
+
+    
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

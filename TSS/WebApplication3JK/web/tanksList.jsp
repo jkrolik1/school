@@ -46,12 +46,11 @@
                             out.print("<td>");
                                 out.print(tank.getGunCaliber());
                             out.print("</td>");
+                            out.print("<td>");
                 %>
-                            <td>
-                                <a href="edit?id='<%=tank.getTankId() %>'>">Edytuj nazwę</a>
-                            </td>
+                                <a href="edit?id=<%=tank.getTankId() %>">Edytuj nazwę</a>
                 <%
-                            
+                            out.print("</td>");
                         out.print("</tr>");    
                     }     
                 %>    

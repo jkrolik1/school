@@ -19,8 +19,18 @@ public class ImageServlet extends HttpServlet {
     private void drawAward(HttpServletRequest request, HttpServletResponse response, int warAmount){
         
         try(javax.servlet.ServletOutputStream out = response.getOutputStream()) {
-            int width = warAmount*10;
-            int height = 20;
+            int width;
+            int height; 
+            
+            if (warAmount == 0){
+                width = 5;
+                height = 20; 
+            }
+            else{
+                width = warAmount*10;
+                height = 20;
+            }
+
             java.awt.image.BufferedImage image = new java.awt.image.BufferedImage(width,height,java.awt.image.BufferedImage.TYPE_INT_RGB);
             java.awt.Graphics graph = image.getGraphics();
             graph.fillRect(20,20,warAmount,warAmount);

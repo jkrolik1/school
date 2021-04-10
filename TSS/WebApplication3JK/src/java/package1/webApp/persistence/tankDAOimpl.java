@@ -58,4 +58,53 @@ public class tankDAOimpl implements tankDAO{
         
         return (LinkedList) idTankList;
     }
+
+    @Override
+    public Tank getTank(int id) {
+        String SELECT_TANKS_QUERY = "SELECT * FROM tank WHERE tankId = ?";
+        Tank tank = null;
+        
+        try {
+            connection = ApplicationLogic1.makeNewConnection();  
+         
+            preparedStatement = connection.prepareStatement(SELECT_TANKS_QUERY);
+            preparedStatement.setInt(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                int tankId = resultSet.getInt("tankId");
+                String name = resultSet.getString("tankName");
+                int armor = resultSet.getInt("armorAmount");
+                int caliber = resultSet.getInt("gunCaliber");
+                tank = new Tank(tankId, name, armor, caliber);
+            }
+        }
+        catch (SQLException e) {
+            ApplicationLogic1.printSQLException(e);
+        }
+        
+        return tank;
+    }
+
+    @Override
+    public boolean updateTank(Tank tank){
+        String UPDATE_TANKS_QUERY = "UPDATE tank SET tankName = ? WHERE tankId = ?";
+        boolean updateSuccess = false;
+        
+        try {
+            connection = ApplicationLogic1.makeNewConnection();  
+         
+            preparedStatement = connection.prepareStatement(UPDATE_TANKS_QUERY);
+            preparedStatement.setString(1, tank.getName());
+            preparedStatement.setInt(2, tank.getTankId());
+            
+            updateSuccess = preparedStatement.executeUpdate() > 0;
+
+        }
+        catch (SQLException e) {
+            ApplicationLogic1.printSQLException(e);
+        }
+        
+        return updateSuccess;
+    }
 }
