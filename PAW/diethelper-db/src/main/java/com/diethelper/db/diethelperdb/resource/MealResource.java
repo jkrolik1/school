@@ -1,7 +1,10 @@
 package com.diethelper.db.diethelperdb.resource;
 
 import com.diethelper.db.diethelperdb.model.Meal;
+import com.diethelper.db.diethelperdb.model.Product;
 import com.diethelper.db.diethelperdb.repository.MealRepository;
+import com.diethelper.db.diethelperdb.repository.PreparationRepository;
+import com.diethelper.db.diethelperdb.repository.ProductRepository;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +20,10 @@ public class MealResource {
 
     @Autowired
     MealRepository mealRepository;
+    
+    @Autowired
+    ProductRepository productRepository;
+
 
     @GetMapping(value = "/all")
     private List<Meal> getAll() {
@@ -26,7 +33,7 @@ public class MealResource {
     @GetMapping(value = "/random")
     private Meal getRandom() {
         Random rand = new Random();
-        List<Meal> newList = new ArrayList<>(mealRepository.findAll()) ;
+        List<Meal> newList = new ArrayList<>(mealRepository.findAll());
         //Collections.shuffle(newList);
         int randomElement = rand.nextInt(newList.size());
         return newList.get(randomElement);
@@ -50,19 +57,26 @@ public class MealResource {
     @GetMapping(value = "/{mealId}/preparation")
     private String getMealPreparation(@PathVariable("mealId") int id) {
         Optional<Meal> opt = mealRepository.findById(id);
-        if (opt.isPresent())
+        if (opt.isPresent()) {
             return opt.get().getPreparation();
-        else
+        } else {
             return "Nie ma id w bazie";
+        }
+    }
+
+    @GetMapping(value = "/{mealId}/products")
+    private List<Product> getMealProducts(@PathVariable("mealId") int id) {
+        return productRepository.findByMeal(id);
     }
 
     @GetMapping(value = "/{mealId}/isHealthy")
     private String getMealHealthyProperty(@PathVariable("mealId") int id) {
         Optional<Meal> opt = mealRepository.findById(id);
-        if (opt.isPresent())
+        if (opt.isPresent()) {
             return mealRepository.getOne(id).getIsHealthy() == 1 ? "Zdrowe" : "Nie zdrowe";
-        else
+        } else {
             return "Nie ma id w bazie";
+        }
     }
 
     @GetMapping(value = "/proteinMeals")
@@ -72,14 +86,15 @@ public class MealResource {
         Meal currentMeal;
         int proteins = 0, fats = 0, carbohydrates = 0;
 
-        for (int i=0; i<allMeals.size(); ++i){
+        for (int i = 0; i < allMeals.size(); ++i) {
             currentMeal = allMeals.get(i);
             proteins = currentMeal.getProteins();
             fats = currentMeal.getFats();
             carbohydrates = currentMeal.getCarbohydrates();
 
-            if ((proteins > fats) && (proteins > carbohydrates))
+            if ((proteins > fats) && (proteins > carbohydrates)) {
                 proteinMeals.add(currentMeal);
+            }
         }
         return proteinMeals;
     }
@@ -87,22 +102,24 @@ public class MealResource {
     @GetMapping(value = "/{mealId}")
     private ResponseEntity<Meal> getMealById(@PathVariable("mealId") int id) {
         Optional<Meal> opt = mealRepository.findById(id);
-        if (opt.isPresent())
+        if (opt.isPresent()) {
             return new ResponseEntity<>(opt.get(), HttpStatus.OK);
+        }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping(value = "/{mealId}")
     private String deleteMealById(@PathVariable("mealId") List<Integer> id) {
-        for (int i=0; i<id.size(); ++i)
+        for (int i = 0; i < id.size(); ++i) {
             mealRepository.deleteById(id.get(i));
+        }
         return "Usunięto";
     }
 
     @PutMapping(value = "/{mealId}")
-    private Pair<String,Meal> editMealById(@RequestBody Map<String, Object> body, @PathVariable("mealId") int id) {
+    private Pair<String, Meal> editMealById(@RequestBody Map<String, Object> body, @PathVariable("mealId") int id) {
         Optional<Meal> mealToEdit = mealRepository.findById(id);
-        if (mealToEdit.isPresent()){
+        if (mealToEdit.isPresent()) {
             mealToEdit.get().setName(body.get("name").toString());
             mealToEdit.get().setCategory(body.get("category").toString());
             mealToEdit.get().setFlavor(body.get("flavor").toString());
@@ -114,14 +131,15 @@ public class MealResource {
             mealToEdit.get().setIsHealthy((Integer) body.get("isHealthy"));
             mealToEdit.get().setPreparation(body.get("preparation").toString());
             mealRepository.save(mealToEdit.get());
-            return new Pair<String,Meal>("Edycja pomyślna",mealToEdit.get());
+            return new Pair<String, Meal>("Edycja pomyślna", mealToEdit.get());
+        } else {
+            return new Pair<String, Meal>("Nie ma id w bazie", null);
         }
-        else
-            return new Pair<String,Meal>("Nie ma id w bazie",null);
     }
 
     @PostMapping(path = "/add")
-    public @ResponseBody Pair<String,Meal> addNewMeal(@RequestBody Map<String, Object> body) {
+    public @ResponseBody
+    Pair<String, Meal> addNewMeal(@RequestBody Map<String, Object> body) {
         Meal meal = new Meal();
 
         meal.setName(body.get("name").toString());
@@ -136,30 +154,31 @@ public class MealResource {
         meal.setPreparation(body.get("preparation").toString());
         mealRepository.save(meal);
 
-
-        return new Pair<String,Meal>("Dodano posiłek.", meal);
+        return new Pair<String, Meal>("Dodano posiłek.", meal);
     }
 
     @DeleteMapping(value = "/nonHealthy")
     private String deleteNonHealthyMeals() {
         List<Meal> nonHealthyMeals = mealRepository.findAll();
-        for (int i=0; i<nonHealthyMeals.size(); ++i)
-            if (nonHealthyMeals.get(i).getIsHealthy() == 0)
+        for (int i = 0; i < nonHealthyMeals.size(); ++i) {
+            if (nonHealthyMeals.get(i).getIsHealthy() == 0) {
                 mealRepository.deleteById(nonHealthyMeals.get(i).getMealId());
+            }
+        }
         return "Usunięto";
     }
 
     @PutMapping(value = "/{mealId}/nameAndPreparationUpdate")
-    private Pair<String,Meal> editNameAndPreparationById(@RequestBody Map<String, Object> body, @PathVariable("mealId") int id) {
+    private Pair<String, Meal> editNameAndPreparationById(@RequestBody Map<String, Object> body, @PathVariable("mealId") int id) {
         Optional<Meal> mealToEdit = mealRepository.findById(id);
-        if (mealToEdit.isPresent()){
+        if (mealToEdit.isPresent()) {
             mealToEdit.get().setName(body.get("name").toString());
             mealToEdit.get().setPreparation(body.get("preparation").toString());
             mealRepository.save(mealToEdit.get());
-            return new Pair<String,Meal>("Edycja pomyślna",mealToEdit.get());
+            return new Pair<String, Meal>("Edycja pomyślna", mealToEdit.get());
+        } else {
+            return new Pair<String, Meal>("Nie ma id w bazie", null);
         }
-        else
-            return new Pair<String,Meal>("Nie ma id w bazie",null);
     }
 
     @GetMapping(value = "/{mealsNum}/menu")
@@ -182,14 +201,14 @@ public class MealResource {
         List<Meal> meals = new ArrayList<>();
         List<Meal> meals2;
 
-        if (mealsNum == 0) return null;
-        else if (mealsNum == 1) {
+        if (mealsNum == 0) {
+            return null;
+        } else if (mealsNum == 1) {
             meals2 = mealRepository.findByCategoryIn(obiad);
             Collections.shuffle(meals2);
             meals.add(meals2.get(0));
             return meals;
-        }
-        else if (mealsNum == 2) {
+        } else if (mealsNum == 2) {
             meals2 = mealRepository.findByCategoryIn(sniadanie);
             Collections.shuffle(meals2);
             meals.add(meals2.get(0));
@@ -199,27 +218,7 @@ public class MealResource {
             meals.add(meals2.get(0));
 
             return meals;
-        }
-        else if (mealsNum == 3) {
-            meals2 = mealRepository.findByCategoryIn(sniadanie);
-            Collections.shuffle(meals2);
-            meals.add(meals2.get(0));
-
-            meals2 = mealRepository.findByCategoryIn(obiad);
-            Collections.shuffle(meals2);
-            meals.add(meals2.get(0));
-
-            meals2 = mealRepository.findByCategoryIn(kolacja);
-            Collections.shuffle(meals2);
-            meals.add(meals2.get(0));
-
-            return meals;
-        }
-        else if (mealsNum == 4) {
-            meals2 = mealRepository.findByCategoryIn(sniadanie);
-            Collections.shuffle(meals2);
-            meals.add(meals2.get(0));
-
+        } else if (mealsNum == 3) {
             meals2 = mealRepository.findByCategoryIn(sniadanie);
             Collections.shuffle(meals2);
             meals.add(meals2.get(0));
@@ -233,8 +232,7 @@ public class MealResource {
             meals.add(meals2.get(0));
 
             return meals;
-        }
-        else if (mealsNum == 5) {
+        } else if (mealsNum == 4) {
             meals2 = mealRepository.findByCategoryIn(sniadanie);
             Collections.shuffle(meals2);
             meals.add(meals2.get(0));
@@ -251,19 +249,37 @@ public class MealResource {
             Collections.shuffle(meals2);
             meals.add(meals2.get(0));
 
+            return meals;
+        } else if (mealsNum == 5) {
+            meals2 = mealRepository.findByCategoryIn(sniadanie);
+            Collections.shuffle(meals2);
+            meals.add(meals2.get(0));
+
+            meals2 = mealRepository.findByCategoryIn(sniadanie);
+            Collections.shuffle(meals2);
+            meals.add(meals2.get(0));
+
+            meals2 = mealRepository.findByCategoryIn(obiad);
+            Collections.shuffle(meals2);
+            meals.add(meals2.get(0));
+
+            meals2 = mealRepository.findByCategoryIn(kolacja);
+            Collections.shuffle(meals2);
+            meals.add(meals2.get(0));
+
             meals2 = mealRepository.findByCategoryIn(kolacja);
             Collections.shuffle(meals2);
             meals.add(meals2.get(0));
 
             return meals;
-        }
-        else {
+        } else {
             meals2 = mealRepository.findByCategoryIn(allCategory);
 
             Collections.shuffle(meals2);
 
-            for (int i=0; i<mealsNum; ++i)
+            for (int i = 0; i < mealsNum; ++i) {
                 meals.add(meals2.get(i));
+            }
 
             return meals;
         }
