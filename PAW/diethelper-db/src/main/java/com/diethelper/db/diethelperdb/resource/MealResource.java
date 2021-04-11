@@ -333,17 +333,16 @@ public class MealResource {
         return null;
     }
 
-    @PostMapping(path = "/addProduct/{mealId}/{productId}/{productAmount}")
+    @PostMapping(path = "/{mealId}/addProduct")
     public @ResponseBody
     String addProductToMeal(
-            @PathVariable("mealId") int mealId,
-            @PathVariable("productId") int productId,
-            @PathVariable("productAmount") int productAmount) {
+            @RequestBody Map<String, Object> body,
+            @PathVariable("mealId") int mealId) {
         Preparation preparation = new Preparation();
 
         preparation.setMealmealId(mealId);
-        preparation.setProductproductId(productId);
-        preparation.setProductAmount(productAmount);
+        preparation.setProductproductId(Integer.parseInt(body.get("productId").toString()));
+        preparation.setProductAmount(Integer.parseInt(body.get("productAmount").toString()));
 
         preparationRepository.save(preparation);
 
