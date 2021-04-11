@@ -1,6 +1,7 @@
 package com.diethelper.db.diethelperdb.resource;
 
 import com.diethelper.db.diethelperdb.model.Meal;
+import com.diethelper.db.diethelperdb.model.Preparation;
 import com.diethelper.db.diethelperdb.model.Product;
 import com.diethelper.db.diethelperdb.repository.MealRepository;
 import com.diethelper.db.diethelperdb.repository.PreparationRepository;
@@ -25,6 +26,8 @@ public class MealResource {
     @Autowired
     ProductRepository productRepository;
 
+    @Autowired
+    PreparationRepository preparationRepository;
 
     @GetMapping(value = "/all")
     private List<Meal> getAll() {
@@ -68,6 +71,29 @@ public class MealResource {
     @GetMapping(value = "/{mealId}/products")
     private List<Product> getMealProducts(@PathVariable("mealId") int id) {
         return productRepository.findByMeal(id);
+    }
+
+    @GetMapping(value = "/all/{productId}")
+    private List<Meal> getProductMeals(@PathVariable("productId") int id) {
+        return mealRepository.findByProduct(id);
+    }
+
+    @GetMapping(value = "/notContains/{spiceName}")
+    private List<Meal> getSpiceMeals(@PathVariable("spiceName") String spiceName) {
+        List<Meal> allMeals = new ArrayList<>(mealRepository.findAll());
+        List<Meal> mealsWithListedSpiceName = new ArrayList<>(mealRepository.findBySpice(spiceName));
+
+        for (int i=0; i<allMeals.size(); ++i)
+            for (int j=0; j<mealsWithListedSpiceName.size(); ++j)
+                if (allMeals.get(i).getName() == mealsWithListedSpiceName.get(j).getName())
+                    allMeals.remove(i);
+
+        return allMeals;
+    }
+
+    @GetMapping(value = "/contains/{nutrientsName}")
+    private List<Meal> getMealWithNutrients(@PathVariable("nutrientsName") String nutrientsName) {
+        return mealRepository.findByNutrients(nutrientsName);
     }
 
     @GetMapping(value = "/{mealId}/isHealthy")
@@ -305,6 +331,23 @@ public class MealResource {
 
         return new Pair<String, Meal[]>("Dodano posiłek.", meal);*/
         return null;
+    }
+
+    @PostMapping(path = "/addProduct/{mealId}/{productId}/{productAmount}")
+    public @ResponseBody
+    String addProductToMeal(
+            @PathVariable("mealId") int mealId,
+            @PathVariable("productId") int productId,
+            @PathVariable("productAmount") int productAmount) {
+        Preparation preparation = new Preparation();
+
+        preparation.setMealmealId(mealId);
+        preparation.setProductproductId(productId);
+        preparation.setProductAmount(productAmount);
+
+        preparationRepository.save(preparation);
+
+        return "Dodano połączenie.";
     }
 
 }

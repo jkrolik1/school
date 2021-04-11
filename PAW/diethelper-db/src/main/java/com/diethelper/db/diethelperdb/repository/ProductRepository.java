@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface ProductRepository  extends JpaRepository<Product, Integer> {
+public interface ProductRepository extends JpaRepository<Product, Integer> {
    @Query(value ="SELECT product.productId, product.name, product.carbohydrates,product.proteins,product.fats FROM product, preparation"
            + " where product.productId = ProductproductId AND MealmealId = :mealId", nativeQuery = true)
-    public List<Product> findByMeal(@Param("mealId") int id);
+   List<Product> findByMeal(@Param("mealId") int id);
 }
