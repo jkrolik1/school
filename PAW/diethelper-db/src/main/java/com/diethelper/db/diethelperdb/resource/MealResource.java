@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.Files;
 import java.util.*;
 
 @RestController
@@ -284,4 +285,26 @@ public class MealResource {
             return meals;
         }
     }
+
+    /* ??? */ @PostMapping(path = "/createWithArray")
+    public @ResponseBody Pair<String, Meal[]> addMealArray(@RequestBody Map<String, Object> body) {
+        //Meal[] meal = new Meal[100];
+        Object x = body.get("name");
+
+
+       /* meal[0].setName(body.get("name"+1).toString());
+        meal[0].setCategory(body.get("category"+1).toString());
+        meal[0].setFlavor(body.get("flavor"+1).toString());
+        meal[0].setDifficultyOfCooking(body.get("difficultyOfCooking"+1).toString());
+        meal[0].setCalories(Integer.parseInt(body.get("calories"+1).toString()));
+        meal[0].setCarbohydrates(Integer.parseInt(body.get("carbohydrates"+1).toString()));
+        meal[0].setProteins(Integer.parseInt(body.get("proteins"+1).toString()));
+        meal[0].setFats(Integer.parseInt(body.get("fats"+1).toString()));
+        meal[0].setIsHealthy(Integer.parseInt(body.get("isHealthy"+1).toString()));
+        meal[0].setPreparation(body.get("preparation"+1).toString());
+
+        return new Pair<String, Meal[]>("Dodano posiłek.", meal);*/
+        return null;
+    }
+
 }

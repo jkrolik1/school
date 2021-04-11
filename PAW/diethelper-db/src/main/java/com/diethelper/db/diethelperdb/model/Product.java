@@ -12,11 +12,11 @@ public class Product {
     @Column(name = "name")
     private String name;
     @Column(name = "carbohydrates")
-    private String carbohydrates;
+    private Integer carbohydrates;
     @Column(name = "proteins")
-    private String proteins;
+    private Integer proteins;
     @Column(name = "fats")
-    private String fats;
+    private Integer fats;
 
     //@OneToMany()
     //@JoinColumn(name="ProductproductId")
@@ -30,7 +30,7 @@ public class Product {
         this.name = name;
     }
 
-    public Product(Integer productId, String name, String carbohydrates, String proteins, String fats) {
+    public Product(Integer productId, String name, Integer carbohydrates, Integer proteins, Integer fats) {
         this.productId = productId;
         this.name = name;
         this.carbohydrates = carbohydrates;
@@ -54,27 +54,27 @@ public class Product {
         this.name = name;
     }
 
-    public String getCarbohydrates() {
+    public Integer getCarbohydrates() {
         return carbohydrates;
     }
 
-    public void setCarbohydrates(String carbohydrates) {
+    public void setCarbohydrates(Integer carbohydrates) {
         this.carbohydrates = carbohydrates;
     }
 
-    public String getProteins() {
+    public Integer getProteins() {
         return proteins;
     }
 
-    public void setProteins(String proteins) {
+    public void setProteins(Integer proteins) {
         this.proteins = proteins;
     }
 
-    public String getFats() {
+    public Integer getFats() {
         return fats;
     }
 
-    public void setFats(String fats) {
+    public void setFats(Integer fats) {
         this.fats = fats;
     }
 }
