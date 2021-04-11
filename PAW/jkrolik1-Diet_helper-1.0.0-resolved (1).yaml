@@ -1,0 +1,1231 @@
+---
+swagger: "2.0"
+info:
+  description: |
+    This is an API documentation for diet helper, where You can find out ideas for meals with values of them.
+  version: 1.0.0
+  title: Diet Helper
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: kuba.rufles@gazeta.pl
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+host: virtserver.swaggerhub.com
+basePath: /jkrolik1/Diet_helper/1.0.0
+tags:
+- name: meal
+  description: Created by group of products with specific proportions
+- name: product
+  description: Access to products
+- name: spice
+  description: Access to spices
+- name: nutrients
+  description: Access to nutrients
+schemes:
+- https
+- http
+paths:
+  /product/add:
+    post:
+      tags:
+      - product
+      summary: Add a new product to database
+      operationId: addProduct
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: body
+        description: Product object that needs to be added to the database
+        required: true
+        schema:
+          $ref: '#/definitions/Product'
+      responses:
+        "405":
+          description: Invalid input
+      security:
+      - diethelper_auth:
+        - write:meals
+        - read:meals
+  /product/all:
+    get:
+      tags:
+      - product
+      summary: Find all products
+      description: Returns all products
+      operationId: getProducts
+      produces:
+      - application/json
+      - application/xml
+      parameters: []
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Product'
+        "404":
+          description: Products not found
+      security:
+      - api_key: []
+  /product/{productId}:
+    get:
+      tags:
+      - product
+      summary: Find product by ID
+      description: Returns a product
+      operationId: getProductById
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: productId
+        in: path
+        description: ID of product to return
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Product'
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Product not found
+      security:
+      - api_key: []
+    put:
+      tags:
+      - product
+      summary: Update an existing product
+      operationId: updateProduct
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: productId
+        in: path
+        description: Product object that needs to be added to the database
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Product'
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Product not found
+      security:
+      - diethelper_auth:
+        - write:meals
+        - read:meals
+    delete:
+      tags:
+      - product
+      summary: Delete a product
+      operationId: deleteProductl
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: api_key
+        in: header
+        required: false
+        type: string
+      - name: productId
+        in: path
+        description: Product id to delete
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Product not found
+      security:
+      - diethelper_auth:
+        - write:meals
+        - read:meals
+  /meal/all:
+    get:
+      tags:
+      - meal
+      summary: Find all meals
+      description: Returns all meal
+      operationId: getMeals
+      produces:
+      - application/json
+      - application/xml
+      parameters: []
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Meal'
+        "404":
+          description: Meals not found
+      security:
+      - api_key: []
+  /meal/random:
+    get:
+      tags:
+      - meal
+      summary: Return one random meal
+      description: Returns random meal
+      operationId: getRandMeal
+      produces:
+      - application/json
+      - application/xml
+      parameters: []
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Meal'
+        "400":
+          description: Bad request
+      security:
+      - api_key: []
+  /meal/categories/{categoryId}:
+    get:
+      tags:
+      - meal
+      summary: Finds meals by category
+      description: Multiple category values can be provided with comma separated strings
+      operationId: findMealsByCategory
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: categoryId
+        in: path
+        description: Category values that need to be considered for filter
+        required: true
+        type: array
+        items:
+          type: string
+          default: breakfast
+          enum:
+          - breakfast
+          - secondBreakfast
+          - dinner
+          - tea
+          - supper
+          - any
+        collectionFormat: csv
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Meal'
+        "400":
+          description: Invalid category value
+      security:
+      - diethelper_auth:
+        - write:meals
+        - read:meals
+  /meal/flavor/{flavorId}:
+    get:
+      tags:
+      - meal
+      summary: Finds meals by flavor
+      description: Multiple flavors values can be provided with comma separated strings
+      operationId: findMealsByFlavor
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: flavorId
+        in: path
+        description: Flavor values that need to be considered for filter
+        required: true
+        type: array
+        items:
+          type: string
+          default: sweet
+        collectionFormat: csv
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Meal'
+        "400":
+          description: Invalid flavor value
+      security:
+      - diethelper_auth:
+        - write:meals
+        - read:meals
+  /meal/difficultyOfCooking/{difficultyId}:
+    get:
+      tags:
+      - meal
+      summary: Finds meals by difficulty of cooking
+      description: Multiple difficulty of cooking values can be provided with comma separated strings
+      operationId: findMealsByDifficultyOfCooking
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: difficultyId
+        in: path
+        description: Difficulty of cooking values that need to be considered for filter
+        required: true
+        type: array
+        items:
+          type: string
+          default: easy
+          enum:
+          - easy
+          - medium
+          - difficult
+          - other
+        collectionFormat: csv
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Meal'
+        "400":
+          description: Invalid difficulty of cooking value
+      security:
+      - diethelper_auth:
+        - write:meals
+        - read:meals
+  /meal/{mealId}/preparation:
+    get:
+      tags:
+      - meal
+      summary: Get how to prepare a meal of ID
+      description: Returns a preparation instruction
+      operationId: getPreparationByMealId
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: mealId
+        in: path
+        description: ID of meal to prepare
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            properties:
+              mealId:
+                type: integer
+                format: int64
+              name:
+                type: string
+                example: scrambled eggs with bacon
+              preparation:
+                type: string
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Meal not found
+      security:
+      - api_key: []
+  /meal/{mealId}/isHealthy:
+    get:
+      tags:
+      - meal
+      summary: Get healthy property for a meal of ID
+      description: Returns a if meal is healthy
+      operationId: getHealthyPropertyByMealId
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: mealId
+        in: path
+        description: Healthy property for a meal
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            properties:
+              mealId:
+                type: integer
+                format: int64
+              is_healthy:
+                type: boolean
+                example: true
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Meal not found
+      security:
+      - api_key: []
+  /meal/proteinMeals:
+    get:
+      tags:
+      - meal
+      summary: Finds all protein meals
+      operationId: findAllProteinMeals
+      produces:
+      - application/json
+      - application/xml
+      parameters: []
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            properties:
+              mealId:
+                type: integer
+                format: int64
+              name:
+                type: string
+                example: scrambled eggs with bacon
+        "404":
+          description: Not found
+      security:
+      - diethelper_auth:
+        - write:meals
+        - read:meals
+  /meal/{mealId}:
+    get:
+      tags:
+      - meal
+      summary: Find meal by ID
+      description: Returns a meal
+      operationId: getMealById
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: mealId
+        in: path
+        description: ID of meal to return
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Meal'
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Meal not found
+      security:
+      - api_key: []
+    put:
+      tags:
+      - meal
+      summary: Update an existing meal
+      operationId: updateMeal
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: mealId
+        in: path
+        description: Meal object that needs to be added to the database
+        required: true
+        type: integer
+      responses:
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Meal not found
+        "405":
+          description: Validation exception
+      security:
+      - diethelper_auth:
+        - write:meals
+        - read:meals
+    delete:
+      tags:
+      - meal
+      summary: Delete a meal
+      operationId: deleteMeal
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: api_key
+        in: header
+        required: false
+        type: string
+      - name: mealId
+        in: path
+        description: Meal id to delete
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Meal not found
+      security:
+      - diethelper_auth:
+        - write:meals
+        - read:meals
+  /meal/add:
+    post:
+      tags:
+      - meal
+      summary: Add a new meal to database
+      operationId: addMeal
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: body
+        description: Meal object that needs to be added to the database
+        required: true
+        schema:
+          $ref: '#/definitions/Meal'
+      responses:
+        "405":
+          description: Invalid input
+      security:
+      - diethelper_auth:
+        - write:meals
+        - read:meals
+  /meal/nonHealthy:
+    delete:
+      tags:
+      - meal
+      summary: Delete non-healthy meals
+      operationId: deleteNonHealthyMeals
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: api_key
+        in: header
+        required: false
+        type: string
+      responses:
+        "404":
+          description: Meals not found
+      security:
+      - diethelper_auth:
+        - write:meals
+        - read:meals
+  /meal/{mealId}/nameAndPreparationUpdate:
+    put:
+      tags:
+      - meal
+      summary: Update name and preparing instruction of an existing meal
+      operationId: updatenameAndPreparationOfMeal
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: mealId
+        in: path
+        description: ID of meal to update
+        required: true
+        type: integer
+        format: int64
+      - in: body
+        name: body
+        description: Meal object's name and preparation
+        required: true
+        schema:
+          $ref: '#/definitions/body'
+      responses:
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Meal not found
+        "405":
+          description: Validation exception
+      security:
+      - diethelper_auth:
+        - write:meals
+        - read:meals
+  /meal/{mealsNum}/menu:
+    get:
+      tags:
+      - meal
+      summary: Get menu with specified meals number
+      description: Returns a menu
+      operationId: getMenu
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: mealsNum
+        in: path
+        description: Number of meals on day
+        required: true
+        type: array
+        items:
+          type: integer
+        collectionFormat: csv
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            properties:
+              meal:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    mealId:
+                      type: integer
+                      format: int64
+                    name:
+                      type: string
+                      example: scrambled eggs with bacon
+                    category:
+                      type: string
+                      example: breakfast
+                      enum:
+                      - breakfast
+                      - dinner
+                      - supper
+                      - any
+        "400":
+          description: Invalid number of meals on a day supplied
+      security:
+      - api_key: []
+  /meal/{mealId}/products:
+    get:
+      tags:
+      - meal
+      summary: Get list of products to buy for preparation a meal of ID
+      description: Returns a shopping list
+      operationId: getShoppingListByMealId
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: mealId
+        in: path
+        description: Products which are needed to prepare a meal
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            properties:
+              mealId:
+                type: integer
+                format: int64
+              products_needed:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    productX:
+                      $ref: '#/definitions/Product'
+                    amount:
+                      type: string
+                      example: "3"
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Meal not found
+      security:
+      - api_key: []
+  /meal/all/{productId}:
+    get:
+      tags:
+      - meal
+      summary: Get list of meals which contain product
+      description: Returns meals
+      operationId: getListOfMealsWithProduct
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: productId
+        in: path
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Meal'
+        "400":
+          description: Invalid product id value
+  /meal/notContains/{spiceName}:
+    get:
+      tags:
+      - meal
+      summary: Get list of meals which not contain listed spice
+      description: Returns meals
+      operationId: getListOfMealsWhichNotContainListedSpices
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: spiceName
+        in: path
+        required: true
+        type: string
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Meal'
+        "400":
+          description: Invalid spice name value
+  /meal/contains/{nutrientsName}:
+    get:
+      tags:
+      - meal
+      summary: Get list of meals which contain listed nutrients
+      description: Returns meals
+      operationId: getListOfMealsWithListedNutrients
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: nutrientsName
+        in: path
+        required: true
+        type: string
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Meal'
+        "400":
+          description: Invalid nutrients name value
+  /meal/createWithList:
+    post:
+      tags:
+      - meal
+      summary: Creates list of meals with given input array
+      operationId: createMealsWithListInput
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: body
+        description: List of meal object
+        required: true
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/Meal'
+      responses:
+        default:
+          description: successful operation
+  /meal/{mealId}/addProduct:
+    post:
+      tags:
+      - meal
+      summary: Add product to meal
+      operationId: productToMeal
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/body_1'
+      - name: mealId
+        in: path
+        required: true
+        type: integer
+        format: int64
+      responses:
+        default:
+          description: successful operation
+  /meal/{mealId}/addSpice/{spiceId}:
+    post:
+      tags:
+      - meal
+      summary: Add spice to meal
+      operationId: spiceToMeal
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: mealId
+        in: path
+        required: true
+        type: integer
+        format: int64
+      - name: spiceId
+        in: path
+        required: true
+        type: integer
+        format: int64
+      responses:
+        default:
+          description: successful operation
+  /meal/{mealId}/addNutrients/{nutrientsId}:
+    post:
+      tags:
+      - meal
+      summary: Add nutrients to meal
+      operationId: nutrientsToMeal
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: mealId
+        in: path
+        required: true
+        type: integer
+        format: int64
+      - name: nutrientsId
+        in: path
+        required: true
+        type: integer
+        format: int64
+      responses:
+        default:
+          description: successful operation
+  /spice/add:
+    post:
+      tags:
+      - spice
+      summary: Add a new spice to database
+      operationId: addSpice
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: body
+        description: Spice object that needs to be added to the database
+        required: true
+        schema:
+          $ref: '#/definitions/Spice'
+      responses:
+        "405":
+          description: Invalid input
+      security:
+      - diethelper_auth:
+        - write:meals
+        - read:meals
+  /spice/all:
+    get:
+      tags:
+      - spice
+      summary: Find all spices
+      description: Returns all spices
+      operationId: getSpices
+      produces:
+      - application/json
+      - application/xml
+      parameters: []
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Spice'
+        "404":
+          description: Spices not found
+      security:
+      - api_key: []
+  /spice/{spiceId}:
+    get:
+      tags:
+      - spice
+      summary: Find spice by ID
+      description: Returns a spice
+      operationId: getSpiceById
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: spiceId
+        in: path
+        description: ID of product to return
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Spice'
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Spice not found
+      security:
+      - api_key: []
+    put:
+      tags:
+      - spice
+      summary: Update an existing spice
+      operationId: updateSpice
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: spiceId
+        in: path
+        description: Spice object that needs to be added to the database
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Spice'
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Spice not found
+      security:
+      - diethelper_auth:
+        - write:meals
+        - read:meals
+    delete:
+      tags:
+      - spice
+      summary: Delete a spice
+      operationId: deleteSpice
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: api_key
+        in: header
+        required: false
+        type: string
+      - name: spiceId
+        in: path
+        description: Spice id to delete
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Spice not found
+      security:
+      - diethelper_auth:
+        - write:meals
+        - read:meals
+  /nutrients/add:
+    post:
+      tags:
+      - nutrients
+      summary: Add a new nutrients to database
+      operationId: addNutrients
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - in: body
+        name: body
+        description: Nutrients object that needs to be added to the database
+        required: true
+        schema:
+          $ref: '#/definitions/Nutrients'
+      responses:
+        "405":
+          description: Invalid input
+  /nutrients/all:
+    get:
+      tags:
+      - nutrients
+      summary: Find all nutrients
+      description: Returns all nutrients
+      operationId: getNutrients
+      produces:
+      - application/json
+      - application/xml
+      parameters: []
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Nutrients'
+        "404":
+          description: Nutrients not found
+      security:
+      - api_key: []
+  /nutrients/{nutrientsId}:
+    get:
+      tags:
+      - nutrients
+      summary: Find nutrients by ID
+      description: Returns a nutrients
+      operationId: getNutrientsById
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: nutrientsId
+        in: path
+        description: ID of nutrients to return
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Nutrients'
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Nutrients not found
+      security:
+      - api_key: []
+    put:
+      tags:
+      - nutrients
+      summary: Update an existing nutrients
+      operationId: updateNutrients
+      consumes:
+      - application/json
+      - application/xml
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: nutrientsId
+        in: path
+        description: Nutrients object that needs to be added to the database
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Nutrients'
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Nutrients not found
+      security:
+      - diethelper_auth:
+        - write:meals
+        - read:meals
+    delete:
+      tags:
+      - nutrients
+      summary: Delete a nutrients
+      operationId: deleteNutrients
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: api_key
+        in: header
+        required: false
+        type: string
+      - name: nutrientsId
+        in: path
+        description: Nutrients id to delete
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Nutrients not found
+      security:
+      - diethelper_auth:
+        - write:meals
+        - read:meals
+securityDefinitions:
+  diethelper_auth:
+    type: oauth2
+    authorizationUrl: http://diethelper.swagger.io/oauth/dialog
+    flow: implicit
+    scopes:
+      write:meals: modify meals in your account
+      read:meals: read your meals
+  api_key:
+    type: apiKey
+    name: api_key
+    in: header
+definitions:
+  Meal:
+    type: object
+    required:
+    - name
+    properties:
+      mealId:
+        type: integer
+        format: int64
+      name:
+        type: string
+        example: scrambled eggs with bacon
+      category:
+        type: string
+        example: breakfast
+        enum:
+        - breakfast
+        - dinner
+        - supper
+        - any
+      products_needed:
+        type: array
+        items:
+          $ref: '#/definitions/Meal_products_needed'
+      spices:
+        type: array
+        items:
+          $ref: '#/definitions/Meal_spices'
+      flavor:
+        type: string
+        example: salty
+        enum:
+        - sweet
+        - salty
+        - sour
+        - bitter
+        - unknown
+      difficulty_of_cooking:
+        type: string
+        example: easy
+        enum:
+        - easy
+        - medium
+        - difficult
+        - other
+      nutrients:
+        type: array
+        xml:
+          name: Nutrients
+          wrapped: true
+        items:
+          $ref: '#/definitions/Nutrients'
+      calories:
+        type: integer
+      macronutrients:
+        $ref: '#/definitions/Macronutrients'
+      is_healthy:
+        type: boolean
+        example: true
+      preparation:
+        type: string
+    xml:
+      name: Meal
+  Product:
+    type: object
+    properties:
+      productId:
+        type: integer
+        format: int64
+      name:
+        type: string
+        example: egg
+      macronutrients:
+        $ref: '#/definitions/Macronutrients'
+    xml:
+      name: Product
+  Spice:
+    type: object
+    properties:
+      spiceId:
+        type: integer
+        format: int64
+      name:
+        type: string
+        example: salt
+  Macronutrients:
+    type: object
+    properties:
+      carbohydrates:
+        type: integer
+      proteins:
+        type: integer
+      fats:
+        type: integer
+  Nutrients:
+    type: object
+    properties:
+      nutritional_value:
+        type: string
+  body:
+    properties:
+      mealId:
+        type: integer
+        format: int64
+      name:
+        type: string
+        example: scrambled eggs with bacon
+      preparation:
+        type: string
+  body_1:
+    properties:
+      productId:
+        type: integer
+        format: int64
+      productAmount:
+        type: string
+        example: "5"
+  Meal_products_needed:
+    type: object
+    properties:
+      productX:
+        $ref: '#/definitions/Product'
+      amount:
+        type: string
+        example: "3"
+  Meal_spices:
+    type: object
+    properties:
+      spice_name:
+        type: string
+        example: salt
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
