@@ -14,9 +14,9 @@ public class Seasoning {
     @Column(name = "SpicesspiceId")
     private Integer SpicesspiceId;
 
-    @ManyToOne()
-    @JoinColumn(name="mealId")
-    private Meal meal;
+    //@ManyToOne()
+    //@JoinColumn(name="mealId")
+    //private Meal meal;
 
     public Seasoning() {
     }

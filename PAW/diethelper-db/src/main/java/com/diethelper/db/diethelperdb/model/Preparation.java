@@ -16,13 +16,13 @@ public class Preparation {
     @Column(name = "productAmount")
     private Integer productAmount;
 
-    @ManyToOne()
-    @JoinColumn(name="mealId")
-    private Meal meal;
+    //@ManyToOne()
+    //@JoinColumn(name="mealId")
+    //private Meal meal;
 
-    @ManyToOne()
-    @JoinColumn(name="productId")
-    private Product product;
+    //@ManyToOne()
+    //@JoinColumn(name="productId")
+    //private Product product;
 
     public Preparation() {
     }

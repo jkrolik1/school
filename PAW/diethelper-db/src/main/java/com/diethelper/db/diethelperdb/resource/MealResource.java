@@ -1,11 +1,7 @@
 package com.diethelper.db.diethelperdb.resource;
 
-import com.diethelper.db.diethelperdb.model.Meal;
-import com.diethelper.db.diethelperdb.model.Preparation;
-import com.diethelper.db.diethelperdb.model.Product;
-import com.diethelper.db.diethelperdb.repository.MealRepository;
-import com.diethelper.db.diethelperdb.repository.PreparationRepository;
-import com.diethelper.db.diethelperdb.repository.ProductRepository;
+import com.diethelper.db.diethelperdb.model.*;
+import com.diethelper.db.diethelperdb.repository.*;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +24,13 @@ public class MealResource {
 
     @Autowired
     PreparationRepository preparationRepository;
+
+    @Autowired
+    SeasoningRepository seasoningRepository;
+
+    @Autowired
+    HealthConditionsRepository healthConditionsRepository;
+
 
     @GetMapping(value = "/all")
     private List<Meal> getAll() {
@@ -312,32 +315,17 @@ public class MealResource {
         }
     }
 
-    /* ??? */ @PostMapping(path = "/createWithArray")
-    public @ResponseBody Pair<String, Meal[]> addMealArray(@RequestBody Map<String, Object> body) {
-        //Meal[] meal = new Meal[100];
-        Object x = body.get("name");
+    @PostMapping(path = "/createWithList")
+    public @ResponseBody String addMealArray(@RequestBody List<Meal> meals) {
 
+        for (Meal meal : meals)
+            mealRepository.save(meal);
 
-       /* meal[0].setName(body.get("name"+1).toString());
-        meal[0].setCategory(body.get("category"+1).toString());
-        meal[0].setFlavor(body.get("flavor"+1).toString());
-        meal[0].setDifficultyOfCooking(body.get("difficultyOfCooking"+1).toString());
-        meal[0].setCalories(Integer.parseInt(body.get("calories"+1).toString()));
-        meal[0].setCarbohydrates(Integer.parseInt(body.get("carbohydrates"+1).toString()));
-        meal[0].setProteins(Integer.parseInt(body.get("proteins"+1).toString()));
-        meal[0].setFats(Integer.parseInt(body.get("fats"+1).toString()));
-        meal[0].setIsHealthy(Integer.parseInt(body.get("isHealthy"+1).toString()));
-        meal[0].setPreparation(body.get("preparation"+1).toString());
-
-        return new Pair<String, Meal[]>("Dodano posiłek.", meal);*/
-        return null;
+        return "Dodano listę posiłków.";
     }
 
     @PostMapping(path = "/{mealId}/addProduct")
-    public @ResponseBody
-    String addProductToMeal(
-            @RequestBody Map<String, Object> body,
-            @PathVariable("mealId") int mealId) {
+    public @ResponseBody String addProductToMeal(@RequestBody Map<String, Object> body, @PathVariable("mealId") int mealId) {
         Preparation preparation = new Preparation();
 
         preparation.setMealmealId(mealId);
@@ -345,6 +333,30 @@ public class MealResource {
         preparation.setProductAmount(Integer.parseInt(body.get("productAmount").toString()));
 
         preparationRepository.save(preparation);
+
+        return "Dodano połączenie.";
+    }
+
+    @PostMapping(path = "/{mealId}/addSpice/{spiceId}")
+    public @ResponseBody String addSpiceToMeal(@PathVariable("mealId") int mealId, @PathVariable("spiceId") int spiceId) {
+        Seasoning seasoning = new Seasoning();
+
+        seasoning.setMealmealId(mealId);
+        seasoning.setSpicesspiceId(spiceId);
+
+        seasoningRepository.save(seasoning);
+
+        return "Dodano połączenie.";
+    }
+
+    @PostMapping(path = "/{mealId}/addNutrients/{nutrientsId}")
+    public @ResponseBody String addNutrientsToMeal(@PathVariable("mealId") int mealId, @PathVariable("nutrientsId") int nutrientsId) {
+        HealthConditions healthConditions = new HealthConditions();
+
+        healthConditions.setMealmealId(mealId);
+        healthConditions.setNutritionalValuenutritionalValueId(nutrientsId);
+
+        healthConditionsRepository.save(healthConditions);
 
         return "Dodano połączenie.";
     }

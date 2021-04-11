@@ -14,9 +14,9 @@ public class HealthConditions {
     @Column(name = "NutritionalValuenutritionalValueId")
     private Integer NutritionalValuenutritionalValueId;
 
-    @ManyToOne()
-    @JoinColumn(name="mealId")
-    private Meal meal;
+    //@ManyToOne()
+    //@JoinColumn(name="mealId")
+    //private Meal meal;
 
     public HealthConditions() {
     }
