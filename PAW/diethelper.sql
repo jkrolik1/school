@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 04 Kwi 2021, 19:04
+-- Czas generowania: 11 Kwi 2021, 16:52
 -- Wersja serwera: 10.4.18-MariaDB
 -- Wersja PHP: 8.0.3
 
@@ -30,8 +30,17 @@ SET time_zone = "+00:00";
 CREATE TABLE `healthconditions` (
   `healthconditionsId` int(11) NOT NULL,
   `MealmealId` int(10) NOT NULL,
-  `NutritionalValuenutritionalValueId` int(10) NOT NULL
+  `NutritionalValuenutritionalValueId` int(10) NOT NULL,
+  `mealId` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `healthconditions`
+--
+
+INSERT INTO `healthconditions` (`healthconditionsId`, `MealmealId`, `NutritionalValuenutritionalValueId`, `mealId`) VALUES
+(1, 3, 1, NULL),
+(2, 4, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -48,7 +57,7 @@ CREATE TABLE `hibernate_sequence` (
 --
 
 INSERT INTO `hibernate_sequence` (`next_val`) VALUES
-(1);
+(32);
 
 -- --------------------------------------------------------
 
@@ -75,19 +84,30 @@ CREATE TABLE `meal` (
 --
 
 INSERT INTO `meal` (`mealId`, `name`, `category`, `flavor`, `difficultyOfCooking`, `calories`, `carbohydrates`, `proteins`, `fats`, `isHealthy`, `preparation`) VALUES
-(1, 'Wegańska chałka', 'Śniadanie', 'Słodki', 'Średni', 154, NULL, NULL, NULL, 1, NULL),
+(1, 'Wegańska chałka', 'Śniadanie', 'Słodki', 'Średni', 154, 0, 0, 0, 1, NULL),
+(2, 'ZAPIEKANKA WARZYWNA Z BATATEM I CUKINIĄ', 'Kolacja', 'Łagodny', 'Średni', 0, 0, 0, 0, 1, 'Piekarnik nagrzać do 190 stopni C. Batata obrać i pokroić w kostkę. Cukinię umyć i pokroić w nieco większą kostką. Cebulę obrać z zewnętrzych suchych łupin i pokroić na paseczki. Ząbki czosnku pozostawić w łupinkach. Warzywa doprawić pieprzem, oregano i pieprzem cayenne, następnie wymieszać z oliwą (nie solić na tym etapie, bo warzywa puszczą soki). Warzywa ułożyć na blaszce do pieczenia (ok. 20 x 30 cm) lub naczyniu żaroodpornym i piec przez 30 minut bez przykrycia. Następnie dodać pokrojonego w kostkę pomidora oraz kuleczki mozzarelli i piec jeszcze przez ok. 10 - 15 minut. Przed podaniem można warzywa posolić.'),
+(3, 'Muffinki jajeczne ze szpinakiem', 'Kolacja', 'Słodki', 'Łatwy', 113, 2, 10, 7, 1, 'Cebulę pokrój w kosteczkę i podsmaż na patelni z łyżeczką oliwy ciągle mieszając, aby się nie przypaliła, dodaj przeciśnięty przez praskę czosnek i podsmaż jeszcze chwilę. Wrzuć posiekany szpinak i duś, aż szpinak zwiędnie. Dopraw mocno solą, pieprzem i odrobiną gałki muszkatołowej. Ostudź szpinak. Nastaw piekarnik na 180 stopni. Jajka roztrzep widelcem i wymieszaj ze szpinakiem, dodaj rozdrobnioną mozzarellę. Przelej łyżką masę serowo szpinakową do foremek na muffinki - ja użyłam foremek silikonowych. Piecz mini frittaty przez 20 minut.'),
+(4, 'Kanapka z awokado i łososiem', 'Śniadanie', NULL, 'Łatwy', 174, 20, 6, 9, 1, 'Awokado zgnieć widelcem, dodaj kilka kropel soku z cytryny, szczyptę soli i pieprzu. Tak przygotowaną pastę rozprowadź na chlebie. Dodaj plasterek łososia. Opcjonalnie, kanapkę możesz oprószyć koperkiem lub pietruszką.'),
 (5, 'Zupa meksykańska z nutką chilli', 'Obiad', 'Ostry', 'Średni', 34, 5, 2, 1, 1, 'W garnku, na oliwie zeszklij cebulę, dodaj pokrojone w kostkę papryki. Smaż 3 minuty. Dodaj mięso mielone i bulion warzywny. Gotuj 10 minut. Dodaj fasolę i kukurydzę. Dodaj pomidory w puszcze i przecier pomidorowy. Całość wymieszaj, dopraw do smaku i gotuj, aż papryka będzie miękka i zupa się zagęści.');
 
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `nutritionalvalue`
+-- Struktura tabeli dla tabeli `nutrients`
 --
 
-CREATE TABLE `nutritionalvalue` (
+CREATE TABLE `nutrients` (
   `nutritionalValueId` int(10) NOT NULL,
-  `name` varchar(255) COLLATE utf8_polish_ci NOT NULL
+  `name` varchar(255) COLLATE utf8_polish_ci NOT NULL,
+  `nutrientsId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `nutrients`
+--
+
+INSERT INTO `nutrients` (`nutritionalValueId`, `name`, `nutrientsId`) VALUES
+(1, 'Błonnik', 0);
 
 -- --------------------------------------------------------
 
@@ -119,7 +139,30 @@ INSERT INTO `preparation` (`preparationId`, `MealmealId`, `ProductproductId`, `p
 (14, 5, 11, 1),
 (15, 5, 12, 1),
 (16, 5, 13, 2),
-(17, 5, 15, 1);
+(17, 5, 15, 1),
+(18, 2, 9, 1),
+(19, 2, 16, 3),
+(20, 2, 17, 3),
+(21, 2, 7, 2),
+(22, 2, 19, 5),
+(23, 2, 14, 1),
+(24, 2, 18, 2),
+(25, 3, 20, 1),
+(26, 3, 21, 1),
+(27, 3, 19, 2),
+(28, 3, 9, 1),
+(29, 3, 18, 1),
+(30, 3, 7, 1),
+(31, 4, 22, 1),
+(32, 4, 23, 1),
+(33, 4, 24, 1),
+(34, 4, 25, 1),
+(35, 5, 5, 10),
+(36, 5, 5, 10),
+(37, 5, 5, 10),
+(38, 5, 5, 10),
+(39, 5, 5, 10),
+(40, 5, 5, 10);
 
 -- --------------------------------------------------------
 
@@ -154,7 +197,17 @@ INSERT INTO `product` (`productId`, `name`, `carbohydrates`, `proteins`, `fats`)
 (12, 'Koncentrat pomidorowy 1 łyżka', NULL, NULL, NULL),
 (13, 'Czerwona fasola 100g', NULL, NULL, NULL),
 (14, 'Pomidory 100g', NULL, NULL, NULL),
-(15, 'Kukurydza 100g', NULL, NULL, NULL);
+(15, 'Kukurydza 100g', NULL, NULL, NULL),
+(16, 'Bataty 100g', NULL, NULL, NULL),
+(17, 'Cukinia 100g', NULL, NULL, NULL),
+(18, 'Czosnek ząbek', NULL, NULL, NULL),
+(19, 'Mozzarella 25g', NULL, NULL, NULL),
+(20, 'Jajko kurze', 0, 6, 5),
+(21, 'Szpinak', 1, 1, NULL),
+(22, 'Awokado', NULL, NULL, NULL),
+(23, 'Chleb żytni razowy kromka', NULL, NULL, NULL),
+(24, 'Wędzony łosoś plaster', NULL, NULL, NULL),
+(25, 'Sok z cytryny łyżeczka', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -165,8 +218,23 @@ INSERT INTO `product` (`productId`, `name`, `carbohydrates`, `proteins`, `fats`)
 CREATE TABLE `seasoning` (
   `seasoningId` int(11) NOT NULL,
   `MealmealId` int(10) NOT NULL,
-  `SpicesspiceId` int(10) NOT NULL
+  `SpicesspiceId` int(10) NOT NULL,
+  `mealId` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `seasoning`
+--
+
+INSERT INTO `seasoning` (`seasoningId`, `MealmealId`, `SpicesspiceId`, `mealId`) VALUES
+(1, 2, 2, NULL),
+(2, 2, 1, NULL),
+(3, 2, 3, NULL),
+(4, 2, 4, NULL),
+(5, 3, 2, NULL),
+(6, 4, 2, NULL),
+(7, 4, 6, NULL),
+(8, 4, 7, NULL);
 
 -- --------------------------------------------------------
 
@@ -180,6 +248,19 @@ CREATE TABLE `spice` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
+-- Zrzut danych tabeli `spice`
+--
+
+INSERT INTO `spice` (`spiceId`, `name`) VALUES
+(1, 'Ketchup'),
+(2, 'Sól'),
+(3, 'Ostra papryka'),
+(4, 'Oregano'),
+(5, 'Pieprz'),
+(6, 'Koperek'),
+(7, 'Natka pietruszki');
+
+--
 -- Indeksy dla zrzutów tabel
 --
 
@@ -189,7 +270,8 @@ CREATE TABLE `spice` (
 ALTER TABLE `healthconditions`
   ADD PRIMARY KEY (`healthconditionsId`),
   ADD KEY `MealmealId` (`MealmealId`),
-  ADD KEY `NutritionalValuenutritionalValueId` (`NutritionalValuenutritionalValueId`);
+  ADD KEY `NutritionalValuenutritionalValueId` (`NutritionalValuenutritionalValueId`),
+  ADD KEY `FKk95l5nbmi58ijob8y576lk9sm` (`mealId`);
 
 --
 -- Indeksy dla tabeli `meal`
@@ -198,9 +280,9 @@ ALTER TABLE `meal`
   ADD PRIMARY KEY (`mealId`);
 
 --
--- Indeksy dla tabeli `nutritionalvalue`
+-- Indeksy dla tabeli `nutrients`
 --
-ALTER TABLE `nutritionalvalue`
+ALTER TABLE `nutrients`
   ADD PRIMARY KEY (`nutritionalValueId`);
 
 --
@@ -208,8 +290,8 @@ ALTER TABLE `nutritionalvalue`
 --
 ALTER TABLE `preparation`
   ADD PRIMARY KEY (`preparationId`),
-  ADD KEY `MealmealId` (`MealmealId`),
-  ADD KEY `ProductproductId` (`ProductproductId`);
+  ADD KEY `FKmxemhhglyy76db2h8hy18e364` (`ProductproductId`),
+  ADD KEY `FKguon4iugjbit6xfd2xtefdeao` (`MealmealId`);
 
 --
 -- Indeksy dla tabeli `product`
@@ -223,7 +305,8 @@ ALTER TABLE `product`
 ALTER TABLE `seasoning`
   ADD PRIMARY KEY (`seasoningId`),
   ADD KEY `SpiceOgr` (`SpicesspiceId`),
-  ADD KEY `MealmealId` (`MealmealId`);
+  ADD KEY `MealmealId` (`MealmealId`),
+  ADD KEY `FKdajhpsni0qtjfquh9keqledox` (`mealId`);
 
 --
 -- Indeksy dla tabeli `spice`
@@ -239,43 +322,43 @@ ALTER TABLE `spice`
 -- AUTO_INCREMENT dla tabeli `healthconditions`
 --
 ALTER TABLE `healthconditions`
-  MODIFY `healthconditionsId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `healthconditionsId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT dla tabeli `meal`
 --
 ALTER TABLE `meal`
-  MODIFY `mealId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `mealId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT dla tabeli `nutritionalvalue`
+-- AUTO_INCREMENT dla tabeli `nutrients`
 --
-ALTER TABLE `nutritionalvalue`
-  MODIFY `nutritionalValueId` int(10) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `nutrients`
+  MODIFY `nutritionalValueId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT dla tabeli `preparation`
 --
 ALTER TABLE `preparation`
-  MODIFY `preparationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `preparationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT dla tabeli `product`
 --
 ALTER TABLE `product`
-  MODIFY `productId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `productId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT dla tabeli `seasoning`
 --
 ALTER TABLE `seasoning`
-  MODIFY `seasoningId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `seasoningId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT dla tabeli `spice`
 --
 ALTER TABLE `spice`
-  MODIFY `spiceId` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `spiceId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Ograniczenia dla zrzutów tabel
@@ -285,8 +368,9 @@ ALTER TABLE `spice`
 -- Ograniczenia dla tabeli `healthconditions`
 --
 ALTER TABLE `healthconditions`
+  ADD CONSTRAINT `FKk95l5nbmi58ijob8y576lk9sm` FOREIGN KEY (`mealId`) REFERENCES `meal` (`mealId`),
   ADD CONSTRAINT `healthconditions_ibfk_1` FOREIGN KEY (`MealmealId`) REFERENCES `meal` (`mealId`),
-  ADD CONSTRAINT `healthconditions_ibfk_2` FOREIGN KEY (`NutritionalValuenutritionalValueId`) REFERENCES `nutritionalvalue` (`nutritionalValueId`);
+  ADD CONSTRAINT `healthconditions_ibfk_2` FOREIGN KEY (`NutritionalValuenutritionalValueId`) REFERENCES `nutrients` (`nutritionalValueId`);
 
 --
 -- Ograniczenia dla tabeli `preparation`
@@ -299,6 +383,7 @@ ALTER TABLE `preparation`
 -- Ograniczenia dla tabeli `seasoning`
 --
 ALTER TABLE `seasoning`
+  ADD CONSTRAINT `FKdajhpsni0qtjfquh9keqledox` FOREIGN KEY (`mealId`) REFERENCES `meal` (`mealId`),
   ADD CONSTRAINT `SpiceOgr` FOREIGN KEY (`SpicesspiceId`) REFERENCES `spice` (`spiceId`),
   ADD CONSTRAINT `seasoning_ibfk_1` FOREIGN KEY (`MealmealId`) REFERENCES `meal` (`mealId`);
 COMMIT;
