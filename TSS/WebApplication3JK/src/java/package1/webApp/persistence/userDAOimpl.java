@@ -54,6 +54,8 @@ public class userDAOimpl implements userDAO {
                 usr.setPassword(resultSet.getString(2));
                 usr.setName(resultSet.getString(3));
             }
+            
+            connection.close();
         }
         catch (SQLException e) {
             ApplicationLogic1.printSQLException(e);
@@ -61,7 +63,5 @@ public class userDAOimpl implements userDAO {
         
         return usr;
     }
-
-
 
 }

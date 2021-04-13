@@ -17,6 +17,7 @@
         <table border="1">
             <thead>
 		<tr>
+                    <th></th>
                     <th>Id</th>
                     <th>Nazwa</th>
                     <th>Pancerz</th>
@@ -35,6 +36,11 @@
 
                         out.print("<tr>");
                             out.print("<td>");
+                %>
+                                <a href="play?id=<%=tank.getTankId() %>">Wybierz do gry</a>
+                <%
+                            out.print("</td>");
+                            out.print("<td>");
                                 out.print(tank.getTankId());
                             out.print("</td>");
                             out.print("<td>");
@@ -51,6 +57,11 @@
                                 <a href="edit?id=<%=tank.getTankId() %>">Edytuj nazwę</a>
                 <%
                             out.print("</td>");
+                            out.print("<td>");
+                %>
+                                <a href="delete?id=<%=tank.getTankId() %>">Usuń czołg</a>
+                <%
+                            out.print("</td>");
                         out.print("</tr>");    
                     }     
                 %>    
@@ -59,6 +70,12 @@
                 
             </tbody>
 	</table>
+                
+        <br/><br/>
+        
+        <a href="<%=request.getContextPath()%>/add">
+            Dodaj czołg
+        </a><br/>        
         <a href="<%=request.getContextPath()%>/back">
             Powrót do poprzedniej strony
         </a><br/><br/>             

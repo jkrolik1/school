@@ -25,6 +25,12 @@ public class Tank {
         this.armorAmount = armorAmount;
         this.gunCaliber = gunCaliber;
     }
+    
+    public Tank(String name, int armorAmount, int gunCaliber){
+        setName(name);
+        this.armorAmount = armorAmount;
+        this.gunCaliber = gunCaliber;
+    }
 
     public Tank() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

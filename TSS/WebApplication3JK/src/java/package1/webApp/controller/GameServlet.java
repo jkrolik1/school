@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -71,6 +72,18 @@ public class GameServlet extends HttpServlet {
                 case "/update":
                     updateTankName(request,response);
                     break;
+                case "/delete":
+                    deleteOption(request,response);
+                    break;
+                case "/add":
+                    addOption(request,response);
+                    break;
+                case "/add2":
+                    add2Option(request,response);
+                    break;
+                case "/play":
+                    
+                    break;
                 case "/back":
                     try {
                         request.getRequestDispatcher("main.jsp").forward(request, response);
@@ -108,6 +121,14 @@ public class GameServlet extends HttpServlet {
 	request.setAttribute("tank", tankForChange);
 	dispatcher.forward(request, response);
     }
+    
+    private void deleteOption(HttpServletRequest request, HttpServletResponse response)
+        throws SQLException, ServletException, IOException {
+	int id = Integer.parseInt(request.getParameter("id"));
+        tankDAOimpl tankDAOimpl = new tankDAOimpl();
+	tankDAOimpl.deleteTank(id);
+        listTanks(request,response);
+    }
 
     private void awardBelt(HttpServletRequest request, HttpServletResponse response)
         throws SQLException, IOException, ServletException {
@@ -143,6 +164,32 @@ public class GameServlet extends HttpServlet {
         response.sendRedirect("list");
     }
 
+    private void addOption(HttpServletRequest request, HttpServletResponse response)
+        throws SQLException, ServletException, IOException {
+        
+        tankDAOimpl tankDAOimpl = new tankDAOimpl();
+        
+	RequestDispatcher dispatcher = request.getRequestDispatcher("tankAdd.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void add2Option(HttpServletRequest request, HttpServletResponse response)
+        throws SQLException, ServletException, IOException {
+        
+        String name = request.getParameter("name");
+        
+        Random rand = new Random();
+        int armor = rand.nextInt(200);
+        int gun = rand.nextInt(200);
+        
+        Tank tank = new Tank(name,armor+1,gun+1);
+        
+        tankDAOimpl tankDAOimpl = new tankDAOimpl();
+        
+	tankDAOimpl.addTank(tank,currentUser.getLogin());
+        
+        response.sendRedirect("list");
+    }
     
     @Override
     public String getServletInfo() {

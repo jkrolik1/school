@@ -28,6 +28,8 @@ public class tankDAOimpl implements tankDAO{
                 Tank tank = new Tank(resultSet.getInt(1), resultSet.getString(2), resultSet.getInt(3), resultSet.getInt(4));
                 tanksList.add(tank);
             }
+            
+            connection.close();
         }
         catch (SQLException e) {
             ApplicationLogic1.printSQLException(e);
@@ -51,6 +53,8 @@ public class tankDAOimpl implements tankDAO{
             while (resultSet.next()){
                 idTankList.add(resultSet.getInt(1));
             }
+            
+            connection.close();
         }
         catch (SQLException e) {
             ApplicationLogic1.printSQLException(e);
@@ -78,6 +82,8 @@ public class tankDAOimpl implements tankDAO{
                 int caliber = resultSet.getInt("gunCaliber");
                 tank = new Tank(tankId, name, armor, caliber);
             }
+            
+            connection.close();
         }
         catch (SQLException e) {
             ApplicationLogic1.printSQLException(e);
@@ -100,6 +106,7 @@ public class tankDAOimpl implements tankDAO{
             
             updateSuccess = preparedStatement.executeUpdate() > 0;
 
+            connection.close();
         }
         catch (SQLException e) {
             ApplicationLogic1.printSQLException(e);
@@ -107,4 +114,64 @@ public class tankDAOimpl implements tankDAO{
         
         return updateSuccess;
     }
+
+    @Override
+    public boolean deleteTank(int id){
+        String DEL_TANKS_QUERY = "DELETE FROM tank WHERE tankId = ?";
+        String DEL_TANKS_QUERY2 = "DELETE FROM battlestat WHERE tankId = ?";
+        boolean deleteSuccess = false;
+        
+        try {
+            connection = ApplicationLogic1.makeNewConnection();  
+         
+            preparedStatement = connection.prepareStatement(DEL_TANKS_QUERY2);
+            preparedStatement.setInt(1, id);
+
+            deleteSuccess = preparedStatement.executeUpdate() > 0;
+            
+            connection.close();
+        }
+        catch (SQLException e) {
+            ApplicationLogic1.printSQLException(e);
+        }
+        
+        try {
+            connection = ApplicationLogic1.makeNewConnection();  
+         
+            preparedStatement = connection.prepareStatement(DEL_TANKS_QUERY);
+            preparedStatement.setInt(1, id);
+
+            deleteSuccess = preparedStatement.executeUpdate() > 0;
+        }
+        catch (SQLException e) {
+            ApplicationLogic1.printSQLException(e);
+        }
+        
+        return deleteSuccess;
+    }
+
+    @Override
+    public void addTank(Tank tank, String login){
+        String ADD_TANK_QUERY = "INSERT INTO tank(tankName,armorAmount,gunCaliber,Userlogin) VALUES(?,?,?,?)";
+        
+        try {
+            connection = ApplicationLogic1.makeNewConnection();  
+         
+            preparedStatement = connection.prepareStatement(ADD_TANK_QUERY);
+            preparedStatement.setString(1, tank.getName());
+            preparedStatement.setInt(2, tank.getArmorAmount());
+            preparedStatement.setInt(3, tank.getGunCaliber());
+            preparedStatement.setString(4, login);
+            
+            preparedStatement.execute();
+            
+            connection.close();
+        }
+        catch (SQLException e) {
+            ApplicationLogic1.printSQLException(e);
+        }
+        
+    }
+
+
 }
