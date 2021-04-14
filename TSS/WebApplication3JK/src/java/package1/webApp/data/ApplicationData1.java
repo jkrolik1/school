@@ -44,8 +44,8 @@ public class ApplicationData1 {
     }
     public java.util.List<Tank> listOfTanks(String name){return listOfTanks;}
     
-    public String battleFight(Tank tank1, Tank tank2){
-        Battle battle = new Battle(1);
+    public static String battleFight(Tank tank1, Tank tank2){
+        Battle battle = new Battle();
         String battleScore = battle.battleInitiate(tank1, tank2);
         return battleScore;
     }

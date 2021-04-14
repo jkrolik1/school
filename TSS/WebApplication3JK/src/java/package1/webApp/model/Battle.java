@@ -6,6 +6,7 @@ public class Battle {
     private int battleNumber;
     private String start;
     
+    public Battle(){}
     public Battle(int battleNumber){
         this.battleNumber = battleNumber;
         this.start = new java.util.Date().toLocaleString();

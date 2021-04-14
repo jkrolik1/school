@@ -78,6 +78,9 @@
         </a><br/>        
         <a href="<%=request.getContextPath()%>/back">
             Powrót do poprzedniej strony
-        </a><br/><br/>             
+        </a><br/><br/>   
+        
+        <h2 style="color:${color}"> ${tankBattleResult} </h2>
+        
     </body>
 </html>

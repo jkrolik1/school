@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import package1.webApp.data.ApplicationData1;
 import package1.webApp.data.ApplicationLogic1;
 import package1.webApp.model.Tank;
 import package1.webApp.data.ApplicationLogic1;
@@ -82,7 +83,10 @@ public class GameServlet extends HttpServlet {
                     add2Option(request,response);
                     break;
                 case "/play":
-                    
+                    selectTank(request,response);
+                    break;
+                case "/war":
+                    warTank(request,response);
                     break;
                 case "/back":
                     try {
@@ -189,6 +193,48 @@ public class GameServlet extends HttpServlet {
 	tankDAOimpl.addTank(tank,currentUser.getLogin());
         
         response.sendRedirect("list");
+    }
+    
+    private void selectTank(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException{
+        int id = Integer.parseInt(request.getParameter("id"));
+
+        tankDAOimpl tankDAOimpl = new tankDAOimpl();
+        
+        Tank oponent = tankDAOimpl.randomOponent(currentUser.getLogin());
+        Tank myTank = tankDAOimpl.getTank(id);
+        
+        request.setAttribute("tank1", oponent);
+        request.setAttribute("tank2", myTank);
+
+        String tankBattleResult = ApplicationData1.battleFight(oponent,myTank);
+        
+        session = request.getSession(false);
+        session.setAttribute("tankBattleResult", tankBattleResult);
+        
+        String[] splited = tankBattleResult.split("\\s+");
+        
+        if (myTank.getName().equals(splited[2]))
+            session.setAttribute("color", "green");
+        else if (oponent.getName().equals(splited[2]))
+            session.setAttribute("color", "red");
+        else
+            session.setAttribute("color", "black");
+        
+        RequestDispatcher dispatcher = request.getRequestDispatcher("tankWar.jsp");
+        dispatcher.forward(request, response);
+    }
+    
+    private void warTank(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException{
+
+        // Kolumna w battle dodać wygranego
+        // Dodanie do tabeli battle + wygrany
+        // Dodanie do battlestat
+        // wykład
+        
+        response.sendRedirect("list");
+        
     }
     
     @Override

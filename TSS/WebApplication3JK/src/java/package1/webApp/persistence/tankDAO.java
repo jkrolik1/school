@@ -9,4 +9,5 @@ public interface tankDAO {
     public boolean updateTank(Tank tank);
     public boolean deleteTank(int id);
     public void addTank(Tank tank, String login);
+    public Tank randomOponent(String login);
 }

@@ -2,12 +2,12 @@ package package1.webApp.persistence;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import package1.webApp.data.ApplicationLogic1;
 import package1.webApp.model.Tank;
-import package1.webApp.model.User;
-import static package1.webApp.persistence.DBProvider.user;
 import static package1.webApp.persistence.userDAOimpl.*;
 
 public class tankDAOimpl implements tankDAO{
@@ -173,5 +173,40 @@ public class tankDAOimpl implements tankDAO{
         
     }
 
+    
+    @Override
+    public Tank randomOponent(String login){
+        String CHOOSE_OPONENT = "SELECT * FROM tank WHERE Userlogin != ?";
+        Tank tank = null;
+        List<Tank> tanks = new ArrayList<>();
+        
+        try {
+            connection = ApplicationLogic1.makeNewConnection();  
+         
+            preparedStatement = connection.prepareStatement(CHOOSE_OPONENT);
+            preparedStatement.setString(1, login);
+            
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                int tankId = resultSet.getInt("tankId");
+                String name = resultSet.getString("tankName");
+                int armor = resultSet.getInt("armorAmount");
+                int caliber = resultSet.getInt("gunCaliber");
+                
+                tank = new Tank(tankId, name, armor, caliber);
+                
+                tanks.add(tank);
+            }
+            
+            Collections.shuffle(tanks);
+            
+            connection.close();
+        }
+        catch (SQLException e) {
+            ApplicationLogic1.printSQLException(e);
+        }
+        
+        return tanks.get(0);
+    }
 
 }
