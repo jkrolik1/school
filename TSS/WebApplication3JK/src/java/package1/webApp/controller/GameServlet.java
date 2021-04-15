@@ -200,6 +200,7 @@ public class GameServlet extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
 
         tankDAOimpl tankDAOimpl = new tankDAOimpl();
+        battlestatDAOimpl battlestatDAOimpl = new battlestatDAOimpl();
         
         Tank oponent = tankDAOimpl.randomOponent(currentUser.getLogin());
         Tank myTank = tankDAOimpl.getTank(id);
@@ -214,12 +215,23 @@ public class GameServlet extends HttpServlet {
         
         String[] splited = tankBattleResult.split("\\s+");
         
-        if (myTank.getName().equals(splited[2]))
+        if (myTank.getName().equals(splited[2])){
+            session.setAttribute("winner", myTank);
+            session.setAttribute("loser", oponent);
             session.setAttribute("color", "green");
-        else if (oponent.getName().equals(splited[2]))
+        } 
+        else if (oponent.getName().equals(splited[2])){
+            session.setAttribute("winner", oponent);
+            session.setAttribute("loser", myTank);
             session.setAttribute("color", "red");
-        else
+        }
+        else{
+            session.setAttribute("winner", oponent);
+            session.setAttribute("loser", myTank);
             session.setAttribute("color", "black");
+        }
+            
+        battlestatDAOimpl.addBattle(request);
         
         RequestDispatcher dispatcher = request.getRequestDispatcher("tankWar.jsp");
         dispatcher.forward(request, response);
@@ -227,14 +239,8 @@ public class GameServlet extends HttpServlet {
     
     private void warTank(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException{
-
-        // Kolumna w battle dodać wygranego
-        // Dodanie do tabeli battle + wygrany
-        // Dodanie do battlestat
-        // wykład
-        
-        response.sendRedirect("list");
-        
+       
+        response.sendRedirect("list");   
     }
     
     @Override
