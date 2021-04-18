@@ -2,14 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/web/tankWar.jsp</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/src/java/package1/webApp/controller/GameServlet.java</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/src/java/package1/webApp/persistence/tankDAOimpl.java</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/web/tanksList.jsp</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/src/java/package1/webApp/model/Battle.java</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/src/java/package1/webApp/data/ApplicationData1.java</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/web/tankForm.jsp</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

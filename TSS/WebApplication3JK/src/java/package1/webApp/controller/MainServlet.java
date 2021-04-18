@@ -1,25 +1,16 @@
 package package1.webApp.controller;
 
-import java.awt.image.BufferedImage;
 import package1.webApp.persistence.userDAOimpl;
 import package1.webApp.persistence.userDAO;
-import package1.webApp.persistence.tankDAOimpl;
-import package1.webApp.persistence.tankDAO;
 
 import java.io.IOException;
-import static java.lang.System.out;
-import java.util.LinkedList;
-import java.util.List;
-import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.annotation.WebServlet;
 import package1.webApp.data.ApplicationLogic1;
-import package1.webApp.model.Tank;
 import package1.webApp.model.User;
-import package1.webApp.controller.ImageServlet;
 
 @WebServlet("/loginRegister")
 public class MainServlet extends HttpServlet {

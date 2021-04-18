@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context antiJARLocking="true" path="/WebApplication3JK"/>
+<Context antiJARLocking="true" path="/WebApplication3JK">
+    <Resource   name = "jdbc/KugakmK1yZ" auth = "Container"
+                type = "javax.sql.DataSource"
+                maxActive = "100" maxIdle = "30" maxWait = "10000"
+                username = "KugakmK1yZ" password = "L0tdidiNMH"
+                driverClassName = "com.mysql.jdbc.Driver" 
+                url = "jdbc:mysql://remotemysql.com:3306/KugakmK1yZ?useSSL=false" 
+    />
+</Context>

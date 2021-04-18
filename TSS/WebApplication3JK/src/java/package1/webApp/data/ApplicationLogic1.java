@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,12 +16,28 @@ import package1.webApp.model.Tank;
 import package1.webApp.model.User;
 import package1.webApp.persistence.tankDAO;
 
-public class ApplicationLogic1 implements package1.webApp.persistence.DBProvider{
+public class ApplicationLogic1{
     
     static Connection connection = null;
     
     public static Connection makeNewConnection() throws SQLException{
 
+        try {
+            javax.naming.Context initContext = new javax.naming.InitialContext();
+            javax.naming.Context environmentContext = (javax.naming.Context) initContext.lookup("java:/comp/env");
+            javax.sql.DataSource mysqlDatabase = (javax.sql.DataSource) environmentContext.lookup("jdbc/KugakmK1yZ");
+           
+            connection = mysqlDatabase.getConnection();
+            
+            return connection;
+            
+        } catch (SQLException ex1) {
+            printSQLException(ex1);
+        } catch (NamingException ex2) {
+            System.out.print(ex2);
+        }
+        
+        /*
         try{
             Class.forName(driver);
             connection = DriverManager.getConnection(dbURL,user,pass);
@@ -29,7 +46,8 @@ public class ApplicationLogic1 implements package1.webApp.persistence.DBProvider
         catch(ClassNotFoundException failed){
             throw new SQLException("Nie znaleziono klasy dla sterownika: " + driver);
         }
-        
+        */
+        return null;
     } 
 
     public static boolean checkIfRegistrationDataOk(String login, String password1, String password2, String name){
