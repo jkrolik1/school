@@ -16,10 +16,10 @@
         <h2>Autor: Krolik Jakub</h2>
         <h3>Przedmiot: Technologie Server Side</h3>
         
-        <br/><br/>
+        <br/>
         
         <h2>Rejestracja</h2>
-        <form action="loginRegister" method="post">
+        <form action="Servlet1" method="post">
             Login użytkownika: <input type="text" name="login"/><br/><br/>
             Imię: <input type="text" name="name"/><br/><br/>
             Hasło: <input type="password" name="password1"/><br/><br/>  
@@ -27,7 +27,7 @@
             <input type="submit" value="rejestracja" name="submit"/>  
         </form>  
         
-        <br/><br/><br/>
+        <br/>
         
         <h4>Aktualna data: <%= (new java.util.Date()).toLocaleString()%></h4>
         

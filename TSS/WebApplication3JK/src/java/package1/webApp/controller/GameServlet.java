@@ -23,6 +23,8 @@ import package1.webApp.persistence.battlestatDAO;
 import package1.webApp.persistence.battlestatDAOimpl;
 import package1.webApp.persistence.tankDAO;
 import package1.webApp.persistence.tankDAOimpl;
+import package1.webApp.persistence.userDAO;
+import package1.webApp.persistence.userDAOimpl;
 
 @WebServlet("/")
 public class GameServlet extends HttpServlet {
@@ -30,13 +32,14 @@ public class GameServlet extends HttpServlet {
     private tankDAO tank;
     private battlestatDAO battlestat;
     private HttpSession session;
-    private User currentUser;
-    
+    private String currentUser;
+    private userDAO usr;
     
     @Override
     public void init() {
         tank = new tankDAOimpl();
         battlestat = new battlestatDAOimpl();
+        usr = new userDAOimpl();
     }
     
     //protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -54,13 +57,24 @@ public class GameServlet extends HttpServlet {
         
         try {
             session = request.getSession(false);
-            currentUser = (User)session.getAttribute("usrObj");
+            currentUser = (String)session.getAttribute("usrLogin");
             
+            session.setAttribute("messageError", " ");
+            session.setAttribute("messageSuccess", " ");
+            
+            
+            //request.setAttribute("myName",user.getName());
             //String submit = request.getParameter("submit");
             
             String action = request.getServletPath();
             
             switch (action) {
+                case "/logout":
+                    session.setAttribute("messageSuccess", "Wylogowano!");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+                    dispatcher.forward(request, response);
+                    session.invalidate();
+                    break;
                 case "/list":
                     listTanks(request,response);
                     break;
@@ -107,7 +121,7 @@ public class GameServlet extends HttpServlet {
 
     private void listTanks(HttpServletRequest request, HttpServletResponse response)
 	throws SQLException, IOException, ServletException {
-	List<Tank> listTanks = tank.getMyTanks(currentUser.getLogin());
+	List<Tank> listTanks = tank.getMyTanks(currentUser);
         request.setAttribute("listTanks",listTanks);
         try {
             request.getRequestDispatcher("tanksList.jsp").forward(request, response);
@@ -136,7 +150,7 @@ public class GameServlet extends HttpServlet {
 
     private void awardBelt(HttpServletRequest request, HttpServletResponse response)
         throws SQLException, IOException, ServletException {
-        List<Integer> idTankList = tank.getIdTankList(currentUser.getLogin());
+        List<Integer> idTankList = tank.getIdTankList(currentUser);
         int warAmount = battlestat.getWarAmount(idTankList);
         //request.setAttribute("warAmount",warAmount);
         
@@ -190,7 +204,7 @@ public class GameServlet extends HttpServlet {
         
         tankDAOimpl tankDAOimpl = new tankDAOimpl();
         
-	tankDAOimpl.addTank(tank,currentUser.getLogin());
+	tankDAOimpl.addTank(tank,currentUser);
         
         response.sendRedirect("list");
     }
@@ -202,7 +216,7 @@ public class GameServlet extends HttpServlet {
         tankDAOimpl tankDAOimpl = new tankDAOimpl();
         battlestatDAOimpl battlestatDAOimpl = new battlestatDAOimpl();
         
-        Tank oponent = tankDAOimpl.randomOponent(currentUser.getLogin());
+        Tank oponent = tankDAOimpl.randomOponent(currentUser);
         Tank myTank = tankDAOimpl.getTank(id);
         
         request.setAttribute("tank1", oponent);

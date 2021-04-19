@@ -9,26 +9,24 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Formularz logowania</title>
+        <title>Strona startowa</title>
     </head>
     <body>
         <h1>Tanks Battle Game</h1>
         <h2>Autor: Krolik Jakub</h2>
         <h3>Przedmiot: Technologie Server Side</h3>
-             
+        
+        <br/>
+        
+        <h3 style = "color:red"> ${messageError} </h3>
+        <h3 style = "color:green"> ${messageSuccess} </h3>
+        
         <br/><br/>
         
-        <h2>Logowanie</h2>
-        
-        <h3 style = "color: red;"> ${message} </h2>
-        <h3 style = "color: green;"> ${success} </h2>
-        
-        <form action="loginRegister" method="post">
-            Login użytkownika: <input type="text" name="login"/><br/><br/>  
-            Hasło: <input type="password" name="password"/><br/><br/> 
-            <input type="submit" value="logowanie" name="submit"/>  
-        </form>  
-        <a href="register.jsp">Zarejestruj</a> 
+        <%
+            out.println("<a href=\"login.jsp\"><input type=\"button\" value=\"Zaloguj\"></a>");
+            out.println("<a href=\"register.jsp\"><input type=\"button\" value=\"Zarejestruj\"></a>");
+        %>
         
         <br/><br/><br/>
         

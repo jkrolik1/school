@@ -42,4 +42,42 @@
             index.jsp
         </welcome-file>
     </welcome-file-list>
+    
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <form-login-config>
+            <form-login-page>/login.jsp</form-login-page>
+            <form-error-page>/errorLogin.jsp</form-error-page>
+        </form-login-config>
+    </login-config>
+    
+    <security-constraint>
+	<web-resource-collection>
+            <web-resource-name>Web</web-resource-name>
+            <url-pattern>/index.jsp</url-pattern>
+            <url-pattern>/register.jsp</url-pattern>
+            <url-pattern>/errorLogin.jsp</url-pattern>
+            <url-pattern>/Servlet1</url-pattern>
+            <http-method>POST</http-method>
+	</web-resource-collection>
+
+	<!-- <auth-constraint>
+            <role-name>tomcat</role-name>
+	</auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>-->
+    </security-constraint>
+    <security-constraint>
+	<web-resource-collection>
+            <web-resource-name>Admin</web-resource-name>
+            <url-pattern>/*</url-pattern>
+	</web-resource-collection>
+
+	<auth-constraint>
+            <role-name>admin</role-name>
+            <role-name>user</role-name>
+	</auth-constraint>
+    </security-constraint>
+
 </web-app>
