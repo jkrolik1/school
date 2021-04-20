@@ -77,12 +77,17 @@
                connectionTimeout="20000"
                redirectPort="8443" />
     <!-- A "Connector" using the shared thread pool-->
-    <!--
-    <Connector executor="tomcatThreadPool"
-               port="8080" protocol="HTTP/1.1"
-               connectionTimeout="20000"
-               redirectPort="8443" />
-    -->
+    
+    <Connector port="8443" protocol="HTTP/1.1"
+			   maxThreads = "200"
+			   schema = "https"
+			   secure = "true"
+			   SSLEnabled = "true"
+			   keystoreFile = "conf\localhost.jks"
+			   keystorePass = "tomcat123"
+			   clientAuth = "false"
+			   sslProtocol= "TLS" />
+    
     <!-- Define an SSL/TLS HTTP/1.1 Connector on port 8443
          This connector uses the NIO implementation. The default
          SSLImplementation will depend on the presence of the APR/native
