@@ -7,6 +7,7 @@
 <%@page import="java.util.List"%>
 <%@page import="package1.webApp.model.Tank"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -34,7 +35,7 @@
                         <tr>
                             <td><a href="play?id=<c:out value='${tank.tankId}'/>">Wybierz do gry</a></td>
                             <td><c:out value="${tank.tankId}"/></td>
-                            <td><c:out value="${tank.name}"/></td>
+                            <td><c:out value="${fn:toUpperCase(tank.name)}"/></td>
                             <td><c:out value="${tank.armorAmount}"/></td>
                             <td><c:out value="${tank.gunCaliber}"/></td>
                             <td><a href="edit?id=<c:out value='${tank.tankId}'/>">Edytuj nazwę</a></td>

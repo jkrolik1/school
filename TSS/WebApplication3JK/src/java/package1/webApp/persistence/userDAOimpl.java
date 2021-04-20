@@ -56,6 +56,7 @@ public class userDAOimpl implements userDAO {
 
     @Override
     public User getUser(String login, String password) {
+        /* USELESS - implemented by security */
         User usr = new User();
         String SELECT_USERS_QUERY = "SELECT * FROM user WHERE login = ? AND password = ?";
 
