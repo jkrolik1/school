@@ -6,6 +6,7 @@
 
 <%@page import="java.util.List"%>
 <%@page import="package1.webApp.model.Tank"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,68 +18,34 @@
         <table border="1">
             <thead>
 		<tr>
-                    <th></th>
                     <th>Id</th>
                     <th>Nazwa</th>
                     <th>Pancerz</th>
                     <th>Kaliber</th>
+                    <th>Edytuj nazwę</th>
+                    <th>Usuń czołg</th>
 		</tr>
             </thead>
             <tbody>
-                
-                <% 
-                    List<Tank> tanks = (List<Tank>) request.getAttribute("listTanks"); 
-                    Tank tank;
-                %>
-                <%  for (int i = 0; i < tanks.size(); ++i) {
-
-                        tank = tanks.get(i);
-
-                        out.print("<tr>");
-                            out.print("<td>");
-                %>
-                                <a href="play?id=<%=tank.getTankId() %>">Wybierz do gry</a>
-                <%
-                            out.print("</td>");
-                            out.print("<td>");
-                                out.print(tank.getTankId());
-                            out.print("</td>");
-                            out.print("<td>");
-                                out.print(tank.getName());
-                            out.print("</td>");
-                            out.print("<td>");
-                                out.print(tank.getArmorAmount());
-                            out.print("</td>");
-                            out.print("<td>");
-                                out.print(tank.getGunCaliber());
-                            out.print("</td>");
-                            out.print("<td>");
-                %>
-                                <a href="edit?id=<%=tank.getTankId() %>">Edytuj nazwę</a>
-                <%
-                            out.print("</td>");
-                            out.print("<td>");
-                %>
-                                <a href="delete?id=<%=tank.getTankId() %>">Usuń czołg</a>
-                <%
-                            out.print("</td>");
-                        out.print("</tr>");    
-                    }     
-                %>    
-
-                
-                
+                <c:forEach var="tank" items="${listTanks}">
+                    <tr>
+                        <td><c:out value="${tank.tankId}"/></td>
+                        <td><c:out value="${tank.name}"/></td>
+                        <td><c:out value="${tank.armorAmount}"/></td>
+                        <td><c:out value="${tank.gunCaliber}"/></td>
+                        <td><a href="edit?id=<c:out value='${tank.tankId}'/>">Edytuj nazwę</a></td>
+                        <td><a href="delete?id=<c:out value='${tank.tankId}'/>">Usuń czołg</a></td>
+                    </tr>
+                </c:forEach>
             </tbody>
 	</table>
                 
         <br/><br/>
         
-        <a href="<%=request.getContextPath()%>/add">
-            Dodaj czołg
-        </a><br/>        
-        <a href="<%=request.getContextPath()%>/back">
-            Powrót do poprzedniej strony
-        </a><br/><br/>   
+        <a href="<%=request.getContextPath()%>/add">Dodaj czołg</a>
+        <br/>        
+        <a href="<%=request.getContextPath()%>/back">Powrót do poprzedniej strony</a>
+        <br/><br/>   
         
         <h2 style="color:${color}"> ${tankBattleResult} </h2>
         

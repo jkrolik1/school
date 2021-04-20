@@ -27,8 +27,9 @@
             <input type="submit" value="rejestracja" name="submit"/>  
         </form>  
         
+        <br/><br/><br/>
+        <a href="login.jsp"><input type="button" value="Zaloguj"></a>
         <br/>
-        
         <h4>Aktualna data: <%= (new java.util.Date()).toLocaleString()%></h4>
         
     </body>

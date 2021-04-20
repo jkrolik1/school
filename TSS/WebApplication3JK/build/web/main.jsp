@@ -18,17 +18,12 @@
         <h1>Pomyślne logowanie!</h1>
         <h3> Zalogowano na Twój profil: <i><%=(String)session.getAttribute("usrLogin")%></i></h3><br/>
 
-        <a href="<%=request.getContextPath()%>/list">
-            Wyświetl czołgi
-        </a><br/> 
-        <a href="<%=request.getContextPath()%>/award">
-            Wyświetl bitewny pasek postępu
-        </a><br/><br/> 
-        <a href="<%=request.getContextPath()%>/logout">
-            Wyloguj
-        </a><br/><br/> 
-        
-        ${listTanks.size()}
+        <a href="<%=request.getContextPath()%>/list">Wyświetl czołgi</a>
+        <br/> 
+        <a href="<%=request.getContextPath()%>/award">Wyświetl bitewny pasek postępu</a>
+        <br/><br/> 
+        <a href="<%=request.getContextPath()%>/logout">Wyloguj</a>
+        <br/><br/> 
         
     </body>
 </html>

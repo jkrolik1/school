@@ -30,11 +30,9 @@
         </form>
         <br/><br/>
             
-        <a href="<%=request.getContextPath()%>/list">
-            Powrót do listy czołgów
-        </a><br/><br/>
-        <a href="<%=request.getContextPath()%>/back">
-            Powrót do menu
-        </a><br/><br/>   
+        <a href="<%=request.getContextPath()%>/list">Powrót do listy czołgów</a>
+        <br/><br/>
+        <a href="<%=request.getContextPath()%>/back">Powrót do menu</a>
+        <br/><br/>   
     </body>
 </html>

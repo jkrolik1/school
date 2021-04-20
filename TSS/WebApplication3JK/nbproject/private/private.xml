@@ -5,11 +5,13 @@
         <group>
             <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/web/META-INF/context.xml</file>
             <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/web/WEB-INF/web.xml</file>
+            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/web/register.jsp</file>
             <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/src/java/package1/webApp/controller/GameServlet.java</file>
             <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/web/index.jsp</file>
             <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/web/main.jsp</file>
             <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/web/login.jsp</file>
             <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/src/java/package1/webApp/controller/MainServlet.java</file>
+            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/src/java/package1/webApp/persistence/userDAOimpl.java</file>
         </group>
     </open-files>
 </project-private>

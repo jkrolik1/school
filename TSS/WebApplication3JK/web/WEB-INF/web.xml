@@ -60,13 +60,12 @@
             <url-pattern>/Servlet1</url-pattern>
             <http-method>POST</http-method>
 	</web-resource-collection>
-
 	<!-- <auth-constraint>
             <role-name>tomcat</role-name>
-	</auth-constraint>
+	</auth-constraint>-->
         <user-data-constraint>
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint>-->
+        </user-data-constraint>
     </security-constraint>
     <security-constraint>
 	<web-resource-collection>

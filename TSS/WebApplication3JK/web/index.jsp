@@ -21,12 +21,12 @@
         <h3 style = "color:red"> ${messageError} </h3>
         <h3 style = "color:green"> ${messageSuccess} </h3>
         
-        <br/><br/>
+        <br/>
         
-        <%
-            out.println("<a href=\"login.jsp\"><input type=\"button\" value=\"Zaloguj\"></a>");
-            out.println("<a href=\"register.jsp\"><input type=\"button\" value=\"Zarejestruj\"></a>");
-        %>
+        <a href="login.jsp"><input type="button" value="Zaloguj"></a>
+        <br/><br/>
+        <a href="register.jsp"><input type="button" value="Zarejestruj"></a>
+        
         
         <br/><br/><br/>
         
