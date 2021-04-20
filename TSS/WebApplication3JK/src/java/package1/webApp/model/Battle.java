@@ -1,7 +1,5 @@
 package package1.webApp.model;
 
-import java.time.LocalDate;
-
 public class Battle {
     private int battleNumber;
     private String start;
