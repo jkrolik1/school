@@ -15,39 +15,55 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <table border="1">
-            <thead>
-		<tr>
-                    <th>Id</th>
-                    <th>Nazwa</th>
-                    <th>Pancerz</th>
-                    <th>Kaliber</th>
-                    <th>Edytuj nazwę</th>
-                    <th>Usuń czołg</th>
-		</tr>
-            </thead>
-            <tbody>
-                <c:forEach var="tank" items="${listTanks}">
+        <c:choose>
+        <c:when test="${listTanks.size() > 0}">
+            <table border="1">
+                <thead>
                     <tr>
-                        <td><c:out value="${tank.tankId}"/></td>
-                        <td><c:out value="${tank.name}"/></td>
-                        <td><c:out value="${tank.armorAmount}"/></td>
-                        <td><c:out value="${tank.gunCaliber}"/></td>
-                        <td><a href="edit?id=<c:out value='${tank.tankId}'/>">Edytuj nazwę</a></td>
-                        <td><a href="delete?id=<c:out value='${tank.tankId}'/>">Usuń czołg</a></td>
+                        <th>Zagraj</th>
+                        <th>Id</th>
+                        <th>Nazwa</th>
+                        <th>Pancerz</th>
+                        <th>Kaliber</th>
+                        <th>Edytuj nazwę</th>
+                        <th>Usuń czołg</th>
                     </tr>
-                </c:forEach>
-            </tbody>
-	</table>
-                
-        <br/><br/>
+                </thead>
+                <tbody>
+                    <c:forEach var="tank" items="${listTanks}">
+                        <tr>
+                            <td><a href="play?id=<c:out value='${tank.tankId}'/>">Wybierz do gry</a></td>
+                            <td><c:out value="${tank.tankId}"/></td>
+                            <td><c:out value="${tank.name}"/></td>
+                            <td><c:out value="${tank.armorAmount}"/></td>
+                            <td><c:out value="${tank.gunCaliber}"/></td>
+                            <td><a href="edit?id=<c:out value='${tank.tankId}'/>">Edytuj nazwę</a></td>
+                            <td><a href="delete?id=<c:out value='${tank.tankId}'/>">Usuń czołg</a></td>
+                        </tr>
+                    </c:forEach>
+
+                </tbody>
+            </table> 
+            
+            <br/><br/>
         
-        <a href="<%=request.getContextPath()%>/add">Dodaj czołg</a>
-        <br/>        
+            <a href="<%=request.getContextPath()%>/add">Dodaj czołg</a>
+        <br/>    
+        </c:when>
+        <c:otherwise>
+            <h2>Nie masz jeszcze czołgów.</h2>
+            
+            <br/>
+            <a href="<%=request.getContextPath()%>/add">Dodaj swój pierwszy czołg</a> 
+            <br/>
+        </c:otherwise>
+        </c:choose>
+
+        <br/>
         <a href="<%=request.getContextPath()%>/back">Powrót do poprzedniej strony</a>
         <br/><br/>   
         
         <h2 style="color:${color}"> ${tankBattleResult} </h2>
-        
+        <h3 style="color: green"> ${crudMessage} </h2>
     </body>
 </html>

@@ -2,7 +2,6 @@ package package1.webApp.persistence;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,22 +12,21 @@ import static package1.webApp.persistence.userDAOimpl.*;
 public class battlestatDAOimpl implements battlestatDAO {
     @Override
     public int getWarAmount(List<Integer> idTankList){
-        String SELECT_ID_QUERY = "SELECT COUNT(*) FROM battlestat WHERE tankId IN (?,?,?)";
+        String SELECT_ID_QUERY = "SELECT COUNT(*) FROM battlestat WHERE tankId IN (?)";
         int warAmount = 0;
-
+        ResultSet resultSet;
+        
         try {
             connection = ApplicationLogic1.makeNewConnection();  
          
-            preparedStatement = connection.prepareStatement(SELECT_ID_QUERY);
-            
             for (int i = 0; i < idTankList.size(); ++i){
-                preparedStatement.setInt(i+1, idTankList.get(i));
+                preparedStatement = connection.prepareStatement(SELECT_ID_QUERY);
+                preparedStatement.setInt(1, idTankList.get(i));
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next())
+                    warAmount += resultSet.getInt(1);
             }
-            
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
-                warAmount = resultSet.getInt(1);
-            }
+
         }
         catch (SQLException e) {
             ApplicationLogic1.printSQLException(e);
@@ -36,6 +34,7 @@ public class battlestatDAOimpl implements battlestatDAO {
         
         return warAmount;
     }
+    @Override
     public void addBattle(HttpServletRequest request){
         String ADD_TANK_QUERY = "INSERT INTO battle(battleCity) VALUES(?)";
         String LAST_ID_QUERY = "SELECT battleId FROM battle ORDER BY battleId desc limit 1";

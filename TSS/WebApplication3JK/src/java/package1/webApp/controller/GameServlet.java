@@ -1,7 +1,6 @@
 package package1.webApp.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Random;
@@ -15,10 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import package1.webApp.data.ApplicationData1;
-import package1.webApp.data.ApplicationLogic1;
 import package1.webApp.model.Tank;
 import package1.webApp.data.ApplicationLogic1;
-import package1.webApp.model.User;
 import package1.webApp.persistence.battlestatDAO;
 import package1.webApp.persistence.battlestatDAOimpl;
 import package1.webApp.persistence.tankDAO;
@@ -59,12 +56,9 @@ public class GameServlet extends HttpServlet {
             session = request.getSession(false);
             currentUser = (String)session.getAttribute("usrLogin");
             
-            session.setAttribute("messageError", " ");
-            session.setAttribute("messageSuccess", " ");
-            
-            
-            //request.setAttribute("myName",user.getName());
-            //String submit = request.getParameter("submit");
+            session.removeAttribute("messageError");
+            session.removeAttribute("messageSuccess");
+            session.setAttribute("crudMessage", " ");
             
             String action = request.getServletPath();
             
@@ -110,7 +104,11 @@ public class GameServlet extends HttpServlet {
                     }
                     break;
                 default:
-                    //ApplicationLogic1.messageOperation(request, response, "message", "Nieprawidłowe dane!", "index.jsp");
+                    try {
+                        request.getRequestDispatcher("index.jsp").forward(request, response);
+                    } catch (ServletException | IOException ex) {
+                        Logger.getLogger(ApplicationLogic1.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     break;
             }
         } catch (SQLException ex) {
@@ -132,6 +130,9 @@ public class GameServlet extends HttpServlet {
     
     private void editForm(HttpServletRequest request, HttpServletResponse response)
         throws SQLException, ServletException, IOException {
+        
+        session.removeAttribute("tankBattleResult");
+        
 	int id = Integer.parseInt(request.getParameter("id"));
         tankDAOimpl tankDAOimpl = new tankDAOimpl();
 	Tank tankForChange = tankDAOimpl.getTank(id);
@@ -145,6 +146,9 @@ public class GameServlet extends HttpServlet {
 	int id = Integer.parseInt(request.getParameter("id"));
         tankDAOimpl tankDAOimpl = new tankDAOimpl();
 	tankDAOimpl.deleteTank(id);
+        session = request.getSession(false);
+        session.removeAttribute("tankBattleResult");
+        session.setAttribute("crudMessage", "Usunięto czołg. Zobacz listę powyżej.");
         listTanks(request,response);
     }
 
@@ -152,7 +156,6 @@ public class GameServlet extends HttpServlet {
         throws SQLException, IOException, ServletException {
         List<Integer> idTankList = tank.getIdTankList(currentUser);
         int warAmount = battlestat.getWarAmount(idTankList);
-        //request.setAttribute("warAmount",warAmount);
         
         session = request.getSession(false);
         session.setAttribute("warAmount",warAmount);
@@ -173,13 +176,15 @@ public class GameServlet extends HttpServlet {
         int armor = Integer.parseInt(request.getParameter("armor"));
         int gun = Integer.parseInt(request.getParameter("gun"));
         
-        Tank tank = new Tank(id,newName,armor,gun);
-        
         tankDAOimpl tankDAOimpl = new tankDAOimpl();
         
-	tankDAOimpl.updateTank(tank);
+	tankDAOimpl.updateTank(new Tank(id,newName,armor,gun));
         
-        response.sendRedirect("list");
+        session = request.getSession(false);
+        session.removeAttribute("tankBattleResult");
+        session.setAttribute("crudMessage", "Edytowano czołg. Zobacz listę powyżej.");
+        
+        listTanks(request,response);
     }
 
     private void addOption(HttpServletRequest request, HttpServletResponse response)
@@ -206,7 +211,11 @@ public class GameServlet extends HttpServlet {
         
 	tankDAOimpl.addTank(tank,currentUser);
         
-        response.sendRedirect("list");
+        session = request.getSession(false);
+        session.removeAttribute("tankBattleResult");
+        session.setAttribute("crudMessage", "Dodano czołg. Zobacz listę powyżej.");
+        
+        listTanks(request,response);
     }
     
     private void selectTank(HttpServletRequest request, HttpServletResponse response) 
@@ -252,11 +261,15 @@ public class GameServlet extends HttpServlet {
     }
     
     private void warTank(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException{
+            throws ServletException, IOException, SQLException{
        
-        response.sendRedirect("list");   
+        listTanks(request,response);
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public String getServletInfo() {
         return "Short description";
