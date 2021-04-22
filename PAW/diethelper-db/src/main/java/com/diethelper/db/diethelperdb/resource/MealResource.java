@@ -46,6 +46,11 @@ public class MealResource {
         return newList.get(randomElement);
     }
 
+    @GetMapping(value = {"/","/categories", "/flavor", "/difficultyOfCooking", "/difficultyOfCooking"})
+    private List<Meal> getMealByCategoryDefault() {
+        return getAll();
+    }
+
     @GetMapping(value = "/categories/{categoryId}")
     private List<Meal> getMealByCategory(@PathVariable("categoryId") List<String> category) {
         return mealRepository.findByCategoryIn(category);

@@ -1,6 +1,7 @@
 package com.diethelper.db.diethelperdb.resource;
 
 import com.diethelper.db.diethelperdb.model.Nutrients;
+import com.diethelper.db.diethelperdb.model.Spice;
 import com.diethelper.db.diethelperdb.repository.NutrientsRepository;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,11 @@ public class NutrientsResource {
             nutrientsRepository.deleteById(id.get(i));
         }
         return "Usunięto";
+    }
+
+    @GetMapping(value = "/")
+    private List<Nutrients> getDefault() {
+        return nutrientsRepository.findAll();
     }
 
 }

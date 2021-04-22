@@ -1,5 +1,6 @@
 package com.diethelper.db.diethelperdb.resource;
 
+import com.diethelper.db.diethelperdb.model.Product;
 import com.diethelper.db.diethelperdb.model.Spice;
 import com.diethelper.db.diethelperdb.repository.SpiceRepository;
 import javafx.util.Pair;
@@ -61,5 +62,10 @@ public class SpiceResource {
             spiceRepository.deleteById(id.get(i));
         }
         return "Usunięto";
+    }
+
+    @GetMapping(value = "/")
+    private List<Spice> getDefault() {
+        return spiceRepository.findAll();
     }
 }

@@ -69,4 +69,8 @@ public class ProductResource {
         return "Usunięto";
     }
 
+    @GetMapping(value = "/")
+    private List<Product> getDefault() {
+        return productRepository.findAll();
+    }
 }
