@@ -3,29 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/web/META-INF/context.xml</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/src/java/package1/webApp/persistence/battlestatDAOimpl.java</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/web/WEB-INF/web.xml</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/web/register.jsp</file>
             <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/src/java/package1/webApp/controller/GameServlet.java</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/web/main.jsp</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/src/java/package1/webApp/model/Tank.java</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/web/tankAdd.jsp</file>
             <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/src/java/package1/webApp/data/ApplicationLogic1.java</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/src/java/package1/webApp/data/ApplicationData1.java</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/web/tankForm.jsp</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/src/java/package1/webApp/controller/ImageServlet.java</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/web/tankWar.jsp</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/web/errorLogin.jsp</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/web/index.jsp</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/web/tanksList.jsp</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/web/award.jsp</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/src/java/package1/webApp/model/Battle.java</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/web/login.jsp</file>
             <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/src/java/package1/webApp/controller/MainServlet.java</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/src/java/package1/webApp/persistence/userDAOimpl.java</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/src/java/package1/webApp/model/User.java</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/src/java/package1/webApp/persistence/userDAO.java</file>
         </group>
     </open-files>
 </project-private>
