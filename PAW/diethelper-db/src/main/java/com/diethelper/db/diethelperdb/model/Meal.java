@@ -42,6 +42,9 @@ public class Meal {
         this.mealId = mealId;
         this.name = name;
     }
+    public Meal(String name) {
+        this.name = name;
+    }
 
     public Meal(Integer mealId, String name, String category, String flavor, String difficultyOfCooking, Integer calories, Integer carbohydrates, Integer proteins, Integer fats, Integer isHealthy, String preparation) {
         this.mealId = mealId;

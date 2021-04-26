@@ -33,12 +33,12 @@ public class MealResource {
 
 
     @GetMapping(value = "/all")
-    private List<Meal> getAll() {
+    public @ResponseBody List<Meal> getAll() {
         return mealRepository.findAll();
     }
 
     @GetMapping(value = "/random")
-    private Meal getRandom() {
+    public @ResponseBody Meal getRandom() {
         Random rand = new Random();
         List<Meal> newList = new ArrayList<>(mealRepository.findAll());
         //Collections.shuffle(newList);
@@ -47,27 +47,27 @@ public class MealResource {
     }
 
     @GetMapping(value = {"/","/categories", "/flavor", "/difficultyOfCooking", "/difficultyOfCooking"})
-    private List<Meal> getMealByCategoryDefault() {
+    public @ResponseBody List<Meal> getMealByCategoryDefault() {
         return getAll();
     }
 
     @GetMapping(value = "/categories/{categoryId}")
-    private List<Meal> getMealByCategory(@PathVariable("categoryId") List<String> category) {
+    public @ResponseBody List<Meal> getMealByCategory(@PathVariable("categoryId") List<String> category) {
         return mealRepository.findByCategoryIn(category);
     }
 
     @GetMapping(value = "/flavor/{flavorId}")
-    private List<Meal> getMealByFlavor(@PathVariable("flavorId") List<String> flavor) {
+    public @ResponseBody List<Meal> getMealByFlavor(@PathVariable("flavorId") List<String> flavor) {
         return mealRepository.findByFlavorIn(flavor);
     }
 
     @GetMapping(value = "/difficultyOfCooking/{difficultyId}")
-    private List<Meal> getMealByDifficultyOfCooking(@PathVariable("difficultyId") List<String> difficultyOfCooking) {
+    public @ResponseBody List<Meal> getMealByDifficultyOfCooking(@PathVariable("difficultyId") List<String> difficultyOfCooking) {
         return mealRepository.findByDifficultyOfCookingIn(difficultyOfCooking);
     }
 
     @GetMapping(value = "/{mealId}/preparation")
-    private String getMealPreparation(@PathVariable("mealId") int id) {
+    public @ResponseBody String getMealPreparation(@PathVariable("mealId") int id) {
         Optional<Meal> opt = mealRepository.findById(id);
         if (opt.isPresent()) {
             return opt.get().getPreparation();
@@ -77,17 +77,17 @@ public class MealResource {
     }
 
     @GetMapping(value = "/{mealId}/products")
-    private List<Product> getMealProducts(@PathVariable("mealId") int id) {
+    public @ResponseBody List<Product> getMealProducts(@PathVariable("mealId") int id) {
         return productRepository.findByMeal(id);
     }
 
     @GetMapping(value = "/all/{productId}")
-    private List<Meal> getProductMeals(@PathVariable("productId") int id) {
+    public @ResponseBody List<Meal> getProductMeals(@PathVariable("productId") int id) {
         return mealRepository.findByProduct(id);
     }
 
     @GetMapping(value = "/notContains/{spiceName}")
-    private List<Meal> getSpiceMeals(@PathVariable("spiceName") String spiceName) {
+    public @ResponseBody List<Meal> getSpiceMeals(@PathVariable("spiceName") String spiceName) {
         List<Meal> allMeals = new ArrayList<>(mealRepository.findAll());
         List<Meal> mealsWithListedSpiceName = new ArrayList<>(mealRepository.findBySpice(spiceName));
 
@@ -100,12 +100,12 @@ public class MealResource {
     }
 
     @GetMapping(value = "/contains/{nutrientsName}")
-    private List<Meal> getMealWithNutrients(@PathVariable("nutrientsName") String nutrientsName) {
+    public @ResponseBody List<Meal> getMealWithNutrients(@PathVariable("nutrientsName") String nutrientsName) {
         return mealRepository.findByNutrients(nutrientsName);
     }
 
     @GetMapping(value = "/{mealId}/isHealthy")
-    private String getMealHealthyProperty(@PathVariable("mealId") int id) {
+    public @ResponseBody String getMealHealthyProperty(@PathVariable("mealId") int id) {
         Optional<Meal> opt = mealRepository.findById(id);
         if (opt.isPresent()) {
             return mealRepository.getOne(id).getIsHealthy() == 1 ? "Zdrowe" : "Nie zdrowe";
@@ -115,7 +115,7 @@ public class MealResource {
     }
 
     @GetMapping(value = "/proteinMeals")
-    private List<Meal> getProteinMeals() {
+    public @ResponseBody List<Meal> getProteinMeals() {
         List<Meal> allMeals = new ArrayList<>(mealRepository.findAll());
         List<Meal> proteinMeals = new ArrayList<Meal>();
         Meal currentMeal;
@@ -135,7 +135,7 @@ public class MealResource {
     }
 
     @GetMapping(value = "/{mealId}")
-    private ResponseEntity<Meal> getMealById(@PathVariable("mealId") int id) {
+    public @ResponseBody ResponseEntity<Meal> getMealById(@PathVariable("mealId") int id) {
         Optional<Meal> opt = mealRepository.findById(id);
         if (opt.isPresent()) {
             return new ResponseEntity<>(opt.get(), HttpStatus.OK);
@@ -144,7 +144,7 @@ public class MealResource {
     }
 
     @DeleteMapping(value = "/{mealId}")
-    private String deleteMealById(@PathVariable("mealId") List<Integer> id) {
+    public @ResponseBody String deleteMealById(@PathVariable("mealId") List<Integer> id) {
         for (int i = 0; i < id.size(); ++i) {
             mealRepository.deleteById(id.get(i));
         }
@@ -152,7 +152,7 @@ public class MealResource {
     }
 
     @PutMapping(value = "/{mealId}")
-    private Pair<String, Meal> editMealById(@RequestBody Map<String, Object> body, @PathVariable("mealId") int id) {
+    public @ResponseBody Pair<String, Meal> editMealById(@RequestBody Map<String, Object> body, @PathVariable("mealId") int id) {
         Optional<Meal> mealToEdit = mealRepository.findById(id);
         if (mealToEdit.isPresent()) {
             mealToEdit.get().setName(body.get("name").toString());
@@ -193,7 +193,7 @@ public class MealResource {
     }
 
     @DeleteMapping(value = "/nonHealthy")
-    private String deleteNonHealthyMeals() {
+    public @ResponseBody String deleteNonHealthyMeals() {
         List<Meal> nonHealthyMeals = mealRepository.findAll();
         for (int i = 0; i < nonHealthyMeals.size(); ++i) {
             if (nonHealthyMeals.get(i).getIsHealthy() == 0) {
@@ -204,7 +204,7 @@ public class MealResource {
     }
 
     @PutMapping(value = "/{mealId}/nameAndPreparationUpdate")
-    private Pair<String, Meal> editNameAndPreparationById(@RequestBody Map<String, Object> body, @PathVariable("mealId") int id) {
+    public @ResponseBody Pair<String, Meal> editNameAndPreparationById(@RequestBody Map<String, Object> body, @PathVariable("mealId") int id) {
         Optional<Meal> mealToEdit = mealRepository.findById(id);
         if (mealToEdit.isPresent()) {
             mealToEdit.get().setName(body.get("name").toString());
@@ -217,7 +217,7 @@ public class MealResource {
     }
 
     @GetMapping(value = "/{mealsNum}/menu")
-    private List<Meal> getMenu(@PathVariable int mealsNum) {
+    public @ResponseBody List<Meal> getMenu(@PathVariable int mealsNum) {
 
         List<String> sniadanie = new ArrayList<String>();
         sniadanie.add("śniadanie");
