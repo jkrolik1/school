@@ -31,8 +31,9 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <c:set var="counter" value="${0}"/>
                     <c:forEach var="tank" items="${listTanks}">
-                        <tr>
+                        <tr bgcolor="${counter % 2 == 0 ? 'Gainsboro' : 'Silver'}">
                             <td><a href="play?id=<c:out value='${tank.tankId}'/>">Wybierz do gry</a></td>
                             <td><c:out value="${tank.tankId}"/></td>
                             <td><c:out value="${fn:toUpperCase(tank.name)}"/></td>
@@ -41,6 +42,7 @@
                             <td><a href="edit?id=<c:out value='${tank.tankId}'/>">Edytuj nazwę</a></td>
                             <td><a href="delete?id=<c:out value='${tank.tankId}'/>">Usuń czołg</a></td>
                         </tr>
+                        <c:set var="counter" value="${counter + 1}"/>
                     </c:forEach>
 
                 </tbody>
