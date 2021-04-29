@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 11 Kwi 2021, 16:52
+-- Czas generowania: 29 Kwi 2021, 20:36
 -- Wersja serwera: 10.4.18-MariaDB
 -- Wersja PHP: 8.0.3
 
@@ -24,23 +24,42 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Struktura tabeli dla tabeli `authorities`
+--
+
+CREATE TABLE `authorities` (
+  `username` varchar(50) COLLATE utf8_polish_ci NOT NULL,
+  `authority` varchar(50) COLLATE utf8_polish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `authorities`
+--
+
+INSERT INTO `authorities` (`username`, `authority`) VALUES
+('test', 'ROLE_USER'),
+('test1', 'ROLE_USER'),
+('user', 'ROLE_USER');
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabeli dla tabeli `healthconditions`
 --
 
 CREATE TABLE `healthconditions` (
   `healthconditionsId` int(11) NOT NULL,
   `MealmealId` int(10) NOT NULL,
-  `NutritionalValuenutritionalValueId` int(10) NOT NULL,
-  `mealId` int(11) DEFAULT NULL
+  `NutritionalValuenutritionalValueId` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
 -- Zrzut danych tabeli `healthconditions`
 --
 
-INSERT INTO `healthconditions` (`healthconditionsId`, `MealmealId`, `NutritionalValuenutritionalValueId`, `mealId`) VALUES
-(1, 3, 1, NULL),
-(2, 4, 1, NULL);
+INSERT INTO `healthconditions` (`healthconditionsId`, `MealmealId`, `NutritionalValuenutritionalValueId`) VALUES
+(1, 3, 1),
+(2, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -57,7 +76,7 @@ CREATE TABLE `hibernate_sequence` (
 --
 
 INSERT INTO `hibernate_sequence` (`next_val`) VALUES
-(32);
+(51);
 
 -- --------------------------------------------------------
 
@@ -156,13 +175,7 @@ INSERT INTO `preparation` (`preparationId`, `MealmealId`, `ProductproductId`, `p
 (31, 4, 22, 1),
 (32, 4, 23, 1),
 (33, 4, 24, 1),
-(34, 4, 25, 1),
-(35, 5, 5, 10),
-(36, 5, 5, 10),
-(37, 5, 5, 10),
-(38, 5, 5, 10),
-(39, 5, 5, 10),
-(40, 5, 5, 10);
+(34, 4, 25, 1);
 
 -- --------------------------------------------------------
 
@@ -218,23 +231,22 @@ INSERT INTO `product` (`productId`, `name`, `carbohydrates`, `proteins`, `fats`)
 CREATE TABLE `seasoning` (
   `seasoningId` int(11) NOT NULL,
   `MealmealId` int(10) NOT NULL,
-  `SpicesspiceId` int(10) NOT NULL,
-  `mealId` int(11) DEFAULT NULL
+  `SpicesspiceId` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
 -- Zrzut danych tabeli `seasoning`
 --
 
-INSERT INTO `seasoning` (`seasoningId`, `MealmealId`, `SpicesspiceId`, `mealId`) VALUES
-(1, 2, 2, NULL),
-(2, 2, 1, NULL),
-(3, 2, 3, NULL),
-(4, 2, 4, NULL),
-(5, 3, 2, NULL),
-(6, 4, 2, NULL),
-(7, 4, 6, NULL),
-(8, 4, 7, NULL);
+INSERT INTO `seasoning` (`seasoningId`, `MealmealId`, `SpicesspiceId`) VALUES
+(1, 2, 2),
+(2, 2, 1),
+(3, 2, 3),
+(4, 2, 4),
+(5, 3, 2),
+(6, 4, 2),
+(7, 4, 6),
+(8, 4, 7);
 
 -- --------------------------------------------------------
 
@@ -260,9 +272,36 @@ INSERT INTO `spice` (`spiceId`, `name`) VALUES
 (6, 'Koperek'),
 (7, 'Natka pietruszki');
 
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `users`
+--
+
+CREATE TABLE `users` (
+  `username` varchar(50) COLLATE utf8_polish_ci NOT NULL,
+  `password` varchar(100) COLLATE utf8_polish_ci NOT NULL,
+  `enabled` tinyint(4) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `users`
+--
+
+INSERT INTO `users` (`username`, `password`, `enabled`) VALUES
+('test', '{bcrypt}$2a$10$p2R6f4VEAtW2rTd4CEw8Ne/y97pcuwli.ab2FKcVU5Q97RwcTG8yK', 1),
+('test1', '{bcrypt}$2a$10$Md.xiGptxjBmPcXQhmCfc.qek13U.8pyeHFDRYnfjn3l/snGsS9/S', 1),
+('user', '$2a$10$8.UnVuG9HHgffUDAlk8qfOuVGkqRzgVymGe07xd00DMxs.AQubh4a', 1);
+
 --
 -- Indeksy dla zrzutów tabel
 --
+
+--
+-- Indeksy dla tabeli `authorities`
+--
+ALTER TABLE `authorities`
+  ADD UNIQUE KEY `ix_auth_username` (`username`,`authority`);
 
 --
 -- Indeksy dla tabeli `healthconditions`
@@ -270,8 +309,7 @@ INSERT INTO `spice` (`spiceId`, `name`) VALUES
 ALTER TABLE `healthconditions`
   ADD PRIMARY KEY (`healthconditionsId`),
   ADD KEY `MealmealId` (`MealmealId`),
-  ADD KEY `NutritionalValuenutritionalValueId` (`NutritionalValuenutritionalValueId`),
-  ADD KEY `FKk95l5nbmi58ijob8y576lk9sm` (`mealId`);
+  ADD KEY `NutritionalValuenutritionalValueId` (`NutritionalValuenutritionalValueId`);
 
 --
 -- Indeksy dla tabeli `meal`
@@ -290,8 +328,8 @@ ALTER TABLE `nutrients`
 --
 ALTER TABLE `preparation`
   ADD PRIMARY KEY (`preparationId`),
-  ADD KEY `FKmxemhhglyy76db2h8hy18e364` (`ProductproductId`),
-  ADD KEY `FKguon4iugjbit6xfd2xtefdeao` (`MealmealId`);
+  ADD KEY `MealmealId` (`MealmealId`),
+  ADD KEY `ProductproductId` (`ProductproductId`);
 
 --
 -- Indeksy dla tabeli `product`
@@ -305,14 +343,19 @@ ALTER TABLE `product`
 ALTER TABLE `seasoning`
   ADD PRIMARY KEY (`seasoningId`),
   ADD KEY `SpiceOgr` (`SpicesspiceId`),
-  ADD KEY `MealmealId` (`MealmealId`),
-  ADD KEY `FKdajhpsni0qtjfquh9keqledox` (`mealId`);
+  ADD KEY `MealmealId` (`MealmealId`);
 
 --
 -- Indeksy dla tabeli `spice`
 --
 ALTER TABLE `spice`
   ADD PRIMARY KEY (`spiceId`);
+
+--
+-- Indeksy dla tabeli `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`username`);
 
 --
 -- AUTO_INCREMENT dla zrzuconych tabel
@@ -322,7 +365,7 @@ ALTER TABLE `spice`
 -- AUTO_INCREMENT dla tabeli `healthconditions`
 --
 ALTER TABLE `healthconditions`
-  MODIFY `healthconditionsId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `healthconditionsId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT dla tabeli `meal`
@@ -340,7 +383,7 @@ ALTER TABLE `nutrients`
 -- AUTO_INCREMENT dla tabeli `preparation`
 --
 ALTER TABLE `preparation`
-  MODIFY `preparationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `preparationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT dla tabeli `product`
@@ -352,7 +395,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT dla tabeli `seasoning`
 --
 ALTER TABLE `seasoning`
-  MODIFY `seasoningId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `seasoningId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT dla tabeli `spice`
@@ -365,10 +408,15 @@ ALTER TABLE `spice`
 --
 
 --
+-- Ograniczenia dla tabeli `authorities`
+--
+ALTER TABLE `authorities`
+  ADD CONSTRAINT `authorities_ibfk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`);
+
+--
 -- Ograniczenia dla tabeli `healthconditions`
 --
 ALTER TABLE `healthconditions`
-  ADD CONSTRAINT `FKk95l5nbmi58ijob8y576lk9sm` FOREIGN KEY (`mealId`) REFERENCES `meal` (`mealId`),
   ADD CONSTRAINT `healthconditions_ibfk_1` FOREIGN KEY (`MealmealId`) REFERENCES `meal` (`mealId`),
   ADD CONSTRAINT `healthconditions_ibfk_2` FOREIGN KEY (`NutritionalValuenutritionalValueId`) REFERENCES `nutrients` (`nutritionalValueId`);
 
@@ -383,7 +431,6 @@ ALTER TABLE `preparation`
 -- Ograniczenia dla tabeli `seasoning`
 --
 ALTER TABLE `seasoning`
-  ADD CONSTRAINT `FKdajhpsni0qtjfquh9keqledox` FOREIGN KEY (`mealId`) REFERENCES `meal` (`mealId`),
   ADD CONSTRAINT `SpiceOgr` FOREIGN KEY (`SpicesspiceId`) REFERENCES `spice` (`spiceId`),
   ADD CONSTRAINT `seasoning_ibfk_1` FOREIGN KEY (`MealmealId`) REFERENCES `meal` (`mealId`);
 COMMIT;
