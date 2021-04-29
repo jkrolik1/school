@@ -46,8 +46,8 @@ public class MealResource {
         return newList.get(randomElement);
     }
 
-    @GetMapping(value = {"/","/categories", "/flavor", "/difficultyOfCooking", "/difficultyOfCooking"})
-    public @ResponseBody List<Meal> getMealByCategoryDefault() {
+    @GetMapping(value = {"/","/categories", "/flavor", "/difficultyOfCooking"})
+    public @ResponseBody List<Meal> getMealDefault() {
         return getAll();
     }
 
@@ -86,6 +86,7 @@ public class MealResource {
         return mealRepository.findByProduct(id);
     }
 
+    // !
     @GetMapping(value = "/notContains/{spiceName}")
     public @ResponseBody List<Meal> getSpiceMeals(@PathVariable("spiceName") String spiceName) {
         List<Meal> allMeals = new ArrayList<>(mealRepository.findAll());

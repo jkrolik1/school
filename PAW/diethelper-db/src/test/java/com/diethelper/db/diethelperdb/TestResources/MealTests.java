@@ -27,7 +27,10 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class MealTest {
+public class MealTests {
+
+    private final String username = "test";
+    private final String password = "test";
 
     @Autowired
     private MockMvc mockMvc;
@@ -41,7 +44,7 @@ public class MealTest {
     @Autowired
     private MealRepository mealRepository;
 
-    @WithMockUser(value = "test", password = "test")
+    @WithMockUser(value = username, password = password)
     @Test
     @DisplayName("Should get single meal")
     public void getSingleMealTest() throws Exception {
@@ -51,7 +54,7 @@ public class MealTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.mealId", Matchers.is(1)));
     }
 
-    @WithMockUser(value = "test", password = "test")
+    @WithMockUser(value = username, password = password)
     @Test
     @DisplayName("Should check meal")
     public void getSingleMeal2Test() throws Exception {
@@ -69,7 +72,7 @@ public class MealTest {
         assertThat(meal.getName()).isNotEmpty();
     }
 
-    @WithMockUser(value = "test", password = "test")
+    @WithMockUser(value = username, password = password)
     @Test
     @DisplayName("Should check meals list")
     public void getMealsTest() throws Exception {
@@ -90,7 +93,7 @@ public class MealTest {
     }
 
     @Test
-    @DisplayName("Should check if every meal has name")
+    @DisplayName("Should check if every meal includes name")
     public void checkMealsNames() throws Exception {
         List<Meal> meals = mealResource.getAll();
         boolean empty = false;
@@ -122,7 +125,7 @@ public class MealTest {
         assertThat(mealsId.size()).isEqualTo(treeSet.size());
     }
 
-    @WithMockUser(value = "test", password = "test")
+    @WithMockUser(value = username, password = password)
     @Test
     @DisplayName("Check if every meal contains at least one product")
     public void checkMealProducts() throws Exception {
