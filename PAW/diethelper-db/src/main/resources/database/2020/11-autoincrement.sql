@@ -1,0 +1,20 @@
+--liquibase formatted sql
+
+--changeset root:1
+ALTER TABLE `meal`
+  MODIFY `mealId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+ALTER TABLE `nutrients`
+  MODIFY `nutritionalValueId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+ALTER TABLE `preparation`
+  MODIFY `preparationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+
+ALTER TABLE `product`
+  MODIFY `productId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+ALTER TABLE `seasoning`
+  MODIFY `seasoningId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+
+ALTER TABLE `spice`
+  MODIFY `spiceId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
