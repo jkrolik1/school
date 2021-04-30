@@ -188,4 +188,83 @@ public class MealIntegrationTests {
                 .andExpect(MockMvcResultMatchers.status().is(400));
     }
 
+    @WithMockUser(value = username, password = password)
+    @Test
+    @DisplayName("Should execute getSpiceMeals()")
+    public void shouldExecuteGetSpiceMeals() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/meal/notContains/sól"))
+                .andExpect(MockMvcResultMatchers.status().is(200));
+    }
+
+    @WithMockUser(value = username, password = password)
+    @Test
+    @DisplayName("Should not execute getSpiceMeals()")
+    public void shouldNotExecuteGetSpiceMeals() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/meal/notContains/1/1"))
+                .andExpect(MockMvcResultMatchers.status().is(404));
+    }
+
+    @WithMockUser(value = username, password = password)
+    @Test
+    @DisplayName("Should execute getMealWithNutrients()")
+    public void shouldExecuteGetMealWithNutrients() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/meal/contains/błonnik"))
+                .andExpect(MockMvcResultMatchers.status().is(200));
+    }
+
+    @WithMockUser(value = username, password = password)
+    @Test
+    @DisplayName("Should not execute getMealWithNutrients()")
+    public void shouldNotExecuteGetMealWithNutrients() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/meal/contains/1/1"))
+                .andExpect(MockMvcResultMatchers.status().is(404));
+    }
+
+    @WithMockUser(value = username, password = password)
+    @Test
+    @DisplayName("Should execute getMealHealthyProperty()")
+    public void shouldExecuteGetMealHealthyProperty() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/meal/1/isHealthy"))
+                .andExpect(MockMvcResultMatchers.status().is(200));
+    }
+
+    @WithMockUser(value = username, password = password)
+    @Test
+    @DisplayName("Should not execute getMealHealthyProperty()")
+    public void shouldNotExecuteGetMealHealthyProperty() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/meal/x/isHealthy"))
+                .andExpect(MockMvcResultMatchers.status().is(400));
+    }
+
+    @WithMockUser(value = username, password = password)
+    @Test
+    @DisplayName("Should execute getProteinMeals()")
+    public void shouldExecuteGetProteinMeals() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/meal/proteinMeals"))
+                .andExpect(MockMvcResultMatchers.status().is(200));
+    }
+
+    @WithMockUser(value = username, password = password)
+    @Test
+    @DisplayName("Should not execute getProteinMeals()")
+    public void shouldNotExecuteGetProteinMeals() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/meal/protein"))
+                .andExpect(MockMvcResultMatchers.status().is(400));
+    }
+
+    @WithMockUser(value = username, password = password)
+    @Test
+    @DisplayName("Should execute getProteinMeals()")
+    public void shouldExecuteGetMealById() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/meal/1"))
+                .andExpect(MockMvcResultMatchers.status().is(200));
+    }
+
+    @WithMockUser(value = username, password = password)
+    @Test
+    @DisplayName("Should not execute getProteinMeals()")
+    public void shouldNotExecuteGetMealById() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/meal/x"))
+                .andExpect(MockMvcResultMatchers.status().is(400));
+    }
 }
