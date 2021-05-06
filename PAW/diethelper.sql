@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 29 Kwi 2021, 20:36
+-- Czas generowania: 04 Maj 2021, 17:36
 -- Wersja serwera: 10.4.18-MariaDB
 -- Wersja PHP: 8.0.3
 
@@ -40,6 +40,92 @@ INSERT INTO `authorities` (`username`, `authority`) VALUES
 ('test', 'ROLE_USER'),
 ('test1', 'ROLE_USER'),
 ('user', 'ROLE_USER');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `databasechangelog`
+--
+
+CREATE TABLE `databasechangelog` (
+  `ID` varchar(255) COLLATE utf8_polish_ci NOT NULL,
+  `AUTHOR` varchar(255) COLLATE utf8_polish_ci NOT NULL,
+  `FILENAME` varchar(255) COLLATE utf8_polish_ci NOT NULL,
+  `DATEEXECUTED` datetime NOT NULL,
+  `ORDEREXECUTED` int(11) NOT NULL,
+  `EXECTYPE` varchar(10) COLLATE utf8_polish_ci NOT NULL,
+  `MD5SUM` varchar(35) COLLATE utf8_polish_ci DEFAULT NULL,
+  `DESCRIPTION` varchar(255) COLLATE utf8_polish_ci DEFAULT NULL,
+  `COMMENTS` varchar(255) COLLATE utf8_polish_ci DEFAULT NULL,
+  `TAG` varchar(255) COLLATE utf8_polish_ci DEFAULT NULL,
+  `LIQUIBASE` varchar(20) COLLATE utf8_polish_ci DEFAULT NULL,
+  `CONTEXTS` varchar(255) COLLATE utf8_polish_ci DEFAULT NULL,
+  `LABELS` varchar(255) COLLATE utf8_polish_ci DEFAULT NULL,
+  `DEPLOYMENT_ID` varchar(10) COLLATE utf8_polish_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `databasechangelog`
+--
+
+INSERT INTO `databasechangelog` (`ID`, `AUTHOR`, `FILENAME`, `DATEEXECUTED`, `ORDEREXECUTED`, `EXECTYPE`, `MD5SUM`, `DESCRIPTION`, `COMMENTS`, `TAG`, `LIQUIBASE`, `CONTEXTS`, `LABELS`, `DEPLOYMENT_ID`) VALUES
+('1', 'root', 'database/2020/01-autorities.sql', '2021-04-30 21:07:15', 1, 'EXECUTED', '8:ea4e48f1f7ed44e01c0c7f3bb53d2400', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
+('2', 'root', 'database/2020/01-autorities.sql', '2021-04-30 21:07:15', 2, 'EXECUTED', '8:797257a960bf809832393318946c76f9', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
+('3', 'root', 'database/2020/01-autorities.sql', '2021-04-30 21:07:15', 3, 'EXECUTED', '8:3560e3f36df655a51dd98edc308b55fa', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
+('1', 'root', 'database/2020/02-hibernate-sequence.sql', '2021-04-30 21:07:15', 4, 'EXECUTED', '8:637d58ba4c44b0037ce155436475c81b', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
+('2', 'root', 'database/2020/02-hibernate-sequence.sql', '2021-04-30 21:07:15', 5, 'EXECUTED', '8:e7a5a53c30fbab35cc3270680930d29f', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
+('1', 'root', 'database/2020/03-users.sql', '2021-04-30 21:07:15', 6, 'EXECUTED', '8:2220263ab30bfd7d7a58bf06c28a8a7c', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
+('2', 'root', 'database/2020/03-users.sql', '2021-04-30 21:07:15', 7, 'EXECUTED', '8:5ce258d4b116643bc88b2c8f9c81cce1', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
+('1', 'root', 'database/2020/04-meal.sql', '2021-04-30 21:07:15', 8, 'EXECUTED', '8:c3086962896ed5df27827a06773d4e74', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
+('2', 'root', 'database/2020/04-meal.sql', '2021-04-30 21:07:15', 9, 'EXECUTED', '8:9f63e9c6414dcfcadefe190910b8c6e0', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
+('1', 'root', 'database/2020/05-product.sql', '2021-04-30 21:07:15', 10, 'EXECUTED', '8:c5fed94c9eef9d4505482a63065aa0f4', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
+('2', 'root', 'database/2020/05-product.sql', '2021-04-30 21:07:15', 11, 'EXECUTED', '8:29152c802f5d847f5291a7e872d0fa20', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
+('1', 'root', 'database/2020/06-spice.sql', '2021-04-30 21:07:15', 12, 'EXECUTED', '8:54b9923a7cf4a0c7a6150ce9527a7a69', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
+('3', 'root', 'database/2020/06-spice.sql', '2021-04-30 21:07:15', 13, 'EXECUTED', '8:27a2054783afb7ff926088faf9df0c81', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
+('1', 'root', 'database/2020/07-nutrients.sql', '2021-04-30 21:07:15', 14, 'EXECUTED', '8:37069aa03a4f1106f4b12f6fcbe13498', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
+('2', 'root', 'database/2020/07-nutrients.sql', '2021-04-30 21:07:15', 15, 'EXECUTED', '8:ff64eba59ad9796e9e2c833fffa8f616', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
+('1', 'root', 'database/2020/08-create-connection-tables.sql', '2021-04-30 21:07:15', 16, 'EXECUTED', '8:23d5fe04898925233c00913bd96359de', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
+('2', 'root', 'database/2020/08-create-connection-tables.sql', '2021-04-30 21:07:15', 17, 'EXECUTED', '8:6a4f0537c4d59076d8f50478281c9195', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
+('3', 'root', 'database/2020/08-create-connection-tables.sql', '2021-04-30 21:07:15', 18, 'EXECUTED', '8:3a2b187d4bd17525ae0fc2286cfb83ec', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
+('1', 'root', 'database/2020/09-insert-connection-data.sql', '2021-04-30 21:07:15', 19, 'EXECUTED', '8:f1c5459a667ad756e1b1d4dcd7ea87de', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
+('2', 'root', 'database/2020/09-insert-connection-data.sql', '2021-04-30 21:07:15', 20, 'EXECUTED', '8:a0f730c690ce0671bf4f44a684cbadf3', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
+('3', 'root', 'database/2020/09-insert-connection-data.sql', '2021-04-30 21:07:15', 21, 'EXECUTED', '8:a2dd0b1ea1abc6851ef9b4a143905798', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
+('1', 'root', 'database/2020/10-primarykeys.sql', '2021-04-30 21:07:16', 22, 'EXECUTED', '8:5b4f5622e861bf33b4c45d4c6e2f82d9', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
+('1', 'root', 'database/2020/11-autoincrement.sql', '2021-04-30 21:07:16', 23, 'EXECUTED', '8:5c3a6e849d32d4543d75bee9d6d1eef0', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
+('1', 'root', 'database/2020/12-constraints.sql', '2021-04-30 21:07:16', 24, 'EXECUTED', '8:901cb68f59f99cce638a29c875c04f58', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `databasechangeloglock`
+--
+
+CREATE TABLE `databasechangeloglock` (
+  `ID` int(11) NOT NULL,
+  `LOCKED` bit(1) NOT NULL,
+  `LOCKGRANTED` datetime DEFAULT NULL,
+  `LOCKEDBY` varchar(255) COLLATE utf8_polish_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `databasechangeloglock`
+--
+
+INSERT INTO `databasechangeloglock` (`ID`, `LOCKED`, `LOCKGRANTED`, `LOCKEDBY`) VALUES
+(1, b'0', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `files`
+--
+
+CREATE TABLE `files` (
+  `id` varchar(255) COLLATE utf8_polish_ci NOT NULL,
+  `fileName` varchar(255) COLLATE utf8_polish_ci NOT NULL,
+  `fileType` varchar(255) COLLATE utf8_polish_ci NOT NULL,
+  `data` blob NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 -- --------------------------------------------------------
 
@@ -304,6 +390,12 @@ ALTER TABLE `authorities`
   ADD UNIQUE KEY `ix_auth_username` (`username`,`authority`);
 
 --
+-- Indeksy dla tabeli `databasechangeloglock`
+--
+ALTER TABLE `databasechangeloglock`
+  ADD PRIMARY KEY (`ID`);
+
+--
 -- Indeksy dla tabeli `healthconditions`
 --
 ALTER TABLE `healthconditions`
@@ -360,12 +452,6 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT dla zrzuconych tabel
 --
-
---
--- AUTO_INCREMENT dla tabeli `healthconditions`
---
-ALTER TABLE `healthconditions`
-  MODIFY `healthconditionsId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT dla tabeli `meal`
