@@ -1,4 +1,4 @@
-package com.diethelper.db.diethelperdb.exception;
+package com.diethelper.db.diethelperdb.exceptionHandlers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

@@ -1,4 +1,4 @@
-package com.diethelper.db.diethelperdb.config;
+package com.diethelper.db.diethelperdb.exceptionHandlers;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

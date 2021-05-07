@@ -1,4 +1,4 @@
-package com.diethelper.db.diethelperdb.config;
+package com.diethelper.db.diethelperdb.exceptionHandlers;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;

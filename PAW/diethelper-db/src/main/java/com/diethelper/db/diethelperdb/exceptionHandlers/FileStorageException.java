@@ -1,4 +1,4 @@
-package com.diethelper.db.diethelperdb.exception;
+package com.diethelper.db.diethelperdb.exceptionHandlers;
 
 public class FileStorageException extends RuntimeException {
     public FileStorageException(String message) {

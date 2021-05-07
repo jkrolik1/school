@@ -1,7 +1,7 @@
 package com.diethelper.db.diethelperdb.service;
 
-import com.diethelper.db.diethelperdb.exception.FileStorageException;
-import com.diethelper.db.diethelperdb.exception.MyFileNotFoundException;
+import com.diethelper.db.diethelperdb.exceptionHandlers.FileStorageException;
+import com.diethelper.db.diethelperdb.exceptionHandlers.MyFileNotFoundException;
 import com.diethelper.db.diethelperdb.model.DBFile;
 import com.diethelper.db.diethelperdb.repository.DBFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;

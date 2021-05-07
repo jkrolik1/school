@@ -1,4 +1,4 @@
-package com.diethelper.db.diethelperdb.config;
+package com.diethelper.db.diethelperdb.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

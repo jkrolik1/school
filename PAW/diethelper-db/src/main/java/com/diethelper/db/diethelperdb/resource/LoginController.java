@@ -1,6 +1,6 @@
 package com.diethelper.db.diethelperdb.resource;
 
-import com.diethelper.db.diethelperdb.config.LoginCredentials;
+import com.diethelper.db.diethelperdb.model.LoginCredentials;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

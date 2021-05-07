@@ -1,5 +1,6 @@
 package com.diethelper.db.diethelperdb.config;
 
+import com.diethelper.db.diethelperdb.model.LoginCredentials;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
