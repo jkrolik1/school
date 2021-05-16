@@ -92,6 +92,13 @@ public class GameServlet extends HttpServlet {
                 case "/war":
                     ApplicationLogic1.warTank(request,response);
                     break;
+                case "/battles":
+                    try {
+                        request.getRequestDispatcher("websocket.jsp").forward(request, response);
+                    } catch (ServletException | IOException ex) {
+                        Logger.getLogger(ApplicationLogic1.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    break;
                 case "/back":
                     try {
                         request.getRequestDispatcher("main.jsp").forward(request, response);

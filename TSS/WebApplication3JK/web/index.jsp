@@ -27,8 +27,10 @@
         <br/><br/>
         <a href="register.jsp"><input type="button" value="Zarejestruj"></a>
         
+
+        <br/>
         
-        <br/><br/><br/>
+        <br/><br/>
         
         <h4>Aktualna data: <%= (new java.util.Date()).toLocaleString()%></h4>
         

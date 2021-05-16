@@ -68,5 +68,6 @@
         
         <h2 style="color:${color}"> ${tankBattleResult} </h2>
         <h3 style="color: green"> ${crudMessage} </h2>
+
     </body>
 </html>

@@ -58,11 +58,12 @@
             <url-pattern>/register.jsp</url-pattern>
             <url-pattern>/errorLogin.jsp</url-pattern>
             <url-pattern>/Servlet1</url-pattern>
+            <url-pattern>/WebApplication3JK/endpoint</url-pattern>
             <http-method>POST</http-method>
 	</web-resource-collection>
-	<!-- <auth-constraint>
-            <role-name>tomcat</role-name>
-	</auth-constraint>-->
+	<auth-constraint>
+            <role-name>**</role-name>
+	</auth-constraint>
         <user-data-constraint>
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>

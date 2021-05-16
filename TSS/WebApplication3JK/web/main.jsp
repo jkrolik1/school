@@ -21,6 +21,8 @@
         <a href="<%=request.getContextPath()%>/list">Wyświetl czołgi</a>
         <br/> 
         <a href="<%=request.getContextPath()%>/award">Wyświetl bitewny pasek postępu</a>
+        <br/> 
+        <a href="<%=request.getContextPath()%>/battles">Wyświetl ilość bitew na serwerze</a>
         <br/><br/> 
         <a href="<%=request.getContextPath()%>/logout">Wyloguj</a>
         <br/><br/> 

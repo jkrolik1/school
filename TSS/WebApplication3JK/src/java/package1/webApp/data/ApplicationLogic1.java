@@ -243,7 +243,7 @@ public class ApplicationLogic1{
     
     public static void warTank(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException, SQLException{
-       
+
         listTanks(request,response);
     }
 

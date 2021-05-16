@@ -80,4 +80,23 @@ public class battlestatDAOimpl implements battlestatDAO {
             ApplicationLogic1.printSQLException(e);
         }
     }
+    @Override
+    public int battleNumber(){
+        String QUERY = "SELECT COUNT(*) FROM battle";
+        try {
+            connection = ApplicationLogic1.makeNewConnection();  
+            
+            preparedStatement = connection.prepareStatement(QUERY);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            while (resultSet.next())
+                return resultSet.getInt(1);
+            
+            connection.close();
+        }
+        catch (SQLException e) {
+            ApplicationLogic1.printSQLException(e);
+        }
+        return 0;
+    }
 }
