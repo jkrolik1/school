@@ -12,12 +12,16 @@ import javax.servlet.http.HttpServletResponse;
 import package1.webApp.data.ApplicationLogic1;
 import package1.webApp.model.User;
 import javax.servlet.http.HttpSession;
+import package1.webApp.persistence.battlestatDAO;
+import package1.webApp.persistence.battlestatDAOimpl;
 
 
 public class MainServlet extends HttpServlet {
     
     private userDAO usr;
-    
+    private battlestatDAO battlestat;
+    private static HttpSession session;
+
     @Override
     public void init() {
         usr = new userDAOimpl();
@@ -32,7 +36,7 @@ public class MainServlet extends HttpServlet {
         String password2 = request.getParameter("password2");
         User user = usr.getUser(login, password1);
         HttpSession session = request.getSession(false);
-        
+    
         String newName = request.getParameter("name");
         if (ApplicationLogic1.checkIfRegistrationDataOk(login,password1,password2,newName)) {
             user.setLogin(login);

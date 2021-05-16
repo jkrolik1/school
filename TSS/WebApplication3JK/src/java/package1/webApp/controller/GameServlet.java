@@ -56,6 +56,7 @@ public class GameServlet extends HttpServlet {
             session.removeAttribute("messageSuccess");
             session.setAttribute("crudMessage", " ");
             
+            
             String action = request.getServletPath();
             
             switch (action) {
@@ -93,6 +94,7 @@ public class GameServlet extends HttpServlet {
                     ApplicationLogic1.warTank(request,response);
                     break;
                 case "/battles":
+                    ApplicationLogic1.setBattleNumber(battlestat.battleNumber());
                     try {
                         request.getRequestDispatcher("websocket.jsp").forward(request, response);
                     } catch (ServletException | IOException ex) {

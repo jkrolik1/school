@@ -24,8 +24,9 @@ public class ApplicationLogic1{
     private static HttpSession session;
     private static String currentUser;
     private static tankDAO tank = new tankDAOimpl();
-    private static battlestatDAO battlestat = new battlestatDAOimpl();;
-
+    private static battlestatDAO battlestat = new battlestatDAOimpl();
+    private static int battleNumber;
+    
     public static Connection makeNewConnection() throws SQLException{
 
         try {
@@ -244,7 +245,18 @@ public class ApplicationLogic1{
     public static void warTank(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException, SQLException{
 
+        int battleNumberX = getBattleNumber();
+        setBattleNumber(battleNumberX+1);
+        
         listTanks(request,response);
+    }
+    
+    public static void setBattleNumber(int x){
+        battleNumber = x;
+    }
+    
+    public static int getBattleNumber(){
+        return battleNumber;
     }
 
 }

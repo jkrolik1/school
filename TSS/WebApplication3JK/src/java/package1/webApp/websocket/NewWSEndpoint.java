@@ -2,6 +2,7 @@ package package1.webApp.websocket;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import javax.servlet.http.HttpSession;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
@@ -20,7 +21,8 @@ public class NewWSEndpoint {
     
     @OnMessage
     public String onMessage(String message) {
-        return battleDAO.battleNumber()+"";
+        return ApplicationLogic1.getBattleNumber() + "";
+        //return battleDAO.battleNumber()+"";
     }
     @OnOpen
     public String onOpen() {
