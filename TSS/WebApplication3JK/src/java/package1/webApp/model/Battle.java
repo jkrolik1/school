@@ -1,6 +1,10 @@
 package package1.webApp.model;
 
-public class Battle {
+import java.io.Serializable;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
+public class Battle implements Serializable{
     private int battleNumber;
     private String start;
     

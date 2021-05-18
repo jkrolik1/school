@@ -1,6 +1,10 @@
 package package1.webApp.model;
 
-public class Tank {
+import java.io.Serializable;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
+public class Tank implements Serializable{
     private int tankId;
     private String name;
     private int armorAmount;
@@ -24,7 +28,6 @@ public class Tank {
     }
 
     public Tank() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     public void setName(String name){

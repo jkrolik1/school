@@ -1,6 +1,10 @@
 package package1.webApp.model;
 
-public class User {
+import java.io.Serializable;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
+public class User implements Serializable{
     private String login;
     private String password;
     private String name;
