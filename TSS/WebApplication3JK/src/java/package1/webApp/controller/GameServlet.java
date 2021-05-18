@@ -54,6 +54,7 @@ public class GameServlet extends HttpServlet {
             
             session.removeAttribute("messageError");
             session.removeAttribute("messageSuccess");
+            session.removeAttribute("tankBattleResult");
             session.setAttribute("crudMessage", " ");
             
             

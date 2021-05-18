@@ -14,6 +14,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.core.MediaType;
 
+import java.util.List;
+import javax.servlet.http.HttpSession;
+import package1.webApp.model.Tank;
+import package1.webApp.persistence.tankDAO;
+import package1.webApp.persistence.tankDAOimpl;
+
 /**
  * REST Web Service
  *
@@ -25,6 +31,9 @@ public class WebserviceDane {
     @Context
     private UriInfo context;
 
+    private HttpSession session;
+    private String currentUser;
+    
     /**
      * Creates a new instance of WebserviceDane
      */
@@ -37,10 +46,12 @@ public class WebserviceDane {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getJson() {
+    public List<Tank> getJson() {
         //TODO return proper representation object
         //throw new UnsupportedOperationException();
-        return "abc";
+        tankDAO tank = new tankDAOimpl();
+        
+        return tank.getAllTanksNames();
     }
 
     /**

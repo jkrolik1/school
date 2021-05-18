@@ -9,7 +9,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+        <title>WebSocket</title>
     </head>
     <body>
         <script langunage="javascript" type="text/javascript">
@@ -44,6 +45,16 @@
                 //writeToScreen("CONNECTED");
             }
             function onMessage(evt){
+                var data = [
+                    {
+                      x: ['Wszystkie bitwy'],
+                      y: [evt.data],
+                      type: 'bar'
+                    }
+                ];
+
+                Plotly.newPlot('myDiv', data);
+
                 writeToScreen(evt.data);
             }
             function onError(evt){
@@ -60,5 +71,6 @@
         </script>
         
         <h4>Ilość bitew na serwerze: <span id="messageID"></span></h4>
+        <div id='myDiv'></div>
     </body>
 </html>

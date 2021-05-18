@@ -9,6 +9,7 @@ public class Tank implements Serializable{
     private String name;
     private int armorAmount;
     private int gunCaliber;
+    private String login;
 
     public int getTankId() {
         return tankId;
@@ -19,6 +20,12 @@ public class Tank implements Serializable{
         setName(name);
         this.armorAmount = armorAmount;
         this.gunCaliber = gunCaliber;
+    }
+    
+    public Tank(int tankId, String name, String login){
+        this.tankId = tankId;
+        setName(name);
+        this.login = login;
     }
     
     public Tank(String name, int armorAmount, int gunCaliber){

@@ -205,17 +205,29 @@ public class ApplicationLogic1{
         int id = Integer.parseInt(request.getParameter("id"));
 
         tankDAOimpl tankDAOimpl = new tankDAOimpl();
-        battlestatDAOimpl battlestatDAOimpl = new battlestatDAOimpl();
         
         Tank oponent = tankDAOimpl.randomOponent(currentUser);
         Tank myTank = tankDAOimpl.getTank(id);
         
-        request.setAttribute("tank1", oponent);
-        request.setAttribute("tank2", myTank);
+        session = request.getSession(false);
+        session.setAttribute("tank1", oponent);
+        session.setAttribute("tank2", myTank);
 
-        String tankBattleResult = ApplicationData1.battleFight(oponent,myTank);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("tankWar.jsp");
+        dispatcher.forward(request, response);
+    }
+    
+    public static void warTank(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException, SQLException{
+
+        battlestatDAOimpl battlestatDAOimpl = new battlestatDAOimpl();
         
         session = request.getSession(false);
+        Tank oponent = (Tank) session.getAttribute("tank1");
+        Tank myTank = (Tank) session.getAttribute("tank2");
+        
+        String tankBattleResult = ApplicationData1.battleFight(oponent,myTank);
+        
         session.setAttribute("tankBattleResult", tankBattleResult);
         
         String[] splited = tankBattleResult.split("\\s+");
@@ -238,13 +250,6 @@ public class ApplicationLogic1{
             
         battlestatDAOimpl.addBattle(request);
         
-        RequestDispatcher dispatcher = request.getRequestDispatcher("tankWar.jsp");
-        dispatcher.forward(request, response);
-    }
-    
-    public static void warTank(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException, SQLException{
-
         int battleNumberX = getBattleNumber();
         setBattleNumber(battleNumberX+1);
         
