@@ -5,10 +5,9 @@
         <group>
             <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/src/java/package1/webApp/websocket/NewWSEndpoint.java</file>
             <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/web/websocket.jsp</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/src/java/package1/webApp/controller/GameServlet.java</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/src/java/package1/webApp/data/ApplicationLogic1.java</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/src/java/package1/webApp/controller/MainServlet.java</file>
-            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/src/java/package1/webApp/data/ApplicationData1.java</file>
+            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/web/main.jsp</file>
+            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/web/tanksList.jsp</file>
+            <file>file:/D:/Dokumenty/GitHub/school/TSS/WebApplication3JK/src/java/package1/webApp/webservices/WebserviceDane.java</file>
         </group>
     </open-files>
 </project-private>

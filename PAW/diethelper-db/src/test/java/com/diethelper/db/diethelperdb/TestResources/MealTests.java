@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -24,6 +25,9 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static sun.plugin2.util.PojoUtil.toJson;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -50,7 +54,7 @@ public class MealTests {
     public void getSingleMealTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/meal/1"))
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().is(200))
+                .andExpect(status().is(200))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.mealId", Matchers.is(1)));
     }
 
@@ -61,7 +65,7 @@ public class MealTests {
         MvcResult mvcResult =
                 mockMvc.perform(MockMvcRequestBuilders.get("/meal/1"))
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().is(200))
+                .andExpect(status().is(200))
                 .andReturn();
 
         Meal meal = objectMapper.readValue(mvcResult.getResponse().getContentAsString(),Meal.class);
@@ -79,7 +83,7 @@ public class MealTests {
         MvcResult mvcResult =
                 mockMvc.perform(MockMvcRequestBuilders.get("/meal/all"))
                         .andDo(MockMvcResultHandlers.print())
-                        .andExpect(MockMvcResultMatchers.status().is(200))
+                        .andExpect(status().is(200))
                         .andReturn();
 
         List<Meal> meals = objectMapper.readValue(mvcResult.getResponse().getContentAsString(),
@@ -138,7 +142,7 @@ public class MealTests {
             mvcResult = mockMvc.perform(MockMvcRequestBuilders
                     .get("/meal/"+meals.get(i).getMealId()+"/products"))
                     .andDo(MockMvcResultHandlers.print())
-                    .andExpect(MockMvcResultMatchers.status().is(200))
+                    .andExpect(status().is(200))
                     .andReturn();
             products = objectMapper.readValue(mvcResult.getResponse().getContentAsString(),
                     objectMapper.getTypeFactory().constructCollectionType(List.class, Product.class));
@@ -150,4 +154,30 @@ public class MealTests {
         }
         assertThat(end).isFalse();
     }
+
+    @WithMockUser(value = username, password = password)
+    @Test
+    @DisplayName("Check if post method works well")
+    public void checkMealPost() throws Exception {
+        Meal meal = new Meal(100,"test","","","",0,0,0,0,0,"");
+
+        mockMvc.perform(post("/meal/add")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(toJson(meal)))
+                .andExpect(status().isOk());
+    }
+
+    @WithMockUser(value = username, password = password)
+    @Test
+    @DisplayName("Check delete method on every test meal")
+    public void checkMealDelete() throws Exception {
+        List<Meal> meals = new ArrayList<>(mealRepository.findAll());
+
+        for (int i = 0; i < meals.size(); ++i)
+            if (meals.get(i).getName().equals("test"))
+                mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/meal/" + meals.get(i).getMealId() + ""))
+                        .andExpect(MockMvcResultMatchers.status().is(200));
+    }
+
 }
