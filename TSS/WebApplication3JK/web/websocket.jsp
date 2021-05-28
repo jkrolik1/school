@@ -19,7 +19,8 @@
             var webSend = setInterval(doSend,1000);
             
             function getRootUri(){
-                return "ws://" + (document.location.hostname == "" ? 
+                var wsUri = (location.protocol === "http:" ? "ws://":"wss://");
+                return wsUri + (document.location.hostname == "" ? 
                 "localhost" : 
                         document.location.hostname) + ":" +
                         (document.location.port == "" ? "8081" :

@@ -5,6 +5,6 @@
                 maxActive = "100" maxIdle = "30" maxWait = "10000"
                 username = "KugakmK1yZ" password = "L0tdidiNMH"
                 driverClassName = "com.mysql.jdbc.Driver" 
-                url = "jdbc:mysql://remotemysql.com:3306/KugakmK1yZ?useSSL=false" 
+                url = "jdbc:mysql://remotemysql.com:3306/KugakmK1yZ?autoReconnect=true" 
     />
 </Context>

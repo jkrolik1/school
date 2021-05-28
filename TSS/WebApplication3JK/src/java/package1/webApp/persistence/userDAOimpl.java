@@ -19,14 +19,23 @@ public class userDAOimpl implements userDAO {
     
     @Override
     public int insertUser(User user, HttpServletRequest request, HttpServletResponse response) {
+        String INSERT_QUERY2 = "INSERT INTO user(login, password, name) VALUES ("
+                + user.getLogin() + "," 
+                + user.getPassword() + "," 
+                + user.getName() + ");"; 
+        String INSERT_ROLE_QUERY2 = "INSERT INTO userrole(role, login) VALUES ("
+                + "\"user\"" + "," 
+                + user.getLogin() + ");"; 
         String INSERT_QUERY = "INSERT INTO user(login, password, name) VALUES (?, ?, ?);";
         String INSERT_ROLE_QUERY = "INSERT INTO userrole(role, login) VALUES (?, ?);";
-
+        
+        
         int result1 = 0, result2 = 0;
 
         try {
+            //Statement statement;
             connection = ApplicationLogic1.makeNewConnection();
-            
+            //statement = connection.createStatement();
             preparedStatement = connection.prepareStatement(INSERT_QUERY);
             preparedStatement.setString(1, user.getLogin());
             preparedStatement.setString(2, user.getPassword());
@@ -37,6 +46,10 @@ public class userDAOimpl implements userDAO {
             preparedStatement.setString(1, "user");
             preparedStatement.setString(2, user.getLogin());
             result2 = preparedStatement.executeUpdate();
+            
+            //statement.addBatch(INSERT_QUERY2);
+            //statement.addBatch(INSERT_ROLE_QUERY2);
+            //statement.executeBatch();
             
             connection.close();
         }
@@ -51,7 +64,7 @@ public class userDAOimpl implements userDAO {
             }
             ApplicationLogic1.printSQLException(e);
         }
-        return result2;
+        return 1;
     }
 
     @Override

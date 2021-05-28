@@ -19,8 +19,6 @@ import package1.webApp.persistence.battlestatDAOimpl;
 public class MainServlet extends HttpServlet {
     
     private userDAO usr;
-    private battlestatDAO battlestat;
-    private static HttpSession session;
 
     @Override
     public void init() {
