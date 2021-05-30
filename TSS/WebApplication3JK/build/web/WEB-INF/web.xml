@@ -32,7 +32,7 @@
         <servlet-name>GameServlet</servlet-name>
         <url-pattern>/GameServlet</url-pattern>
     </servlet-mapping>
-	<servlet>
+    <servlet>
         <servlet-name>Jersey REST Service</servlet-name>   
         <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class> 
         <init-param>
@@ -74,19 +74,23 @@
             <url-pattern>/WebApplication3JK/endpoint</url-pattern>
             <http-method>POST</http-method>
 	</web-resource-collection>
+	<auth-constraint>
+            <role-name>**</role-name>
+	</auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
     </security-constraint>
     <security-constraint>
 	<web-resource-collection>
             <web-resource-name>Admin</web-resource-name>
             <url-pattern>/*</url-pattern>
 	</web-resource-collection>
-<auth-constraint>
-            <role-name>**</role-name>
-	</auth-constraint>
-        <user-data-constraint>
-            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint>
 
+	<auth-constraint>
+            <role-name>admin</role-name>
+            <role-name>user</role-name>
+	</auth-constraint>
     </security-constraint>
 
 </web-app>
