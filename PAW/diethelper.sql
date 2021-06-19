@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 04 Maj 2021, 17:36
+-- Czas generowania: 17 Cze 2021, 18:01
 -- Wersja serwera: 10.4.18-MariaDB
 -- Wersja PHP: 8.0.3
 
@@ -69,30 +69,31 @@ CREATE TABLE `databasechangelog` (
 --
 
 INSERT INTO `databasechangelog` (`ID`, `AUTHOR`, `FILENAME`, `DATEEXECUTED`, `ORDEREXECUTED`, `EXECTYPE`, `MD5SUM`, `DESCRIPTION`, `COMMENTS`, `TAG`, `LIQUIBASE`, `CONTEXTS`, `LABELS`, `DEPLOYMENT_ID`) VALUES
-('1', 'root', 'database/2020/01-autorities.sql', '2021-04-30 21:07:15', 1, 'EXECUTED', '8:ea4e48f1f7ed44e01c0c7f3bb53d2400', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
-('2', 'root', 'database/2020/01-autorities.sql', '2021-04-30 21:07:15', 2, 'EXECUTED', '8:797257a960bf809832393318946c76f9', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
-('3', 'root', 'database/2020/01-autorities.sql', '2021-04-30 21:07:15', 3, 'EXECUTED', '8:3560e3f36df655a51dd98edc308b55fa', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
-('1', 'root', 'database/2020/02-hibernate-sequence.sql', '2021-04-30 21:07:15', 4, 'EXECUTED', '8:637d58ba4c44b0037ce155436475c81b', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
-('2', 'root', 'database/2020/02-hibernate-sequence.sql', '2021-04-30 21:07:15', 5, 'EXECUTED', '8:e7a5a53c30fbab35cc3270680930d29f', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
-('1', 'root', 'database/2020/03-users.sql', '2021-04-30 21:07:15', 6, 'EXECUTED', '8:2220263ab30bfd7d7a58bf06c28a8a7c', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
-('2', 'root', 'database/2020/03-users.sql', '2021-04-30 21:07:15', 7, 'EXECUTED', '8:5ce258d4b116643bc88b2c8f9c81cce1', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
-('1', 'root', 'database/2020/04-meal.sql', '2021-04-30 21:07:15', 8, 'EXECUTED', '8:c3086962896ed5df27827a06773d4e74', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
-('2', 'root', 'database/2020/04-meal.sql', '2021-04-30 21:07:15', 9, 'EXECUTED', '8:9f63e9c6414dcfcadefe190910b8c6e0', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
-('1', 'root', 'database/2020/05-product.sql', '2021-04-30 21:07:15', 10, 'EXECUTED', '8:c5fed94c9eef9d4505482a63065aa0f4', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
-('2', 'root', 'database/2020/05-product.sql', '2021-04-30 21:07:15', 11, 'EXECUTED', '8:29152c802f5d847f5291a7e872d0fa20', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
-('1', 'root', 'database/2020/06-spice.sql', '2021-04-30 21:07:15', 12, 'EXECUTED', '8:54b9923a7cf4a0c7a6150ce9527a7a69', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
-('3', 'root', 'database/2020/06-spice.sql', '2021-04-30 21:07:15', 13, 'EXECUTED', '8:27a2054783afb7ff926088faf9df0c81', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
-('1', 'root', 'database/2020/07-nutrients.sql', '2021-04-30 21:07:15', 14, 'EXECUTED', '8:37069aa03a4f1106f4b12f6fcbe13498', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
-('2', 'root', 'database/2020/07-nutrients.sql', '2021-04-30 21:07:15', 15, 'EXECUTED', '8:ff64eba59ad9796e9e2c833fffa8f616', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
-('1', 'root', 'database/2020/08-create-connection-tables.sql', '2021-04-30 21:07:15', 16, 'EXECUTED', '8:23d5fe04898925233c00913bd96359de', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
-('2', 'root', 'database/2020/08-create-connection-tables.sql', '2021-04-30 21:07:15', 17, 'EXECUTED', '8:6a4f0537c4d59076d8f50478281c9195', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
-('3', 'root', 'database/2020/08-create-connection-tables.sql', '2021-04-30 21:07:15', 18, 'EXECUTED', '8:3a2b187d4bd17525ae0fc2286cfb83ec', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
-('1', 'root', 'database/2020/09-insert-connection-data.sql', '2021-04-30 21:07:15', 19, 'EXECUTED', '8:f1c5459a667ad756e1b1d4dcd7ea87de', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
-('2', 'root', 'database/2020/09-insert-connection-data.sql', '2021-04-30 21:07:15', 20, 'EXECUTED', '8:a0f730c690ce0671bf4f44a684cbadf3', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
-('3', 'root', 'database/2020/09-insert-connection-data.sql', '2021-04-30 21:07:15', 21, 'EXECUTED', '8:a2dd0b1ea1abc6851ef9b4a143905798', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
-('1', 'root', 'database/2020/10-primarykeys.sql', '2021-04-30 21:07:16', 22, 'EXECUTED', '8:5b4f5622e861bf33b4c45d4c6e2f82d9', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
-('1', 'root', 'database/2020/11-autoincrement.sql', '2021-04-30 21:07:16', 23, 'EXECUTED', '8:5c3a6e849d32d4543d75bee9d6d1eef0', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009'),
-('1', 'root', 'database/2020/12-constraints.sql', '2021-04-30 21:07:16', 24, 'EXECUTED', '8:901cb68f59f99cce638a29c875c04f58', 'sql', '', NULL, '3.10.3', NULL, NULL, '9809635009');
+('1', 'root', 'database/2020/01-autorities.sql', '2021-05-04 17:40:57', 1, 'EXECUTED', '8:ea4e48f1f7ed44e01c0c7f3bb53d2400', 'sql', '', NULL, '3.10.3', NULL, NULL, '0142857866'),
+('2', 'root', 'database/2020/01-autorities.sql', '2021-05-04 17:40:57', 2, 'EXECUTED', '8:797257a960bf809832393318946c76f9', 'sql', '', NULL, '3.10.3', NULL, NULL, '0142857866'),
+('3', 'root', 'database/2020/01-autorities.sql', '2021-05-04 17:40:58', 3, 'EXECUTED', '8:3560e3f36df655a51dd98edc308b55fa', 'sql', '', NULL, '3.10.3', NULL, NULL, '0142857866'),
+('1', 'root', 'database/2020/02-hibernate-sequence.sql', '2021-05-04 17:40:58', 4, 'EXECUTED', '8:637d58ba4c44b0037ce155436475c81b', 'sql', '', NULL, '3.10.3', NULL, NULL, '0142857866'),
+('2', 'root', 'database/2020/02-hibernate-sequence.sql', '2021-05-04 17:40:58', 5, 'EXECUTED', '8:e7a5a53c30fbab35cc3270680930d29f', 'sql', '', NULL, '3.10.3', NULL, NULL, '0142857866'),
+('1', 'root', 'database/2020/03-users.sql', '2021-05-04 17:40:58', 6, 'EXECUTED', '8:2220263ab30bfd7d7a58bf06c28a8a7c', 'sql', '', NULL, '3.10.3', NULL, NULL, '0142857866'),
+('2', 'root', 'database/2020/03-users.sql', '2021-05-04 17:40:58', 7, 'EXECUTED', '8:5ce258d4b116643bc88b2c8f9c81cce1', 'sql', '', NULL, '3.10.3', NULL, NULL, '0142857866'),
+('1', 'root', 'database/2020/04-meal.sql', '2021-05-04 17:40:58', 8, 'EXECUTED', '8:c3086962896ed5df27827a06773d4e74', 'sql', '', NULL, '3.10.3', NULL, NULL, '0142857866'),
+('2', 'root', 'database/2020/04-meal.sql', '2021-05-04 17:40:58', 9, 'EXECUTED', '8:9f63e9c6414dcfcadefe190910b8c6e0', 'sql', '', NULL, '3.10.3', NULL, NULL, '0142857866'),
+('1', 'root', 'database/2020/05-product.sql', '2021-05-04 17:40:58', 10, 'EXECUTED', '8:c5fed94c9eef9d4505482a63065aa0f4', 'sql', '', NULL, '3.10.3', NULL, NULL, '0142857866'),
+('2', 'root', 'database/2020/05-product.sql', '2021-05-04 17:40:58', 11, 'EXECUTED', '8:29152c802f5d847f5291a7e872d0fa20', 'sql', '', NULL, '3.10.3', NULL, NULL, '0142857866'),
+('1', 'root', 'database/2020/06-spice.sql', '2021-05-04 17:40:58', 12, 'EXECUTED', '8:54b9923a7cf4a0c7a6150ce9527a7a69', 'sql', '', NULL, '3.10.3', NULL, NULL, '0142857866'),
+('3', 'root', 'database/2020/06-spice.sql', '2021-05-04 17:40:58', 13, 'EXECUTED', '8:27a2054783afb7ff926088faf9df0c81', 'sql', '', NULL, '3.10.3', NULL, NULL, '0142857866'),
+('1', 'root', 'database/2020/07-nutrients.sql', '2021-05-04 17:40:58', 14, 'EXECUTED', '8:37069aa03a4f1106f4b12f6fcbe13498', 'sql', '', NULL, '3.10.3', NULL, NULL, '0142857866'),
+('2', 'root', 'database/2020/07-nutrients.sql', '2021-05-04 17:40:58', 15, 'EXECUTED', '8:ff64eba59ad9796e9e2c833fffa8f616', 'sql', '', NULL, '3.10.3', NULL, NULL, '0142857866'),
+('1', 'root', 'database/2020/08-create-connection-tables.sql', '2021-05-04 17:40:58', 16, 'EXECUTED', '8:23d5fe04898925233c00913bd96359de', 'sql', '', NULL, '3.10.3', NULL, NULL, '0142857866'),
+('2', 'root', 'database/2020/08-create-connection-tables.sql', '2021-05-04 17:40:58', 17, 'EXECUTED', '8:6a4f0537c4d59076d8f50478281c9195', 'sql', '', NULL, '3.10.3', NULL, NULL, '0142857866'),
+('3', 'root', 'database/2020/08-create-connection-tables.sql', '2021-05-04 17:40:58', 18, 'EXECUTED', '8:3a2b187d4bd17525ae0fc2286cfb83ec', 'sql', '', NULL, '3.10.3', NULL, NULL, '0142857866'),
+('1', 'root', 'database/2020/09-insert-connection-data.sql', '2021-05-04 17:40:58', 19, 'EXECUTED', '8:f1c5459a667ad756e1b1d4dcd7ea87de', 'sql', '', NULL, '3.10.3', NULL, NULL, '0142857866'),
+('2', 'root', 'database/2020/09-insert-connection-data.sql', '2021-05-04 17:40:58', 20, 'EXECUTED', '8:a0f730c690ce0671bf4f44a684cbadf3', 'sql', '', NULL, '3.10.3', NULL, NULL, '0142857866'),
+('3', 'root', 'database/2020/09-insert-connection-data.sql', '2021-05-04 17:40:58', 21, 'EXECUTED', '8:a2dd0b1ea1abc6851ef9b4a143905798', 'sql', '', NULL, '3.10.3', NULL, NULL, '0142857866'),
+('1', 'root', 'database/2020/10-primarykeys.sql', '2021-05-04 17:40:59', 22, 'EXECUTED', '8:5b4f5622e861bf33b4c45d4c6e2f82d9', 'sql', '', NULL, '3.10.3', NULL, NULL, '0142857866'),
+('1', 'root', 'database/2020/11-autoincrement.sql', '2021-05-04 17:40:59', 23, 'EXECUTED', '8:5c3a6e849d32d4543d75bee9d6d1eef0', 'sql', '', NULL, '3.10.3', NULL, NULL, '0142857866'),
+('1', 'root', 'database/2020/12-constraints.sql', '2021-05-04 17:40:59', 24, 'EXECUTED', '8:901cb68f59f99cce638a29c875c04f58', 'sql', '', NULL, '3.10.3', NULL, NULL, '0142857866'),
+('1', 'root', 'database/2020/13-files.sql', '2021-05-04 17:40:59', 25, 'EXECUTED', '8:99771622bd96bf885909e15c4f916195', 'sql', '', NULL, '3.10.3', NULL, NULL, '0142857866');
 
 -- --------------------------------------------------------
 
@@ -126,6 +127,14 @@ CREATE TABLE `files` (
   `fileType` varchar(255) COLLATE utf8_polish_ci NOT NULL,
   `data` blob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+--
+-- Zrzut danych tabeli `files`
+--
+
+INSERT INTO `files` (`id`, `fileName`, `fileType`, `data`) VALUES
+('4608eafa-2f37-4557-bbfb-de9f1658d816', 'remove-button.png', 'image/png', 0x89504e470d0a1a0a0000000d49484452000000100000001008060000001ff3ff610000000473424954080808087c0864880000000970485973000007eb000007eb01eb84ffc90000001974455874536f667477617265007777772e696e6b73636170652e6f72679bee3c1a000000a849444154388dad93510dc3300c449fc7a11442600c026328c26045530255610cc006a00cd25ff7c7a9b228ab34b9964e722cdfc997c4a2aad421220178007703c0cb30a9eae78ba0aa98880009d800fd81cd7ae4e055e4e584d86229224520fd412e48c57ee88cfd067275ce566bed0480b1431e8068c46cf9d0117902cc4d3103d1c68b4d9e9bde1960edf83b444ec80aac372e08b78511e725fa9ed1fd912ef9ca9e6512ef3aef63f5eaad261231ec0000000049454e44ae426082),
+('998e4e7b-2298-4208-9013-55237f0e8466', 'remove-button.png', 'image/png', 0x89504e470d0a1a0a0000000d49484452000000100000001008060000001ff3ff610000000473424954080808087c0864880000000970485973000007eb000007eb01eb84ffc90000001974455874536f667477617265007777772e696e6b73636170652e6f72679bee3c1a000000a849444154388dad93510dc3300c449fc7a11442600c026328c26045530255610cc006a00cd25ff7c7a9b228ab34b9964e722cdfc997c4a2aad421220178007703c0cb30a9eae78ba0aa98880009d800fd81cd7ae4e055e4e584d86229224520fd412e48c57ee88cfd067275ce566bed0480b1431e8068c46cf9d0117902cc4d3103d1c68b4d9e9bde1960edf83b444ec80aac372e08b78511e725fa9ed1fd912ef9ca9e6512ef3aef63f5eaad261231ec0000000049454e44ae426082);
 
 -- --------------------------------------------------------
 
@@ -162,7 +171,7 @@ CREATE TABLE `hibernate_sequence` (
 --
 
 INSERT INTO `hibernate_sequence` (`next_val`) VALUES
-(51);
+(56);
 
 -- --------------------------------------------------------
 
@@ -193,7 +202,13 @@ INSERT INTO `meal` (`mealId`, `name`, `category`, `flavor`, `difficultyOfCooking
 (2, 'ZAPIEKANKA WARZYWNA Z BATATEM I CUKINIĄ', 'Kolacja', 'Łagodny', 'Średni', 0, 0, 0, 0, 1, 'Piekarnik nagrzać do 190 stopni C. Batata obrać i pokroić w kostkę. Cukinię umyć i pokroić w nieco większą kostką. Cebulę obrać z zewnętrzych suchych łupin i pokroić na paseczki. Ząbki czosnku pozostawić w łupinkach. Warzywa doprawić pieprzem, oregano i pieprzem cayenne, następnie wymieszać z oliwą (nie solić na tym etapie, bo warzywa puszczą soki). Warzywa ułożyć na blaszce do pieczenia (ok. 20 x 30 cm) lub naczyniu żaroodpornym i piec przez 30 minut bez przykrycia. Następnie dodać pokrojonego w kostkę pomidora oraz kuleczki mozzarelli i piec jeszcze przez ok. 10 - 15 minut. Przed podaniem można warzywa posolić.'),
 (3, 'Muffinki jajeczne ze szpinakiem', 'Kolacja', 'Słodki', 'Łatwy', 113, 2, 10, 7, 1, 'Cebulę pokrój w kosteczkę i podsmaż na patelni z łyżeczką oliwy ciągle mieszając, aby się nie przypaliła, dodaj przeciśnięty przez praskę czosnek i podsmaż jeszcze chwilę. Wrzuć posiekany szpinak i duś, aż szpinak zwiędnie. Dopraw mocno solą, pieprzem i odrobiną gałki muszkatołowej. Ostudź szpinak. Nastaw piekarnik na 180 stopni. Jajka roztrzep widelcem i wymieszaj ze szpinakiem, dodaj rozdrobnioną mozzarellę. Przelej łyżką masę serowo szpinakową do foremek na muffinki - ja użyłam foremek silikonowych. Piecz mini frittaty przez 20 minut.'),
 (4, 'Kanapka z awokado i łososiem', 'Śniadanie', NULL, 'Łatwy', 174, 20, 6, 9, 1, 'Awokado zgnieć widelcem, dodaj kilka kropel soku z cytryny, szczyptę soli i pieprzu. Tak przygotowaną pastę rozprowadź na chlebie. Dodaj plasterek łososia. Opcjonalnie, kanapkę możesz oprószyć koperkiem lub pietruszką.'),
-(5, 'Zupa meksykańska z nutką chilli', 'Obiad', 'Ostry', 'Średni', 34, 5, 2, 1, 1, 'W garnku, na oliwie zeszklij cebulę, dodaj pokrojone w kostkę papryki. Smaż 3 minuty. Dodaj mięso mielone i bulion warzywny. Gotuj 10 minut. Dodaj fasolę i kukurydzę. Dodaj pomidory w puszcze i przecier pomidorowy. Całość wymieszaj, dopraw do smaku i gotuj, aż papryka będzie miękka i zupa się zagęści.');
+(5, 'Zupa meksykańska z nutką chilli', 'Obiad', 'Ostry', 'Średni', 34, 5, 2, 1, 1, 'W garnku, na oliwie zeszklij cebulę, dodaj pokrojone w kostkę papryki. Smaż 3 minuty. Dodaj mięso mielone i bulion warzywny. Gotuj 10 minut. Dodaj fasolę i kukurydzę. Dodaj pomidory w puszcze i przecier pomidorowy. Całość wymieszaj, dopraw do smaku i gotuj, aż papryka będzie miękka i zupa się zagęści.'),
+(6, 'Omlet wegetariański', 'Śniadanie', 'Słodki', 'Łatwy', NULL, NULL, NULL, NULL, 1, 'Cebulę i czosnek obierz i posiekaj. Pomidorki przekrój na pół, paprykę pokrój w paski. Cebulę i czosnek zeszklij na oliwie. Dodaj pomidorki, paprykę, dopraw przyprawą Knorr, pieprzem, bazylią, oregano i podsmaż. Na koniec wlej ubite jajka. Kiedy omlet się zetnie ostrożnie przewróć na drugą stronę i podsmaż.\r\n\r\n'),
+(7, 'Budyń waniliowy ze skrobią oporną', 'Śniadanie', 'Słodki', 'Łatwy', NULL, NULL, NULL, NULL, 1, '1/2 szklanki mleka roślinnego wlej do garnka, dodaj olej kokosowy i cukier waniliowy. Podgrzewaj na wolnym ogniu. Pozostałe mleko wymieszaj dokładnie z mąką ziemniaczaną. Kiedy mleko kokosowe się zagotuje wlej do niego mleko z mąką ziemniaczaną i mieszaj całość dokładnie około 1 minuty. Mleko szybko zgęstnieje w budyń. Zdejmij z ognia. Podawaj z plastrami zielonego banana ( koniecznie zielonego ponieważ zawiera on bardzo dużo skrobi opornej) i ulubionymi owocami.'),
+(8, 'Czekoladowe naleśniki z truskawkami', 'Obiad', 'Słodki', 'Łatwy', NULL, NULL, NULL, NULL, 0, 'Do wysokiej miski dodajemy mąkę, mleko, wodę gazowaną, jajko, kakao i szczyptę soli. Miksujemy przez około minutę do momentu połączenia się składników. Miksujemy dokładnie, aby nie było grudek. Smażymy z obu stron na dużej, rozgrzanej patelni. Ja mam patelnię z powierzchnią nieprzywierającą do naleśników, jednak jeśli takiej nie macie to trzeba najpierw wlać odrobinę oleju i rozprowadzić go po powierzchni patelni. Do miski dodajemy mascarpone lub twaróg półtłusty (w przypadku twarogu trzeba go nieco rozdrobnić widelcem lub blenderem). Następnie dodajemy cukier puder (3 łyżeczki), serek homogenizowany waniliowy lub straciatella (300g). Całość mieszamy delikatnie za pomocą łyżki. Naleśniki smarujemy nadzieniem i posypujemy drobno posiekanymi truskawkami. Zwijamy w rulonik lub trójkąty. W małym garnku roztapiamy czekoladę mleczną wraz ze śmietanką kremówką. Mieszamy jedynie do momentu powstania jednolitej polewy czekoladowej. Wierzch dekorujemy polewą czekoladową lub oprószamy cukrem pudr'),
+(9, 'Szaszłyki z piekarnika z kurczakiem i boczkiem', 'Obiad', 'Słony', 'Łatwy', NULL, NULL, NULL, NULL, NULL, 'Zaczynamy do zamarynowania mięsa. Piersi z kurczaka kroimy w większą kostkę. W miseczce mieszamy przyprawę do kurczaka, szczyptę papryki słodkiej i ostrej oraz oliwę z oliwek, przeciśnięty przez praskę ząbek czosnku oraz oliwę z oliwek. Do miseczki dodajemy kurczaka i całość mieszamy łyżką lub dłonią. Na długi patyczki do szaszłyków wbijamy pokrojoną w kawałki paprykę (np. zieloną), zwinięty plasterek boczku, plasterek cukinii, cebulę i kurczaka.Czynność powtarzamy np. dwukrotnie. Układamy na tacce do grillowania lub papierze do pieczenia. Wkładamy do piekarnika nagrzanego do temp. 200 stopni. Pieczemy przez ok. 10 minut (góra-dół, bez termoobiegu), a następnie przez 5-10 minut (termoobieg lub funkcja grill). Kontroluj długość pieczenia, aby szaszłyki się nie spaliły. Smacznego! Szaszłyki z piekarnika można zaserwować wraz z moją sprawdzoną sałatkę grillową. Będzie tu pasować idealnie! Jeżeli dodatkowo planujesz przygotować również karkówkę z grilla to polecam wypróbować tą smaczną i s'),
+(10, 'Sałatka z makaronem, awokado i piersią z kurczaka', 'Kolacja', 'Słony', 'Łatwy', 620, 52, 32, 34, 1, 'Pierś z kurczaka przygotowujemy zgodnie z przepisem na opakowaniu Pomysłu na… Papirus Winiary. Mix sałat płuczemy, odsączamy na sicie. Pomidorki myjemy, przecinamy na ćwiartki. Awokado obieramy ze skóry, kroimy w drobną kostkę. Olej dokładnie mieszamy z wodą, miodem, musztardą i octem winnym. Doprawiamy do smaku solą i pieprzem. Awokado, pomidorki i makaron dodajemy do sałaty. Polewamy sosem i dokładnie mieszamy. Przybieramy pokrojoną w paski piersią kurczaka. Posypujemy odrobiną świeżo mielonego pieprzu.'),
+(11, 'Omlet ze szpinakiem, kurkami i startym żółtym serem', 'Kolacja', 'Łagodny', 'Łatwy', 390, 14, 25, 25, 1, 'Grzyby oczyść pędzelkiem, pokrój. Jajka wbij do miseczki, dodaj mąkę, ser, pieprz. Całość dobrze wymieszaj. Rozgrzej oliwę na patelni, dodaj posiekaną cebulę z MAGGI. Kiedy cebula się zeszkli dodaj kurki. Całość podsmażaj do momentu, aż grzyby i cebula delikatnie się przyrumienią. Następnie dodaj szpinak, podsmaż chwilę, aż zmięknie. Wlej na patelnię jajka, przykryj pokrywką. Omlet będzie gotowy jak góra się zetnie po około 4-5 minutach na bardzo małym ogniu.\r\n\r\n\r\n');
 
 -- --------------------------------------------------------
 
@@ -261,7 +276,29 @@ INSERT INTO `preparation` (`preparationId`, `MealmealId`, `ProductproductId`, `p
 (31, 4, 22, 1),
 (32, 4, 23, 1),
 (33, 4, 24, 1),
-(34, 4, 25, 1);
+(34, 4, 25, 1),
+(49, 6, 20, 8),
+(50, 6, 26, 1),
+(51, 6, 14, 2),
+(52, 6, 8, 2),
+(53, 6, 9, 1),
+(54, 6, 27, 1),
+(55, 6, 7, 2),
+(56, 7, 28, 2),
+(57, 7, 29, 1),
+(58, 7, 30, 2),
+(59, 8, 1, 10),
+(60, 8, 31, 1),
+(61, 8, 32, 3),
+(62, 8, 28, 1),
+(63, 8, 20, 2),
+(64, 9, 36, 4),
+(65, 9, 7, 2),
+(66, 9, 18, 1),
+(67, 9, 35, 3),
+(68, 9, 33, 2),
+(69, 9, 34, 2),
+(70, 9, 17, 2);
 
 -- --------------------------------------------------------
 
@@ -306,7 +343,18 @@ INSERT INTO `product` (`productId`, `name`, `carbohydrates`, `proteins`, `fats`)
 (22, 'Awokado', NULL, NULL, NULL),
 (23, 'Chleb żytni razowy kromka', NULL, NULL, NULL),
 (24, 'Wędzony łosoś plaster', NULL, NULL, NULL),
-(25, 'Sok z cytryny łyżeczka', NULL, NULL, NULL);
+(25, 'Sok z cytryny łyżeczka', NULL, NULL, NULL),
+(26, 'Przyprawa knorr szczypta', NULL, NULL, NULL),
+(27, 'Bazylia 0.5 łyżeczki', NULL, NULL, NULL),
+(28, 'Mleko roślinne szklanka', NULL, NULL, NULL),
+(29, 'Mąka ziemniaczana', NULL, NULL, NULL),
+(30, 'Cukier waniliowy', NULL, NULL, NULL),
+(31, 'Woda gazowana szklanka', 0, 0, 0),
+(32, 'Ciemne kakao łyżeczka', NULL, NULL, NULL),
+(33, 'Papryka zielona', NULL, NULL, NULL),
+(34, 'Czerwona cebula', NULL, NULL, NULL),
+(35, 'Boczek 50g', NULL, NULL, NULL),
+(36, 'Pierś z kurczaka 100g', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -332,7 +380,13 @@ INSERT INTO `seasoning` (`seasoningId`, `MealmealId`, `SpicesspiceId`) VALUES
 (5, 3, 2),
 (6, 4, 2),
 (7, 4, 6),
-(8, 4, 7);
+(8, 4, 7),
+(50, 6, 4),
+(51, 6, 5),
+(52, 8, 2),
+(53, 9, 9),
+(54, 9, 10),
+(55, 9, 11);
 
 -- --------------------------------------------------------
 
@@ -356,7 +410,10 @@ INSERT INTO `spice` (`spiceId`, `name`) VALUES
 (4, 'Oregano'),
 (5, 'Pieprz'),
 (6, 'Koperek'),
-(7, 'Natka pietruszki');
+(7, 'Natka pietruszki'),
+(9, 'Przyprawa do kurczaka'),
+(10, 'Papryka ostra'),
+(11, 'Papryka słodka');
 
 -- --------------------------------------------------------
 
@@ -457,7 +514,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT dla tabeli `meal`
 --
 ALTER TABLE `meal`
-  MODIFY `mealId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `mealId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT dla tabeli `nutrients`
@@ -469,25 +526,25 @@ ALTER TABLE `nutrients`
 -- AUTO_INCREMENT dla tabeli `preparation`
 --
 ALTER TABLE `preparation`
-  MODIFY `preparationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `preparationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT dla tabeli `product`
 --
 ALTER TABLE `product`
-  MODIFY `productId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `productId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT dla tabeli `seasoning`
 --
 ALTER TABLE `seasoning`
-  MODIFY `seasoningId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `seasoningId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT dla tabeli `spice`
 --
 ALTER TABLE `spice`
-  MODIFY `spiceId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `spiceId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Ograniczenia dla zrzutów tabel
